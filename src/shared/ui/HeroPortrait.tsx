@@ -81,7 +81,7 @@ export function HeroPortrait({
                 <div className="text-lg font-bold leading-none text-brand-500 [text-shadow:0_0_12px_rgba(56,189,248,0.7)]">
                   {yearsExperience}
                 </div>
-                <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-ink/80">
+                <div className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-white">
                   Years Exp.
                 </div>
               </div>
@@ -95,7 +95,7 @@ export function HeroPortrait({
                 className="h-2 w-2 shrink-0 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(56,189,248,0.5)]"
                 aria-hidden
               />
-              <span className="text-xs font-medium tracking-wide text-ink/95">
+              <span className="text-xs font-medium tracking-wide text-white">
                 Available for work
               </span>
             </div>

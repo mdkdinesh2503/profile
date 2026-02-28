@@ -18,7 +18,7 @@ export function SectionHeading({
   return (
     <div className={cx("max-w-2xl", className)}>
       {eyebrow ? (
-        <div className="text-xs font-medium tracking-wide text-muted-2">
+        <div className="text-xs font-medium tracking-wide text-primary">
           {eyebrow}
         </div>
       ) : null}
