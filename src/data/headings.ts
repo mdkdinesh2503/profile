@@ -45,9 +45,9 @@ export const headings = {
 
   resume: {
     eyebrow: "Resume",
-    title: "Experience and skills at a glance",
+    title: "One document. Your full story.",
     description:
-      "Download my resume for a concise overview of my background, technical skills, and work history.",
+      "A concise snapshot of my experience, stack, and outcomes—ready to download or view. Built for recruiters and teams who care about shipping.",
   } satisfies SelectedSectionHeading,
 
   contact: {

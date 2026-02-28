@@ -10,19 +10,19 @@ export const certifications: Certification[] = [
     verifyLink: "",
   },
   {
-    name: "AWS DynamoDB",
-    issuer: "Meta",
-    year: "Jun 16, 2025",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/AWS_DynamoDB.pdf",
-    verifyLink: "",
-  },
-  {
     name: "Advanced React",
     issuer: "Whizlabs",
     year: "May 12, 2025",
     thumbnail: "./default/certificate.svg",
     pdf: "./certification/Advanced_React.pdf",
+    verifyLink: "",
+  },
+  {
+    name: "AWS DynamoDB",
+    issuer: "Meta",
+    year: "Jun 16, 2025",
+    thumbnail: "./default/certificate.svg",
+    pdf: "./certification/AWS_DynamoDB.pdf",
     verifyLink: "",
   },
 ];

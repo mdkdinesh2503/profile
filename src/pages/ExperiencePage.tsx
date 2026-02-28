@@ -4,13 +4,13 @@ import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Card } from "@/shared/ui/Card";
 import { Reveal } from "@/shared/motion/Reveal";
 import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/data/experience";
-import { headings } from "@/data/headings";
 import { Chip } from "@/shared/ui/Chip";
+import { headings } from "@/data/headings";
 import type { SkillGroup } from "@/types";
 import { Button } from "@/shared/ui/Button";
 import { profile } from "@/data/profile";
 import { AnimatePresence, motion } from "framer-motion";
-import { Calendar, MapPin, Clock, ChevronRight, Tag } from "lucide-react";
+import { Calendar, MapPin, Clock, ChevronRight, Tag, Award, ExternalLink, Download } from "lucide-react";
 
 /** Order of skill group tabs; derived from experience data. */
 const skillGroups = skills.map((g) => g.group);
@@ -203,7 +203,7 @@ export function ExperiencePage() {
               <Chip
                 key={g}
                 active={active === g}
-                activeVariant={"primary"}
+                activeVariant="primary"
                 onClick={() => setActive(g)}
               >
                 {g}
@@ -213,12 +213,14 @@ export function ExperiencePage() {
 
           <Reveal>
             <Card className="mt-4 p-6">
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-2">
                 {activeSkills.map((s) => (
                   <span
                     key={s}
-                    className="inline-flex items-center rounded-lg border border-line bg-surface-2 px-2.5 py-1 text-xs font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+                    className="inline-flex cursor-default items-center gap-1.5 rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-ink ring-1 ring-line transition-colors hover:text-primary"
+                    aria-label="Skill"
                   >
+                    <Tag className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden />
                     {s}
                   </span>
                 ))}
@@ -234,83 +236,101 @@ export function ExperiencePage() {
             description={headings.credentials.description}
           />
 
-          <div className="mt-6 grid gap-3 md:grid-cols-2">
+          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {profile.certifications.map((c, idx) => {
-              const selected = idx === selectedCertIdx;
+              const selected = certModalOpen && idx === selectedCertIdx;
+              const dateBadge = c.year ? `${c.year.slice(0, 3)} ${c.year.slice(-4)}` : "";
               return (
-                <Reveal key={`${c.name}-${idx}`} delay={0.02 * idx}>
-                  <Card className="p-5">
-                    <div className="flex items-start gap-4">
+                <motion.article
+                  key={`${c.name}-${idx}`}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-24px" }}
+                  transition={{ duration: 0.35, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lift-1 hover:border-primary/20"
+                >
+                  {/* Top ribbon accent */}
+                  <div className="absolute left-0 right-0 top-0 h-0.5 bg-gradient-to-r from-primary/80 via-primary to-primary/80" aria-hidden />
+                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
+                  {dateBadge ? (
+                    <span className="absolute right-3 top-3 rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary ring-1 ring-primary/20">
+                      {dateBadge}
+                    </span>
+                  ) : null}
+                  <div className="flex min-h-0 flex-1 flex-col pl-4 pr-4 py-4 sm:pl-5">
+                    <div className="flex flex-1 items-start gap-3 pr-12">
                       <button
                         type="button"
                         onClick={() => {
                           setSelectedCertIdx(idx);
                           setCertModalOpen(true);
                         }}
-                        className="group relative overflow-hidden rounded-xl border border-line bg-surface/80 shadow-sm transition-shadow hover:shadow-lift-1"
+                        className="relative flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line bg-surface/80 shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-md"
                         aria-label={`Preview ${c.name}`}
                       >
                         <img
                           src={c.thumbnail}
-                          alt={c.name}
-                          className="h-16 w-20 object-cover"
+                          alt=""
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                           loading="lazy"
                         />
-                        <div
-                          aria-hidden
-                          className="pointer-events-none absolute inset-0 bg-[radial-gradient(120px_80px_at_30%_25%,rgba(37,99,235,0.22),transparent_60%)] opacity-0 transition-opacity group-hover:opacity-100"
-                        />
+                        <span className="absolute inset-0 flex items-center justify-center bg-primary/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden>
+                          <Award className="h-7 w-7 text-primary" />
+                        </span>
                       </button>
-
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
-                            <div className="truncate text-sm font-semibold text-ink">
-                              {c.name}
-                            </div>
-                            <div className="mt-1 truncate text-xs text-muted-2">
-                              {c.issuer}
-                              {c.year ? ` · ${c.year}` : ""}
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSelectedCertIdx(idx);
-                              setCertModalOpen(true);
-                            }}
-                            className={[
-                              "shrink-0 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
-                              selected
-                                ? "border-line-strong bg-surface text-ink shadow-sm"
-                                : "border-line bg-surface/80 text-muted-1 hover:bg-surface hover:text-ink",
-                            ].join(" ")}
-                          >
-                            Preview
-                          </button>
+                        <div className="flex items-center gap-2">
+                          <Award className="h-4 w-4 shrink-0 text-primary/70" aria-hidden />
+                          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-ink">
+                            {c.name}
+                          </h3>
                         </div>
-
-                        <div className="mt-3 flex flex-wrap items-center gap-2">
-                          {c.verifyLink ? (
-                            <a href={c.verifyLink} target="_blank" rel="noreferrer">
-                              <Button variant="secondary">Verify</Button>
-                            </a>
-                          ) : null}
-                          {c.pdf ? (
-                            <>
-                              <a href={c.pdf} download>
-                                <Button variant="primary">Download</Button>
-                              </a>
-                              <a href={c.pdf} target="_blank" rel="noreferrer">
-                                <Button variant="secondary">Open</Button>
-                              </a>
-                            </>
-                          ) : null}
-                        </div>
+                        <span className="mt-1.5 inline-flex rounded-full bg-ink/5 px-2 py-0.5 text-xs font-medium text-muted-2 ring-1 ring-line">
+                          {c.issuer}
+                        </span>
                       </div>
                     </div>
-                  </Card>
-                </Reveal>
+                    <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4 mt-4">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCertIdx(idx);
+                          setCertModalOpen(true);
+                        }}
+                        className={[
+                          "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all duration-200",
+                          selected
+                            ? "bg-primary text-white shadow-sm ring-1 ring-primary/30 hover:bg-primary-hover"
+                            : "bg-ink/5 text-ink ring-1 ring-line hover:bg-ink/10 hover:ring-line-strong",
+                        ].join(" ")}
+                      >
+                        <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                        View PDF
+                      </button>
+                      {c.verifyLink ? (
+                        <a
+                          href={c.verifyLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-ink/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-line transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                          Verify
+                        </a>
+                      ) : null}
+                      {c.pdf ? (
+                        <a
+                          href={c.pdf}
+                          download
+                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-primary px-3 py-2 text-xs font-medium text-white ring-1 ring-primary/30 shadow-sm transition-all duration-200 hover:bg-primary-hover"
+                        >
+                          <Download className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                          Download
+                        </a>
+                      ) : null}
+                    </div>
+                  </div>
+                </motion.article>
               );
             })}
           </div>
