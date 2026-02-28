@@ -3,7 +3,7 @@ title: "Idempotency in practice (without the buzzwords)"
 date: "2025-11-03"
 summary: "When a system retries, duplicates events, or processes things out of order, idempotency is what keeps you from paying twice."
 tags: ["backend", "payments", "reliability"]
-image: "/blogs/cover-2.svg"
+image: "/default/Blog.svg"
 imageAlt: "Soft gradient cover image"
 ---
 

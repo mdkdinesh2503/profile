@@ -36,6 +36,7 @@ export type ExperienceItem = {
   company: string;
   logo?: string;
   location?: string;
+  domains?: string[];
   title?: string;
   startDate: string;
   endDate?: string | null;

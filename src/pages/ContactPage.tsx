@@ -1,4 +1,4 @@
-import { Mail, Phone, Github, Linkedin, ListChecks } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Instagram, ListChecks } from "lucide-react";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Card } from "@/shared/ui/Card";
@@ -90,7 +90,7 @@ export function ContactPage() {
                         "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#24292f] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
                       )}
                     >
-                      <Github {...iconProps} /> GitHub
+                      <Github {...iconProps} />
                     </a>
                     <a
                       href={profile.links.linkedin}
@@ -102,8 +102,22 @@ export function ContactPage() {
                         "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
                       )}
                     >
-                      <Linkedin {...iconProps} /> LinkedIn
+                      <Linkedin {...iconProps} />
                     </a>
+                    {profile.links.instagram && (
+                      <a
+                        href={profile.links.instagram}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cx(
+                          "inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-white shadow-sm",
+                          "bg-[#E4405F] hover:bg-[#C13584]",
+                          "transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4405F] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
+                        )}
+                      >
+                        <Instagram {...iconProps} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

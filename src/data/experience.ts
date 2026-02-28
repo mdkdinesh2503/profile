@@ -66,10 +66,15 @@ function formatDateRange(
 
 // ─── Public API ─────────────────────────────────────────────────────────────
 
-export function getDisplayTimeframe(item: ExperienceItem): string {
-  const range = item.timeframe ?? formatDateRange(item.startDate, item.endDate);
+/** Duration only, e.g. "1 yr 2 mos", for use with a calendar icon. */
+export function getDisplayDuration(item: ExperienceItem): string {
   const months = getItemDurationMonths(item);
-  return `${range}${DURATION_SEP}${formatDuration(months)}`;
+  return formatDuration(months);
+}
+
+/** Date range only, e.g. "Sep 2022 — Dec 2023" or "Aug 2024 — Present". */
+export function getDisplayDateRange(item: ExperienceItem): string {
+  return formatDateRange(item.startDate, item.endDate);
 }
 
 export function getYearsExperience(items: ExperienceItem[]): string {
@@ -91,6 +96,7 @@ export const experience: ExperienceItem[] = [
     logo: "./experience/Aretedge.jpg",
     title: "Software Engineer",
     location: "Hyderabad, Telangana, India · On-site",
+    domains: ["Gaming", "Web3"],
     startDate: "Aug 2024",
     endDate: null,
     summary:
@@ -105,7 +111,9 @@ export const experience: ExperienceItem[] = [
   {
     company: "Aspire Systems",
     logo: "./experience/Aspire_Systems.jpg",
+    title: "Frontend Developer",
     location: "Chennai, Tamil Nadu, India · Remote",
+    domains: ["Software Development", "IT Services"],
     startDate: "Sep 2022",
     endDate: "Dec 2023",
     roles: [
@@ -137,13 +145,7 @@ export const experience: ExperienceItem[] = [
 export const skills: SkillGroup[] = [
   {
     group: "Frontend",
-    items: [
-      "Angular",
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Tailwind",
-    ],
+    items: ["Angular", "React", "Next.js", "TypeScript", "Tailwind"],
   },
   {
     group: "Backend",

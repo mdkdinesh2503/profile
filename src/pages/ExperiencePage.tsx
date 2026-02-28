@@ -3,13 +3,14 @@ import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Card } from "@/shared/ui/Card";
 import { Reveal } from "@/shared/motion/Reveal";
-import { experience, getDisplayTimeframe, skills } from "@/data/experience";
+import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/data/experience";
 import { headings } from "@/data/headings";
 import { Chip } from "@/shared/ui/Chip";
 import type { SkillGroup } from "@/types";
 import { Button } from "@/shared/ui/Button";
 import { profile } from "@/data/profile";
 import { AnimatePresence, motion } from "framer-motion";
+import { Calendar, MapPin, Clock, ChevronRight, Tag } from "lucide-react";
 
 /** Order of skill group tabs; derived from experience data. */
 const skillGroups = skills.map((g) => g.group);
@@ -51,50 +52,90 @@ export function ExperiencePage() {
           description={headings.experience.description}
         />
 
-        <div className="mt-8 grid gap-4">
+        <div className="mt-10 space-y-6">
           {experience.map((item, idx) => {
-            const displayTimeframe = getDisplayTimeframe(item);
+            const displayDuration = getDisplayDuration(item);
+            const displayDateRange = getDisplayDateRange(item);
+            const hasRoles = Boolean(item.roles?.length);
+            const titleLine =
+              item.title
+                ? `${item.title} · ${item.company}`
+                : item.company;
+
             return (
               <Reveal
                 key={item.roles?.length ? item.company : `${item.company}-${item.startDate}`}
-                delay={0.03 * idx}
+                delay={0.04 * idx}
               >
-                <Card className="p-6">
-                  {item.roles && item.roles.length > 0 ? (
-                    <>
-                      <div className="flex flex-wrap items-baseline justify-between gap-3">
-                        <div className="flex items-center gap-3 space-y-0.5">
+                <article className="group relative overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/20">
+                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
+
+                  <div className="pl-4 pr-4 py-4 sm:pl-5">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="flex flex-wrap items-start gap-3 min-w-0 flex-1">
+                      <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
+                        {/* Circular ring: 4 primary arcs with gaps */}
+                        <div
+                          className="absolute inset-0 rounded-full p-[2px] transition-[transform] duration-300 group-hover:animate-[spin_6s_linear_infinite]"
+                          style={{
+                            background: "conic-gradient(from 0deg, rgba(37,99,235,0.4) 0deg, var(--color-primary) 72deg, transparent 72deg 90deg, rgba(37,99,235,0.4) 90deg, var(--color-primary) 162deg, transparent 162deg 180deg, rgba(37,99,235,0.4) 180deg, var(--color-primary) 252deg, transparent 252deg 270deg, rgba(37,99,235,0.4) 270deg, var(--color-primary) 342deg, transparent 342deg 360deg)",
+                          }}
+                          aria-hidden
+                        >
+                          <div className="h-full w-full rounded-full bg-surface" />
+                        </div>
+                        <div className="absolute inset-[2px] z-10 flex items-center justify-center overflow-hidden rounded-full bg-surface">
                           {item.logo ? (
-                            <img
-                              src={item.logo}
-                              alt={item.company}
-                              className="h-10 w-10 shrink-0 rounded-lg object-contain bg-surface-2 border border-line"
-                            />
+                            <img src={item.logo} alt="" className="h-11 w-11 object-contain" />
                           ) : (
-                            <div
-                              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-sm font-semibold text-primary border border-line"
-                              aria-hidden
-                            >
-                              {item.company.slice(0, 2).toUpperCase()}
-                            </div>
+                            <span className="text-xs font-bold tracking-tight text-primary">{item.company.slice(0, 2).toUpperCase()}</span>
                           )}
-                          <div>
-                            <div className="text-sm font-semibold text-primary">
-                              {item.company}
-                            </div>
-                            {item.location && (
-                              <div className="text-xs text-muted-2">
-                                {item.location}
-                              </div>
-                            )}
-                            {displayTimeframe && (
-                              <div className="text-xs text-muted-1">
-                                {displayTimeframe}
-                              </div>
-                            )}
-                          </div>
                         </div>
                       </div>
+                      <div className="min-w-0 flex-1 ">
+                        <h3 className="text-lg font-bold tracking-tight text-ink">
+                          {titleLine}
+                        </h3>
+                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-2">
+                          {item.location && (
+                            <span className="flex items-center gap-1.5">
+                              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                              {item.location}
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                            {displayDateRange}
+                          </span>
+                        </div>
+                      </div>
+                      </div>
+                      {!item.endDate && (
+                        <span className="shrink-0 rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary ring-1 ring-primary/20">
+                          Current
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
+                        <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                        {displayDuration}
+                      </span>
+                      {item.domains?.map((domain) => (
+                        <span
+                          key={domain}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-ink ring-1 ring-line"
+                          aria-label="Domain"
+                        >
+                          <Tag className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden />
+                          {domain}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Roles — original timeline with dots and connector */}
+                    {hasRoles ? (
                       <div className="mt-5 flex flex-col gap-0">
                         {item.roles!.map((role, roleIdx) => (
                           <div key={`${role.title}-${role.employmentType}-${roleIdx}`}>
@@ -125,70 +166,26 @@ export function ExperiencePage() {
                           </div>
                         ))}
                       </div>
-                      <ul className="mt-5 grid gap-2 border-t border-line pt-5">
-                        {item.outcomes.map((o) => (
-                          <li
-                            key={o}
-                            className="flex gap-3 text-sm leading-relaxed text-muted-1"
-                          >
-                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                            <span>{o}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex flex-wrap items-baseline justify-between gap-3">
-                        <div className="flex items-center gap-3 space-y-0.5">
-                          {item.logo ? (
-                            <img
-                              src={item.logo}
-                              alt={item.company}
-                              className="h-10 w-10 shrink-0 rounded-lg object-contain bg-surface-2 border border-line"
-                            />
-                          ) : (
-                            <div
-                              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-sm font-semibold text-primary border border-line"
-                              aria-hidden
-                            >
-                              {item.company.slice(0, 2).toUpperCase()}
-                            </div>
-                          )}
-                          <div>
-                            <div className="text-sm font-semibold text-primary">
-                              {item.title} · {item.company}
-                            </div>
-                            {item.location && (
-                              <div className="text-xs text-muted-2">
-                                {item.location}
-                              </div>
-                            )}
-                            {displayTimeframe && (
-                              <div className="text-xs text-muted-1">
-                                {displayTimeframe}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <p className="mt-4 text-sm leading-relaxed text-muted-1">
+                    ) : (
+                      <p className="mt-3 border-l-2 border-primary/30 pl-3 text-sm leading-relaxed text-muted-1">
                         {item.summary}
                       </p>
-                      <ul className="mt-4 grid gap-2 border-t border-line pt-4">
+                    )}
+
+                    <div className="mt-4 border-t border-line pt-4">
+                      <ul className="space-y-2">
                         {item.outcomes.map((o) => (
-                          <li
-                            key={o}
-                            className="flex gap-3 text-sm leading-relaxed text-muted-1"
-                          >
-                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                          <li key={o} className="flex gap-3 text-sm leading-relaxed text-muted-1">
+                            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                              <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+                            </span>
                             <span>{o}</span>
                           </li>
                         ))}
                       </ul>
-                    </>
-                  )}
-                </Card>
+                    </div>
+                  </div>
+                </article>
               </Reveal>
             );
           })}
@@ -261,7 +258,7 @@ export function ExperiencePage() {
                         />
                         <div
                           aria-hidden
-                          className="pointer-events-none absolute inset-0 bg-[radial-gradient(120px_80px_at_30%_25%,rgba(56,189,248,0.22),transparent_60%)] opacity-0 transition-opacity group-hover:opacity-100"
+                          className="pointer-events-none absolute inset-0 bg-[radial-gradient(120px_80px_at_30%_25%,rgba(37,99,235,0.22),transparent_60%)] opacity-0 transition-opacity group-hover:opacity-100"
                         />
                       </button>
 

@@ -257,7 +257,7 @@ title: "Post title"
 date: "2025-01-15"
 summary: "Short description."
 tags: ["tag1", "tag2"]
-image: "/blogs/cover-1.svg"
+image: "/blogs/Blog.svg"
 ---
 ```
 
@@ -398,7 +398,7 @@ Use **framer-motion** and a consistent easing (e.g. `[0.22, 1, 0.36, 1]`).
 
 ## 12. Assets and public files
 
-- **`public/`**: favicon (e.g. `favicon.svg`), profile photo (e.g. `profile/mdk_4.jpg`), resume PDF (e.g. `resume/Dinesh_Resume.pdf`), blog cover images (e.g. `blogs/cover-1.svg`), default/certificate assets (e.g. `default/certificate.svg`), certification PDFs (e.g. `certification/Name.pdf`).
+- **`public/`**: Avatar (e.g. `Avatar.png`), profile photo (e.g. `profile/mdk_4.jpg`), resume PDF (e.g. `resume/Dinesh_Resume.pdf`), blog cover images (e.g. `blogs/Blog.svg`), default/certificate assets (e.g. `default/certificate.svg`), certification PDFs (e.g. `certification/Name.pdf`).
 - In **profile.ts**, set `avatar` to path under `public/` (e.g. `./profile/mdk_4.jpg`); set `resume.pdfSrc` and `resume.pdfTitle` for Resume page and PDF preview.
 - In **certifications**, set `thumbnail` and `pdf` to paths under `public/` (e.g. `./default/certificate.svg`, `./certification/AWS_DynamoDB.pdf`).
 

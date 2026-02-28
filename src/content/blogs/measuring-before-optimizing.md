@@ -3,7 +3,7 @@ title: "Measure before you optimize"
 date: "2025-08-14"
 summary: "Performance work goes sideways when it’s driven by hunches. A simple measurement loop keeps it grounded and repeatable."
 tags: ["performance", "reliability", "engineering"]
-image: "/blogs/cover-1.svg"
+image: "/default/Blog.svg"
 imageAlt: "Soft gradient cover image"
 ---
 
