@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        var stored = localStorage.getItem("profile-theme");
+        var useDark = stored === "dark";
+        if (useDark)
+          document.documentElement.classList.add("dark");
+        else
+          document.documentElement.classList.remove("dark");
+      })();
+    </script>
+    <!-- Primary SEO: name first so "Dinesh" and "MDK" match search intent -->
+    <title>Dinesh Kumar M</title>
+    <meta name="description" content="Dinesh Kumar M (MDK) – Official profile, portfolio and contact. Find Dinesh Kumar M / MDK online." />
+    <meta name="keywords" content="Dinesh, Dinesh Kumar, Dinesh Kumar M, MDK, mdk, profile, portfolio" />
+    <meta name="author" content="Dinesh Kumar M" />
+    <link rel="canonical" href="https://your-profile-url.com/" />
+    <!-- Open Graph for social & search -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Dinesh Kumar M (MDK) – Profile & Portfolio" />
+    <meta property="og:description" content="Dinesh Kumar M (MDK) – Official profile, portfolio and contact." />
+    <meta property="og:url" content="https://your-profile-url.com/" />
+    <meta property="profile:first_name" content="Dinesh" />
+    <meta property="profile:last_name" content="Kumar M" />
+    <!-- Schema.org Person: tells Google this page is about you -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Dinesh Kumar M",
+      "alternateName": ["MDK", "mdk"],
+      "givenName": "Dinesh",
+      "familyName": "Kumar M",
+      "url": "https://your-profile-url.com/"
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/default/Avatar.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

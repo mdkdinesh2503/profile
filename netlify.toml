@@ -1,0 +1,9 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA redirect is handled by public/_redirects (copied to dist root)
+# Fallback for direct URLs and refresh on /projects, /blogs/:slug, etc.
