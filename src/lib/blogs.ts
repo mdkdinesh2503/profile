@@ -97,6 +97,15 @@ function parseBlog(path: string, raw: string): Blog {
       ? (fm.tags as string[])
       : [];
   const image = isString(fm.image) ? fm.image : undefined;
+  const readTime =
+    typeof fm.readTime === "number" && fm.readTime > 0
+      ? fm.readTime
+      : typeof fm.readTime === "string"
+        ? (() => {
+            const n = parseInt(fm.readTime, 10);
+            return Number.isFinite(n) && n > 0 ? n : undefined;
+          })()
+        : undefined;
 
   return {
     slug,
@@ -105,6 +114,7 @@ function parseBlog(path: string, raw: string): Blog {
     summary,
     tags,
     image,
+    readTime,
     content: parsed.content.trim(),
   };
 }

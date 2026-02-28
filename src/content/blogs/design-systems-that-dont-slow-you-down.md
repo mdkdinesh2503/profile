@@ -2,7 +2,8 @@
 title: "Design systems that don't slow you down"
 date: "2025-09-28"
 summary: "A component system should reduce decisions, not add meetings. Start with primitives and bake quality into defaults."
-tags: ["frontend", "ui", "design-systems"]
+tags: ["frontend"]
+readTime: 3
 ---
 
 The best design systems feel boring—in a good way.

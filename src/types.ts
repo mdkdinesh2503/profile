@@ -64,6 +64,7 @@ export type BlogMeta = {
   summary: string;
   tags: string[];
   image?: string;
+  readTime?: number;
 };
 
 export type Blog = BlogMeta & {

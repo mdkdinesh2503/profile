@@ -2,7 +2,7 @@
 title: "Operability is a feature"
 date: "2026-01-20"
 summary: "If support and on-call can’t answer “what happened?”, the system isn’t done. Operability is part of product quality."
-tags: ["observability", "ownership", "systems"]
+tags: ["observability", "ownership"]
 image: "/default/Blog.svg"
 imageAlt: "Soft gradient cover image"
 ---
