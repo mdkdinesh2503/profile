@@ -7,7 +7,7 @@ import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/d
 import { Chip } from "@/shared/ui/Chip";
 import { headings } from "@/data/headings";
 import type { SkillGroup } from "@/types";
-import { Button } from "@/shared/ui/Button";
+import { Button, buttonStyles, cx } from "@/shared/ui";
 import { profile } from "@/data/profile";
 import { AnimatePresence, motion } from "framer-motion";
 import { Calendar, MapPin, Clock, ChevronRight, Tag, Award, ExternalLink, Download } from "lucide-react";
@@ -247,50 +247,47 @@ export function ExperiencePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-24px" }}
                   transition={{ duration: 0.35, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lift-1 hover:border-primary/20"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.12),0_4px_14px_-4px_rgba(0,0,0,0.06)]"
                 >
-                  {/* Top ribbon accent */}
-                  <div className="absolute left-0 right-0 top-0 h-0.5 bg-gradient-to-r from-primary/80 via-primary to-primary/80" aria-hidden />
-                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
-                  {dateBadge ? (
-                    <span className="absolute right-3 top-3 rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary ring-1 ring-primary/20">
-                      {dateBadge}
-                    </span>
-                  ) : null}
-                  <div className="flex min-h-0 flex-1 flex-col pl-4 pr-4 py-4 sm:pl-5">
-                    <div className="flex flex-1 items-start gap-3 pr-12">
+                  {/* Top accent only */}
+                  <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70 transition-all duration-300 group-hover:h-1.5" aria-hidden />
+                  <div className="glass-inner relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                    <div className="flex flex-1 items-start gap-4">
                       <button
                         type="button"
                         onClick={() => {
                           setSelectedCertIdx(idx);
                           setCertModalOpen(true);
                         }}
-                        className="relative flex h-14 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line bg-surface/80 shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-md"
+                        className="relative flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-primary/20 bg-primary/5 shadow-[0_0_20px_rgba(37,99,235,0.08)] transition-all duration-300 group-hover:scale-105 group-hover:border-primary/30 group-hover:shadow-[0_0_24px_rgba(37,99,235,0.12)]"
                         aria-label={`Preview ${c.name}`}
                       >
                         <img
                           src={c.thumbnail}
                           alt=""
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="h-full w-full object-cover"
                           loading="lazy"
                         />
-                        <span className="absolute inset-0 flex items-center justify-center bg-primary/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden>
-                          <Award className="h-7 w-7 text-primary" />
+                        <span className="absolute inset-0 flex items-center justify-center bg-primary/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden>
+                          <Award className="h-8 w-8 text-primary" />
                         </span>
                       </button>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <Award className="h-4 w-4 shrink-0 text-primary/70" aria-hidden />
-                          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-ink">
-                            {c.name}
-                          </h3>
-                        </div>
-                        <span className="mt-1.5 inline-flex rounded-full bg-ink/5 px-2 py-0.5 text-xs font-medium text-muted-2 ring-1 ring-line">
+                        {dateBadge ? (
+                          <span className="mb-1.5 inline-block rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary ring-1 ring-primary/20">
+                            {dateBadge}
+                          </span>
+                        ) : null}
+                        <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-ink">
+                          {c.name}
+                        </h3>
+                        <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-ink/5 px-2.5 py-0.5 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
+                          <Award className="h-3 w-3 text-primary/70" aria-hidden />
                           {c.issuer}
                         </span>
                       </div>
                     </div>
-                    <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4 mt-4">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-4 dark:border-white/10">
                       <button
                         type="button"
                         onClick={() => {
@@ -301,7 +298,7 @@ export function ExperiencePage() {
                           "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all duration-200",
                           selected
                             ? "bg-primary text-white shadow-sm ring-1 ring-primary/30 hover:bg-primary-hover"
-                            : "bg-ink/5 text-ink ring-1 ring-line hover:bg-ink/10 hover:ring-line-strong",
+                            : "bg-ink/5 text-ink ring-1 ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20",
                         ].join(" ")}
                       >
                         <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
@@ -312,7 +309,7 @@ export function ExperiencePage() {
                           href={c.verifyLink}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-ink/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-line transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong"
+                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-ink/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-line transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong dark:bg-white/5 dark:ring-white/10"
                         >
                           <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
                           Verify
@@ -322,7 +319,7 @@ export function ExperiencePage() {
                         <a
                           href={c.pdf}
                           download
-                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-primary px-3 py-2 text-xs font-medium text-white ring-1 ring-primary/30 shadow-sm transition-all duration-200 hover:bg-primary-hover"
+                          className={cx(buttonStyles.base, buttonStyles.sizes.sm, buttonStyles.variants.shine)}
                         >
                           <Download className="h-3.5 w-3.5 shrink-0" aria-hidden />
                           Download
@@ -375,17 +372,18 @@ export function ExperiencePage() {
                           href={selectedCert.pdf}
                           target="_blank"
                           rel="noreferrer"
-                          className="rounded-xl border border-line bg-ink/[0.06] px-3 py-2 text-sm font-medium text-ink hover:bg-ink/[0.1] transition-colors"
+                          className={cx(buttonStyles.base, buttonStyles.sizes.md, buttonStyles.variants.primary)}
                         >
                           Open PDF
                         </a>
-                        <button
+                        <Button
                           type="button"
+                          variant="secondary"
+                          size="md"
                           onClick={() => setCertModalOpen(false)}
-                          className="rounded-xl border border-line bg-ink/[0.06] px-3 py-2 text-sm font-medium text-ink hover:bg-ink/[0.1] transition-colors"
                         >
                           Close
-                        </button>
+                        </Button>
                       </div>
                     </div>
 

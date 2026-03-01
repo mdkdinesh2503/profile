@@ -1,12 +1,10 @@
 import { useState, useCallback } from "react";
 import { Mail, Phone, Github, Linkedin, Instagram, ListChecks, Copy, Check, ArrowRight, Sparkles } from "lucide-react";
-import { Container } from "@/shared/ui/Container";
-import { SectionHeading } from "@/shared/ui/SectionHeading";
+import { Container, SectionHeading, buttonStyles, cx } from "@/shared/ui";
 import { Reveal } from "@/shared/motion/Reveal";
 import { profile } from "@/data/profile";
 import { contactData } from "@/data/contact";
 import { headings } from "@/data/headings";
-import { cx } from "@/shared/ui/cx";
 import { motion, AnimatePresence } from "framer-motion";
 
 const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(contactData.emailSubject)}`;
@@ -54,150 +52,158 @@ export function ContactPage() {
           />
         </Reveal>
 
-        {/* Hero CTA strip */}
+        {/* Hero CTA strip — single inner border */}
         <Reveal delay={0.05}>
-          <div className="mt-10 flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-surface/80 px-5 py-4 shadow-sm ring-1 ring-black/5 dark:ring-white/5 backdrop-blur-sm">
-            <span className="flex items-center gap-2 text-sm font-medium text-muted-1">
-              <Sparkles className="h-4 w-4 text-primary" aria-hidden />
-              Best for projects & collaboration
-            </span>
-            <span className="hidden sm:inline h-4 w-px bg-line" aria-hidden />
-            <span className="text-xs text-muted-2">
-              Usually replies within 24h
-            </span>
-          </div>
-        </Reveal>
-
-        {/* Primary contact block – email as star */}
-        <Reveal delay={0.08}>
-          <div className="mt-6 rounded-2xl border border-line bg-surface p-0 shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/25 overflow-hidden">
-            <div className="relative border-b border-line bg-gradient-to-br from-primary/8 via-primary/5 to-transparent px-6 py-6 sm:px-8 sm:py-7">
-              <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-primary/10 to-transparent" aria-hidden />
-              <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_0_1px_rgba(37,99,235,0.15)]">
-                    <Mail size={26} className="shrink-0" aria-hidden />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-ink">{contactData.reachMe.title}</h3>
-                    <p className="text-sm text-muted-1 mt-0.5">{contactData.reachMe.description}</p>
-                    <p className="mt-2 font-mono text-sm text-ink break-all">{profile.email}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 sm:shrink-0">
-                  <button
-                    type="button"
-                    onClick={copyEmail}
-                    className={cx(
-                      "inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink",
-                      "hover:border-primary hover:bg-primary hover:text-white transition-all duration-200",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                    )}
-                  >
-                    <AnimatePresence mode="wait">
-                      {copied ? (
-                        <motion.span
-                          key="check"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          className="inline-flex items-center gap-2"
-                        >
-                          <Check size={18} aria-hidden />
-                          Copied!
-                        </motion.span>
-                      ) : (
-                        <motion.span
-                          key="copy"
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.8 }}
-                          className="inline-flex items-center gap-2"
-                        >
-                          <Copy size={18} aria-hidden />
-                          Copy email
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </button>
-                  <a
-                    href={mailto}
-                    className={cx(
-                      "inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-medium text-white shadow-sm",
-                      "hover:bg-[var(--color-primary-hover)] transition-colors",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                    )}
-                  >
-                    Email me
-                    <ArrowRight size={16} aria-hidden />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone + social row */}
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-6 py-5 sm:px-8">
-              <a
-                href={tel}
-                className={cx(
-                  "inline-flex items-center gap-3 rounded-xl border border-line bg-ink/[0.03] px-4 py-3 text-sm font-medium text-ink",
-                  "hover:bg-ink/[0.06] hover:border-primary/20 transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                )}
-              >
-                <Phone {...iconProps} className="text-muted-2" />
-                {profile.phone}
-              </a>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-medium uppercase tracking-wider text-muted-2 mr-1">
-                  {contactData.connect.label}
+          <div className="mt-10 rounded-2xl bg-surface shadow-sm transition-shadow duration-300 hover:shadow-[0_8px_24px_-8px_rgba(37,99,235,0.12)]">
+            <div className="glass-inner m-2 flex flex-wrap items-center gap-3 rounded-xl px-5 py-4">
+              <span className="flex items-center gap-2 text-sm font-medium text-muted-1">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Sparkles className="h-4 w-4" aria-hidden />
                 </span>
-                {socialLinks.map(({ href, icon: Icon, label, color }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cx(
-                      "inline-flex h-10 w-10 items-center justify-center rounded-xl text-white transition-transform hover:scale-105",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                      color,
-                    )}
-                    aria-label={label}
-                  >
-                    <Icon size={20} aria-hidden />
-                  </a>
-                ))}
+                Best for projects & collaboration
+              </span>
+              <span className="hidden sm:inline h-4 w-px bg-line dark:bg-white/20" aria-hidden />
+              <span className="rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
+                Usually replies within 24h
+              </span>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Primary contact block — glass-inner, top accent */}
+        <Reveal delay={0.08}>
+          <div className="group relative mt-6 overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 hover:shadow-[0_12px_32px_-8px_rgba(37,99,235,0.15)]">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+            <div className="glass-inner relative m-2 mt-4 flex flex-col rounded-xl overflow-hidden">
+              <div className="relative border-b border-line dark:border-white/10 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent px-6 py-6 sm:px-8 sm:py-7">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_20px_rgba(37,99,235,0.1)] ring-1 ring-primary/20 transition-shadow group-hover:shadow-[0_0_24px_rgba(37,99,235,0.15)]">
+                      <Mail size={26} className="shrink-0" aria-hidden />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-ink">{contactData.reachMe.title}</h3>
+                      <p className="text-sm text-muted-1 mt-0.5">{contactData.reachMe.description}</p>
+                      <p className="mt-2 font-mono text-sm text-ink break-all">{profile.email}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 sm:shrink-0">
+                    <button
+                      type="button"
+                      onClick={copyEmail}
+                      className={cx(
+                        buttonStyles.base,
+                        "rounded-xl px-4 py-2.5 text-sm gap-2",
+                        "ring-1 transition-all duration-200",
+                        copied
+                          ? "bg-primary text-white ring-primary/30 hover:bg-primary-hover"
+                          : "bg-ink/5 text-ink ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 dark:hover:ring-primary/20"
+                      )}
+                    >
+                      <AnimatePresence mode="wait">
+                        {copied ? (
+                          <motion.span
+                            key="check"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            className="inline-flex items-center gap-2"
+                          >
+                            <Check size={18} aria-hidden />
+                            Copied!
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="copy"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            className="inline-flex items-center gap-2"
+                          >
+                            <Copy size={18} aria-hidden />
+                            Copy email
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </button>
+                    <a
+                      href={mailto}
+                      className={cx(buttonStyles.base, buttonStyles.sizes.md, buttonStyles.variants.shine)}
+                    >
+                      Email me
+                      <ArrowRight size={16} aria-hidden />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone + social row */}
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-6 py-5 sm:px-8">
+                <a
+                  href={tel}
+                  className={cx(
+                    "inline-flex items-center gap-3 rounded-xl border border-line bg-ink/[0.03] px-4 py-3 text-sm font-medium text-ink dark:bg-white/5 dark:border-white/10",
+                    "hover:bg-primary/[0.06] hover:border-primary/20 transition-all duration-200",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
+                  )}
+                >
+                  <Phone {...iconProps} className="text-muted-2" />
+                  {profile.phone}
+                </a>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-medium uppercase tracking-wider text-muted-2 mr-1">
+                    {contactData.connect.label}
+                  </span>
+                  {socialLinks.map(({ href, icon: Icon, label, color }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cx(
+                        "inline-flex h-10 w-10 items-center justify-center rounded-xl text-white transition-transform hover:scale-105",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
+                        color,
+                      )}
+                      aria-label={label}
+                    >
+                      <Icon size={20} aria-hidden />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </Reveal>
 
-        {/* What helps – compact checklist */}
+        {/* What helps — glass-inner, top accent */}
         <Reveal delay={0.12}>
-          <div className="mt-6 rounded-2xl border border-line bg-surface p-6 shadow-sm transition-shadow duration-300 hover:shadow-lift-1">
-            <div className="flex items-start gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
-                <ListChecks {...iconProps} className={cx(iconProps.className, "text-primary")} />
+          <div className="group relative mt-6 overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.12)]">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60" aria-hidden />
+            <div className="glass-inner relative m-2 mt-4 rounded-xl p-6">
+              <div className="flex items-start gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/20">
+                  <ListChecks {...iconProps} className={cx(iconProps.className, "text-primary")} />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold text-ink">{contactData.whatHelps.title}</h3>
+                  <p className="text-sm text-muted-1 mt-0.5">{contactData.whatHelps.description}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-semibold text-ink">{contactData.whatHelps.title}</h3>
-                <p className="text-sm text-muted-1 mt-0.5">{contactData.whatHelps.description}</p>
-              </div>
+              <ul className="mt-5 space-y-3">
+                {contactData.whatHelps.items.map((item, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary mt-0.5"
+                      aria-hidden
+                    >
+                      {i + 1}
+                    </span>
+                    <span className="text-sm leading-relaxed text-muted-1">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <ul className="mt-5 space-y-3">
-              {contactData.whatHelps.items.map((item, i) => (
-                <li key={i} className="flex gap-3">
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary mt-0.5"
-                    aria-hidden
-                  >
-                    {i + 1}
-                  </span>
-                  <span className="text-sm leading-relaxed text-muted-1">{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </Reveal>
       </Container>

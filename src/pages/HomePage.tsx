@@ -7,7 +7,7 @@ import { Card } from "@/shared/ui/Card";
 import { profile } from "@/data/profile";
 import { headings } from "@/data/headings";
 import { skills } from "@/data/experience";
-import { HeroPortrait } from "@/shared/ui/HeroPortrait";
+import { HeroPortrait, ButtonLink } from "@/shared/ui";
 import {
   Layout,
   Code2,
@@ -16,7 +16,6 @@ import {
   Zap,
   ShieldCheck,
   ArrowRight,
-  FileText,
   MapPin,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -49,74 +48,78 @@ export function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-x-hidden pt-14 md:pt-20">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          aria-hidden
-        >
-          <div className="absolute -right-40 top-0 h-[420px] w-[420px] rounded-full bg-primary/[0.06] blur-3xl" />
-          <div className="absolute left-1/2 -translate-x-1/2 top-1/3 h-px w-full max-w-xl bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
-        </div>
-
         <Container>
           <div className="flex flex-col-reverse items-start gap-10 md:grid md:grid-cols-[1fr_360px] md:gap-14">
             <div className="max-w-2xl">
               <Reveal>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/80 px-3 py-1 text-xs font-medium text-muted-1 backdrop-blur-sm">
+                <p className="text-sm font-medium tracking-wide text-primary">
+                  Hi, I'm <span className="font-semibold text-ink">{profile.name.split(" ")[0]}</span>
+                </p>
+              </Reveal>
+              <Reveal delay={0.02}>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/80 px-3 py-1.5 text-xs font-medium text-muted-1 backdrop-blur-sm">
                     <MapPin className="h-3.5 w-3.5" aria-hidden />
                     {profile.location}
                   </span>
-                  <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
+                  <span className="rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary ring-1 ring-primary/20">
                     {profile.role}
                   </span>
                 </div>
-                <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-                  {profile.hero.headline}
+              </Reveal>
+              <Reveal delay={0.04}>
+                <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.15] tracking-tight text-ink md:text-5xl lg:text-[2.75rem]">
+                  {(() => {
+                    const highlight = "calm, reliable systems";
+                    const i = profile.hero.headline.indexOf(highlight);
+                    if (i === -1) return profile.hero.headline;
+                    return (
+                      <>
+                        {profile.hero.headline.slice(0, i)}
+                        <span className="hero-gradient-text font-semibold">{highlight}</span>
+                        {profile.hero.headline.slice(i + highlight.length)}
+                      </>
+                    );
+                  })()}
                 </h1>
               </Reveal>
               <Reveal delay={0.05}>
-                <p className="mt-5 text-pretty text-base leading-relaxed text-muted-1 md:text-lg">
+                <p className="mt-6 text-pretty text-base leading-relaxed text-muted-1 md:text-lg max-w-xl">
                   {profile.hero.subhead}
                 </p>
               </Reveal>
 
               <Reveal delay={0.1}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
+                  <ButtonLink
                     to={profile.primaryCta.href}
-                    className={cx(
-                      "inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-white shadow-sm",
-                      "hover:bg-[var(--color-primary-hover)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                    )}
+                    variant="shine"
+                    size="lg"
+                    className="group"
                   >
                     {profile.primaryCta.label}
-                    <ArrowRight size={16} aria-hidden />
-                  </Link>
-                  <Link
-                    to="/resume"
-                    className={cx(
-                      "inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-5 py-2.5 text-sm font-medium text-ink",
-                      "hover:bg-ink/[0.05] hover:border-primary/30 transition-all duration-200",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
-                    )}
-                  >
-                    <FileText size={16} aria-hidden />
-                    Resume
-                  </Link>
+                    <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
+                  </ButtonLink>
                 </div>
               </Reveal>
             </div>
 
             <div className="flex w-full justify-center md:w-auto md:pt-2">
               <Reveal delay={0.06}>
-                <HeroPortrait
-                  src={profile.avatar}
-                  alt={profile.name}
-                  initials={profile.hero.initials ?? profile.name.slice(0, 2).toUpperCase()}
-                  yearsExperience={profile.hero.yearsExperience ?? ""}
-                  className="mx-auto"
-                />
+                <motion.div
+                  className="relative"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <HeroPortrait
+                    src={profile.avatar}
+                    alt={profile.name}
+                    initials={profile.hero.initials ?? profile.name.slice(0, 2).toUpperCase()}
+                    yearsExperience={profile.hero.yearsExperience ?? ""}
+                    className="mx-auto"
+                  />
+                </motion.div>
               </Reveal>
             </div>
           </div>
@@ -185,32 +188,45 @@ export function HomePage() {
                 <Reveal key={c.title} delay={0.03 * idx}>
                   <motion.div
                     className={cx(
-                      "group relative flex h-full flex-col overflow-hidden rounded-2xl p-6 transition-all duration-300",
-                      "border border-line bg-surface shadow-sm",
-                      "hover:shadow-lift-1 hover:border-primary/20 hover:-translate-y-0.5",
+                      "group relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 ease-out",
+                      "bg-surface shadow-sm",
+                      "hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.15),0_4px_14px_-4px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-[1.02]",
                     )}
-                    whileHover={{ transition: { duration: 0.2 } }}
+                    whileHover={{ transition: { duration: 0.25 } }}
                   >
-                    {/* Top accent bar – gradient per card */}
+                    {/* Top accent bar – gradient, expands on hover */}
                     <div
                       className={cx(
-                        "absolute left-0 right-0 top-0 h-1",
+                        "absolute left-0 right-0 top-0 h-1 origin-left transition-all duration-300 ease-out",
                         "bg-gradient-to-r from-primary/70 via-primary to-primary/70",
+                        "group-hover:h-1.5 group-hover:opacity-100",
                       )}
                       aria-hidden
                     />
-                    <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/[0.08] blur-2xl transition-opacity group-hover:opacity-80" aria-hidden />
-                    <div className="relative">
+                    <div
+                      className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/[0.08] blur-2xl transition-all duration-300 group-hover:scale-150 group-hover:opacity-100 group-hover:bg-primary/[0.12]"
+                      aria-hidden
+                    />
+                    {/* Subtle inner glow on hover */}
+                    <div
+                      className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/[0.04] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none"
+                      aria-hidden
+                    />
+                    {/* Inner glass content panel */}
+                    <div className="glass-inner relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
                       <div className="flex items-start justify-between gap-3">
                         <div
                           className={cx(
-                            "flex shrink-0 items-center justify-center rounded-2xl text-primary transition-transform duration-300 group-hover:scale-110",
-                            "bg-primary/10 shadow-[0_0_20px_rgba(37,99,235,0.12)]",
+                            "glass-icon flex shrink-0 items-center justify-center rounded-2xl text-primary transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_28px_rgba(37,99,235,0.2)]",
                             isFeatured ? "h-14 w-14" : "h-12 w-12",
                           )}
                         >
                           <Icon size={isFeatured ? 24 : 22} aria-hidden strokeWidth={2} />
                         </div>
+                        {/* Small decorative tag */}
+                        <span className="rounded-full border border-primary bg-primary/5 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                          {tag}
+                        </span>
                       </div>
                       <h3 className={cx(
                         "mt-4 font-semibold text-ink",

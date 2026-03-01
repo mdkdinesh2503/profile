@@ -5,6 +5,7 @@ summary: "When a system retries, duplicates events, or processes things out of o
 tags: ["backend", "payments", "reliability"]
 image: "/default/Blog.svg"
 imageAlt: "Soft gradient cover image"
+readTime: 1
 ---
 
 In production, the same request can happen more than once:

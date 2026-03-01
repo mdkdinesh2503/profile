@@ -2,15 +2,11 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Container } from "@/shared/ui/Container";
-import { Card } from "@/shared/ui/Card";
+import { Container, Prose, ButtonLink, buttonStyles, cx } from "@/shared/ui";
 import { getBlogBySlug } from "@/lib/blogs";
-import { Prose } from "@/shared/ui/Prose";
 import { Reveal } from "@/shared/motion/Reveal";
-import { ArrowLeft, Calendar, Check, ChevronRight, Clock, Link2, Tag } from "lucide-react";
+import { ArrowLeft, BookOpen, Calendar, Check, ChevronRight, Clock, Link2, Tag } from "lucide-react";
 import { motion } from "framer-motion";
-
-const WORDS_PER_MINUTE = 200;
 
 function formatDate(iso: string) {
   const dt = new Date(iso);
@@ -58,19 +54,19 @@ export function BlogDetailPage() {
     return (
       <section className="pt-12 md:pt-16">
         <Container>
-          <Card className="p-8 text-center">
-            <div className="text-lg font-semibold text-ink">Blog not found</div>
-            <p className="mt-2 text-muted-1">
-              This post doesn't exist yet. Check the blog list.
-            </p>
-            <Link
-              to="/blogs"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to blogs
-            </Link>
-          </Card>
+          <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60" aria-hidden />
+            <div className="glass-inner m-2 mt-4 rounded-xl p-8 text-center">
+              <div className="text-lg font-semibold text-ink">Blog not found</div>
+              <p className="mt-2 text-muted-1">
+                This post doesn't exist yet. Check the blog list.
+              </p>
+              <ButtonLink to="/blogs" variant="soft" size="md" className="mt-6">
+                <ArrowLeft className="h-4 w-4" />
+                Back to blogs
+              </ButtonLink>
+            </div>
+          </div>
         </Container>
       </section>
     );
@@ -120,21 +116,50 @@ export function BlogDetailPage() {
                 <button
                   type="button"
                   onClick={copyLink}
-                  className="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-sm font-medium text-primary transition-all hover:bg-primary hover:text-white group"
                   aria-label="Copy link"
+                  className={cx(
+                    buttonStyles.base,
+                    "rounded-xl px-4 py-2.5 text-sm gap-2 ring-1 transition-all duration-200",
+                    linkCopied
+                      ? "bg-primary text-white ring-primary/30 hover:bg-primary-hover"
+                      : "bg-ink/5 text-ink ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 dark:hover:ring-primary/20"
+                  )}
                 >
                   {linkCopied ? (
                     <>
-                      <Check className="h-4 w-4 text-primary group-hover:text-white" aria-hidden />
-                      <span className="text-primary group-hover:text-white">Copied</span>
+                      <Check className="h-4 w-4" aria-hidden />
+                      Copied
                     </>
                   ) : (
                     <>
-                      <Link2 className="h-4 w-4 text-primary group-hover:text-white" aria-hidden />
-                      <span className="text-primary group-hover:text-white">Copy link</span>
+                      <Link2 className="h-4 w-4" aria-hidden />
+                      Copy link
                     </>
                   )}
                 </button>
+              </div>
+            </Reveal>
+
+            {/* At-a-glance strip — same style as Resume (role, PDF ready) */}
+            <Reveal delay={0.02}>
+              <div className="mt-6 rounded-2xl bg-surface shadow-sm transition-shadow duration-300 hover:shadow-[0_8px_24px_-8px_rgba(37,99,235,0.12)]">
+                <div className="glass-inner m-2 flex flex-wrap items-center gap-3 rounded-xl px-4 py-3.5 sm:px-5">
+                  <span className="flex items-center gap-2 text-sm text-muted-1">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <BookOpen className="h-4 w-4" aria-hidden />
+                    </span>
+                    <span className="font-semibold text-ink">Article</span>
+                  </span>
+                  <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                  <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
+                    <time dateTime={blog.date}>{formatDate(blog.date)}</time>
+                  </span>
+                  <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                  <span className="flex items-center gap-1.5 rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
+                    <Clock className="h-3.5 w-3.5" aria-hidden />
+                    {blog.readTime ?? 1} min read
+                  </span>
+                </div>
               </div>
             </Reveal>
 
@@ -156,53 +181,40 @@ export function BlogDetailPage() {
                 <h1 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-ink md:text-4xl lg:text-[2.75rem] lg:leading-tight">
                   {blog.title}
                 </h1>
-                <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-muted-1">
-                  <time
-                    dateTime={blog.date}
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <Calendar className="h-4 w-4 shrink-0" aria-hidden />
-                    {formatDate(blog.date)}
-                  </time>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Clock className="h-4 w-4 shrink-0" aria-hidden />
-                    {blog.readTime ?? 1} min read
-                  </span>
-                </div>
               </header>
             </Reveal>
           </Container>
         </div>
 
-        {/* Featured image – full-bleed feel with rounded bottom */}
+        {/* Featured image – single inner border */}
         {blog.image && (
           <Reveal delay={0.05}>
             <Container className="mt-8">
-              <div className="relative overflow-hidden rounded-2xl border border-line bg-surface-2 shadow-lg ring-1 ring-ink/5">
-                <img
-                  src={blog.image}
-                  alt=""
-                  className="h-64 w-full object-cover md:h-80 lg:h-96"
-                  loading="eager"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent pointer-events-none"
-                  aria-hidden
-                />
+              <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
+                <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+                <div className="glass-inner relative m-2 mt-4 overflow-hidden rounded-xl">
+                  <img
+                    src={blog.image}
+                    alt=""
+                    className="h-64 w-full object-cover md:h-80 lg:h-96"
+                    loading="eager"
+                  />
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent pointer-events-none"
+                    aria-hidden
+                  />
+                </div>
               </div>
             </Container>
           </Reveal>
         )}
 
-        {/* Article body – card with left accent */}
+        {/* Article body – glass-inner, top accent */}
         <Container>
           <Reveal delay={blog.image ? 0.07 : 0.05}>
-            <Card className="relative mt-8 overflow-hidden md:mt-10" hoverLift={false}>
-              <div
-                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl bg-gradient-to-b from-primary via-primary/90 to-secondary"
-                aria-hidden
-              />
-              <div className="p-6 pl-8 md:p-10 md:pl-12 lg:p-12 lg:pl-14">
+            <div className="relative mt-8 overflow-hidden rounded-2xl bg-surface shadow-sm md:mt-10">
+              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+              <div className="glass-inner relative m-2 mt-4 rounded-xl p-6 md:p-10 lg:p-12">
                 <Prose className="max-w-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
@@ -210,13 +222,13 @@ export function BlogDetailPage() {
                       a: (props) => (
                         <a
                           {...props}
-                          className="font-medium text-primary no-underline underline-offset-4 hover:underline"
+                          className="font-medium text-primary no-underline underline-offset-2 hover:underline"
                         />
                       ),
                       pre: (props) => (
                         <pre
                           {...props}
-                          className="overflow-x-auto rounded-xl border border-line bg-ink/5 py-4"
+                          className="overflow-x-auto rounded-xl border border-line bg-ink/[0.04] py-4 shadow-inner dark:bg-white/5 dark:border-white/10"
                         />
                       ),
                       code: (props) => {
@@ -225,7 +237,7 @@ export function BlogDetailPage() {
                           return (
                             <code
                               {...props}
-                              className="rounded bg-ink/10 px-1.5 py-0.5 text-sm font-medium text-ink"
+                              className="rounded bg-ink/[0.08] px-1.5 py-0.5 text-sm font-medium text-ink dark:bg-white/10"
                             />
                           );
                         return <code {...props} />;
@@ -236,19 +248,21 @@ export function BlogDetailPage() {
                   </ReactMarkdown>
                 </Prose>
               </div>
-            </Card>
+            </div>
           </Reveal>
 
           {/* Footer CTA */}
           <Reveal delay={0.09}>
             <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-10">
-              <Link
+              <ButtonLink
                 to="/blogs"
-                className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg hover:-translate-y-0.5"
+                variant="shine"
+                size="lg"
+                className="group"
               >
                 <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
                 All posts
-              </Link>
+              </ButtonLink>
               <p className="text-sm text-muted-1">
                 Thanks for reading. More ideas in the blog.
               </p>

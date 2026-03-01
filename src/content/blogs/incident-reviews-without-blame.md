@@ -3,6 +3,7 @@ title: "Incident reviews without blame (and with better outcomes)"
 date: "2026-02-02"
 summary: "A useful incident review improves the system, not the story. Focus on contributing factors, guardrails, and follow-through."
 tags: ["reliability"]
+readTime: 3
 ---
 
 The point of an incident review isn’t to assign fault. It’s to reduce the chance of recurrence.

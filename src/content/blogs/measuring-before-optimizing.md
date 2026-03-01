@@ -5,6 +5,7 @@ summary: "Performance work goes sideways when it’s driven by hunches. A simple
 tags: ["performance", "reliability", "engineering"]
 image: "/default/Blog.svg"
 imageAlt: "Soft gradient cover image"
+readTime: 2
 ---
 
 Most performance problems aren’t “a single slow line.” They’re a slow *path*.
