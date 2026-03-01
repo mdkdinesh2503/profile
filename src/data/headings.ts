@@ -15,6 +15,20 @@ export const headings = {
       "A few projects where trade-offs, constraints, and operational realities mattered.",
   } satisfies SelectedSectionHeading,
 
+  selectedWorkRealTime: {
+    eyebrow: "Real-time projects",
+    title: "Production & industry work",
+    description:
+      "Projects delivered in professional or client contexts—shipping features, reliability, and scale.",
+  } satisfies SelectedSectionHeading,
+
+  selectedWorkAcademic: {
+    eyebrow: "Academic & self-learn",
+    title: "Learning projects",
+    description:
+      "Coursework, research, and self-directed projects—exploration, practice, and building in the open.",
+  } satisfies SelectedSectionHeading,
+
   experience: {
     eyebrow: "Experience",
     title: "Results-first, systems-aware",

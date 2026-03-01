@@ -1,31 +1,3 @@
-export type Project = {
-  slug: string;
-  name: string;
-  summary: string;
-  role: string;
-  timeline: string;
-  context: string;
-  outcome: string;
-  stackNote?: string;
-  caseStudy: {
-    problem: string;
-    constraints: string[];
-    approach: { title: string; details: string }[];
-    highlights: string[];
-    impact: string[];
-    learned?: string[];
-  };
-};
-
-export type ProjectCaseStudy = {
-  slug: string;
-  title: string;
-  context: string;
-  role: string;
-  decisions: { title: string; tradeoff: string; result: string }[];
-  outcomes: string[];
-};
-
 export type ExperienceRole = {
   title: string;
   employmentType: string;
@@ -68,6 +40,39 @@ export type BlogMeta = {
 };
 
 export type Blog = BlogMeta & {
+  content: string;
+};
+
+/** Project category for Selected Work sections */
+export type ProjectCategory = "real-time" | "academic" | "self-learn";
+
+/** Markdown-based project (content/projects/real-time/*.md or content/projects/academic-self-learn/*.md), same pattern as blogs */
+export type ProjectPostMeta = {
+  slug: string;
+  name: string;
+  summary: string;
+  /** Optional: e.g. "Backend Engineer" (omit for learning projects) */
+  role?: string;
+  /** Optional: e.g. "4 weeks • 2024" (omit for learning projects) */
+  timeline?: string;
+  category: ProjectCategory;
+  context?: string;
+  stackNote?: string;
+  image?: string;
+  tags: string[];
+  /** Live demo URL (used for academic/self-learn: "View" link) */
+  demoUrl?: string;
+  /** GitHub/repo URL (used for academic/self-learn: "Code" link) */
+  repoUrl?: string;
+  /** Year worked (e.g. "2024") */
+  year?: string;
+  /** Tech used for the demo / View link (e.g. "HTML, CSS, JS") */
+  demoStack?: string;
+  /** Tech used for the original repo / Code link (e.g. "Angular") */
+  originalStack?: string;
+};
+
+export type ProjectPost = ProjectPostMeta & {
   content: string;
 };
 

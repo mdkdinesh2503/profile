@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Reveal } from "@/shared/motion/Reveal";
-import { projectsData } from "@/data/projects";
+import { getProjectsByCategory } from "@/lib/projects";
 import { Card } from "@/shared/ui/Card";
 import { profile } from "@/data/profile";
 import { headings } from "@/data/headings";
@@ -41,8 +41,13 @@ const howICanHelpTags = [
   "Reliability",
 ] as const;
 
+const FEATURED_PER_SECTION = 3;
+
 export function HomePage() {
-  const featured = projectsData.slice(0, 3);
+  const realTimeFeatured = getProjectsByCategory("real-time").slice(
+    0,
+    FEATURED_PER_SECTION,
+  );
 
   return (
     <>
@@ -246,14 +251,14 @@ export function HomePage() {
         </Container>
       </section>
 
-      {/* Selected Work */}
+      {/* Selected Work: Real-time projects only */}
       <section className="mt-14 md:mt-20">
         <Container>
           <div className="flex items-end justify-between gap-6">
             <SectionHeading
-              eyebrow={headings.selectedWork.eyebrow}
-              title={headings.selectedWork.title}
-              description={headings.selectedWork.description}
+              eyebrow={headings.selectedWorkRealTime.eyebrow}
+              title={headings.selectedWorkRealTime.title}
+              description={headings.selectedWorkRealTime.description}
             />
             <div className="hidden md:block">
               <Link
@@ -267,7 +272,7 @@ export function HomePage() {
           </div>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {featured.map((p, idx) => (
+            {realTimeFeatured.map((p, idx) => (
               <Reveal key={p.slug} delay={0.04 * idx}>
                 <Link to={`/projects/${p.slug}`} className="group flex h-full">
                   <div
@@ -277,18 +282,31 @@ export function HomePage() {
                     )}
                   >
                     <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
-                    <div className="text-sm font-semibold text-ink">{p.title}</div>
+                    <div className="text-sm font-semibold text-ink">{p.name}</div>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-1">
-                      {p.context}
+                      {p.context ?? p.summary}
                     </p>
                     <div className="mt-4 grid gap-2 text-xs text-muted-2">
+                      {(p.role || p.timeline || p.year || p.demoStack || p.originalStack) ? (
+                        <div>
+                          <span className="font-medium text-muted-1">
+                            {p.role ? "Role" : p.year ? "Year" : "Tech"}
+                          </span>
+                          {" "}
+                          {p.role
+                            ? p.role
+                            : p.timeline
+                              ? p.timeline
+                              : p.year
+                                ? p.year
+                                : [p.demoStack && `Demo: ${p.demoStack}`, p.originalStack && `Original: ${p.originalStack}`]
+                                    .filter(Boolean)
+                                    .join(" · ") || "—"}
+                        </div>
+                      ) : null}
                       <div>
-                        <span className="font-medium text-muted-1">Role:</span>{" "}
-                        {p.role}
-                      </div>
-                      <div>
-                        <span className="font-medium text-muted-1">Outcome:</span>{" "}
-                        {p.outcomes[0] ?? "—"}
+                        <span className="font-medium text-muted-1">Summary:</span>{" "}
+                        {p.summary ? (p.summary.length > 80 ? p.summary.slice(0, 80) + "…" : p.summary) : "—"}
                       </div>
                     </div>
                     <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
