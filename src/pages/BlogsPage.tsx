@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { ArrowRight, Calendar, Clock, FileText, BookOpen } from "lucide-react";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Reveal } from "@/shared/motion/Reveal";
 import { getAllBlogs } from "@/lib/blogs";
 import { headings } from "@/data/headings";
+import type { BlogMeta } from "@/types";
 
 const DEFAULT_BLOG_IMAGE = "/default/Blog.svg";
 
@@ -13,100 +14,230 @@ function formatDate(iso: string) {
   return new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short", day: "2-digit" }).format(dt);
 }
 
+/* ----- Latest: list card (single row per post) ----- */
+function LatestListCard({ b, index }: { b: BlogMeta; index: number }) {
+  return (
+    <Reveal delay={index * 0.06} className="h-full">
+      <Link
+        to={`/blogs/${b.slug}`}
+        className="group flex h-full flex-col rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg sm:flex-row"
+      >
+        <div className="glass-card-outer blog-latest-card relative flex flex-1 overflow-hidden rounded-2xl">
+          <div className="absolute left-0 top-0 bottom-0 z-10 w-1 rounded-l-2xl bg-gradient-to-b from-primary via-primary/90 to-primary/70" aria-hidden />
+          <div className="glass-card-panel relative flex min-h-0 flex-1 flex-col gap-4 rounded-xl border border-line p-4 pl-5 dark:border-white/10 sm:flex-row sm:items-center sm:gap-6 sm:p-5 sm:pl-6">
+            {/* Thumbnail – list style */}
+            <div className="relative h-36 w-full shrink-0 overflow-hidden rounded-xl bg-surface-2 sm:h-28 sm:w-44">
+              <img
+                src={b.image ?? DEFAULT_BLOG_IMAGE}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0" aria-hidden />
+              <span className="absolute left-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-md bg-white/95 text-[10px] font-bold tabular-nums text-primary shadow-sm dark:bg-ink/95">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {b.readTime ? (
+                <span className="absolute bottom-2 right-2 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                  {b.readTime}m
+                </span>
+              ) : null}
+            </div>
+            {/* Content */}
+            <div className="flex min-w-0 flex-1 flex-col justify-center">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-medium uppercase tracking-wider text-muted-2">
+                <time dateTime={b.date} className="inline-flex items-center gap-1">
+                  <Calendar className="h-3 w-3" aria-hidden />
+                  {formatDate(b.date)}
+                </time>
+                {b.readTime ? (
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3 w-3" aria-hidden />
+                    {b.readTime} min read
+                  </span>
+                ) : null}
+              </div>
+              <h2 className="mt-1.5 line-clamp-2 text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary sm:text-xl">
+                {b.title}
+              </h2>
+              {b.summary ? (
+                <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-1">
+                  {b.summary}
+                </p>
+              ) : null}
+              {b.tags.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {b.tags.slice(0, 4).map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary dark:border-primary/35 dark:bg-primary/10"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div className="mt-4 flex items-center gap-2 border-t border-line pt-4 dark:border-white/10">
+                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/20 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30 dark:ring-primary/30">
+                  Read article
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </Reveal>
+  );
+}
+
+/* ----- More articles: grid card ----- */
+function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
+  return (
+    <Reveal key={b.slug} delay={0.03 * idx} className="h-full">
+      <Link
+        to={`/blogs/${b.slug}`}
+        className="group flex h-full flex-col rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+      >
+        <div className="glass-card-outer blog-latest-card relative flex h-full flex-col overflow-hidden rounded-2xl">
+          <div className="absolute left-0 top-0 bottom-0 z-10 w-1 rounded-l-2xl bg-gradient-to-b from-primary via-primary/90 to-primary/70" aria-hidden />
+          <div className="glass-card-panel relative m-2 mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-line pl-4 dark:border-white/10">
+            {/* Image */}
+            <div className="relative aspect-[16/10] shrink-0 overflow-hidden rounded-t-xl bg-surface-2">
+              <img
+                src={b.image ?? DEFAULT_BLOG_IMAGE}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            {/* Content – same style as Latest */}
+            <div className="flex min-h-0 flex-1 flex-col p-4 pl-3">
+              <div className="min-h-0 flex-1">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-medium uppercase tracking-wider text-muted-2">
+                  <time dateTime={b.date} className="inline-flex items-center gap-1">
+                    <Calendar className="h-3 w-3" aria-hidden />
+                    {formatDate(b.date)}
+                  </time>
+                  {b.readTime ? (
+                    <span className="inline-flex items-center gap-1">
+                      <Clock className="h-3 w-3" aria-hidden />
+                      {b.readTime} min read
+                    </span>
+                  ) : null}
+                </div>
+                <h2 className="mt-1.5 line-clamp-2 text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary">
+                  {b.title}
+                </h2>
+                {b.summary ? (
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-1">
+                    {b.summary}
+                  </p>
+                ) : null}
+                {b.tags.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {b.tags.slice(0, 4).map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary dark:border-primary/35 dark:bg-primary/10"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="mt-4 flex shrink-0 items-center gap-2 border-t border-line pt-4 dark:border-white/10">
+                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/20 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30 dark:ring-primary/30">
+                  Read article
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </Reveal>
+  );
+}
+
 export function BlogsPage() {
   const blogs = getAllBlogs();
+  const [featured, ...rest] = blogs;
 
   return (
-    <section className="pt-12 md:pt-16">
+    <section className="relative pt-12 md:pt-16">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+        <div className="absolute -right-32 top-24 h-80 w-80 rounded-full bg-primary/[0.06] blur-3xl" />
+        <div className="absolute -left-16 bottom-1/4 h-56 w-56 rounded-full bg-primary/[0.04] blur-3xl" />
+      </div>
+
       <Container>
-        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+        <Reveal delay={0}>
           <SectionHeading
             eyebrow={headings.blogs.eyebrow}
             title={headings.blogs.title}
             description={headings.blogs.description}
           />
-        </div>
+        </Reveal>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogs.length ? (
-            blogs.map((b, idx) => (
-              <Reveal key={b.slug} delay={0.04 * idx} className="h-full">
-                <Link
-                  to={`/blogs/${b.slug}`}
-                  className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
-                >
-                  <div className="relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.12),0_4px_14px_-4px_rgba(0,0,0,0.06)]">
-                    <div className="absolute left-0 right-0 top-0 z-10 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-                    <div className="relative shrink-0 overflow-hidden rounded-t-2xl bg-surface-2">
-                      <img
-                        src={b.image ?? DEFAULT_BLOG_IMAGE}
-                        alt=""
-                        className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-bg/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden />
-                    </div>
-                    <div className="glass-inner relative m-2 mt-3 flex min-h-0 flex-1 flex-col rounded-xl p-5 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
-                      <div className="min-h-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-2">
-                          <time dateTime={b.date} className="inline-flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                            {formatDate(b.date)}
-                          </time>
-                          {b.readTime ? (
-                            <>
-                              <span className="text-muted-2/60" aria-hidden>·</span>
-                              <span className="inline-flex items-center gap-1.5">
-                                <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                                {b.readTime} min read
-                              </span>
-                            </>
-                          ) : null}
-                        </div>
-                        <h2 className="mt-2.5 line-clamp-2 text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary">
-                          {b.title}
-                        </h2>
-                        {b.summary ? (
-                          <p className="mt-2.5 line-clamp-3 text-sm leading-relaxed text-muted-1">
-                            {b.summary}
-                          </p>
-                        ) : null}
-                        {b.tags.length ? (
-                          <div className="mt-4 flex flex-wrap gap-1.5">
-                            {b.tags.slice(0, 5).map((t) => (
-                              <span
-                                key={t}
-                                className="inline-flex items-center rounded-md border border-line bg-ink/10 px-2 py-0.5 text-[11px] font-medium text-primary dark:bg-white/10 dark:border-white/20"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        ) : null}
-                      </div>
-                      <div className="mt-5 border-t border-line pt-5 dark:border-white/10">
-                        <span className="inline-flex w-fit items-center gap-2 rounded-full bg-ink/5 px-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line transition-all duration-200 group-hover:bg-primary/10 group-hover:text-primary group-hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10">
-                          View article
-                          <ArrowRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
-                        </span>
-                      </div>
-                    </div>
+        {blogs.length ? (
+          <>
+            {/* Latest – list card view */}
+            {featured && (
+              <div className="mt-10">
+                <div className="mb-4 flex items-center gap-3">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <BookOpen className="h-4 w-4" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">
+                      Latest
+                    </p>
+                    <p className="text-xs text-muted-2">Most recent post</p>
                   </div>
-                </Link>
-              </Reveal>
-            ))
-          ) : (
-            <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60" aria-hidden />
-              <div className="glass-inner m-2 mt-4 rounded-xl p-8 text-center">
-                <h2 className="text-lg font-semibold text-ink">No posts yet</h2>
-                <p className="mt-2 max-w-sm mx-auto text-sm leading-relaxed text-muted-1">
-                  Add Markdown files to <code className="rounded bg-ink/[0.08] px-1.5 py-0.5 text-ink dark:bg-white/10 dark:text-ink">src/content/blogs</code> to see them here.
-                </p>
+                </div>
+                <div className="space-y-4">
+                  <LatestListCard b={featured} index={0} />
+                </div>
               </div>
+            )}
+
+            {/* More articles – grid view */}
+            {rest.length > 0 && (
+              <div className="mt-14">
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="h-px flex-1 max-w-24 bg-gradient-to-r from-primary to-transparent dark:from-white/20" aria-hidden />
+                  <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">
+                    More articles
+                  </p>
+                  <span className="text-xs text-primary">({rest.length})</span>
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                  {rest.map((b, idx) => (
+                    <GridBlogCard key={b.slug} b={b} idx={idx} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <Reveal delay={0.05}>
+            <div className="mt-10 flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-surface/50 px-8 py-16 text-center dark:border-white/15">
+              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <FileText className="h-7 w-7" aria-hidden />
+              </span>
+              <h2 className="mt-4 text-lg font-semibold text-ink">No posts yet</h2>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-1">
+                Add Markdown files to{" "}
+                <code className="rounded bg-ink/[0.08] px-1.5 py-0.5 text-ink dark:bg-white/10 dark:text-ink">
+                  src/content/blogs
+                </code>{" "}
+                to see them here.
+              </p>
             </div>
-          )}
-        </div>
+          </Reveal>
+        )}
       </Container>
     </section>
   );

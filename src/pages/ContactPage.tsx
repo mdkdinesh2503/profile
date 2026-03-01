@@ -52,10 +52,11 @@ export function ContactPage() {
           />
         </Reveal>
 
-        {/* Hero CTA strip — single inner border */}
+        {/* Hero CTA strip — same 2-layer structure as resume/certification */}
         <Reveal delay={0.05}>
-          <div className="mt-10 rounded-2xl bg-surface shadow-sm transition-shadow duration-300 hover:shadow-[0_8px_24px_-8px_rgba(37,99,235,0.12)]">
-            <div className="glass-inner m-2 flex flex-wrap items-center gap-3 rounded-xl px-5 py-4">
+          <div className="glass-card-outer group relative mt-10 overflow-hidden rounded-2xl hover:!translate-y-0">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+            <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-line px-5 py-4 dark:border-white/10">
               <span className="flex items-center gap-2 text-sm font-medium text-muted-1">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Sparkles className="h-4 w-4" aria-hidden />
@@ -70,11 +71,11 @@ export function ContactPage() {
           </div>
         </Reveal>
 
-        {/* Primary contact block — glass-inner, top accent */}
+        {/* Primary contact block — same card style as resume/certification */}
         <Reveal delay={0.08}>
-          <div className="group relative mt-6 overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 hover:shadow-[0_12px_32px_-8px_rgba(37,99,235,0.15)]">
+          <div className="glass-card-outer group relative mt-6 overflow-hidden rounded-2xl hover:!translate-y-0">
             <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-            <div className="glass-inner relative m-2 mt-4 flex flex-col rounded-xl overflow-hidden">
+            <div className="glass-card-panel relative m-2 mt-4 flex flex-col overflow-hidden rounded-xl border border-line dark:border-white/10">
               <div className="relative border-b border-line dark:border-white/10 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent px-6 py-6 sm:px-8 sm:py-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-4">
@@ -143,11 +144,13 @@ export function ContactPage() {
                   href={tel}
                   className={cx(
                     "inline-flex items-center gap-3 rounded-xl border border-line bg-ink/[0.03] px-4 py-3 text-sm font-medium text-ink dark:bg-white/5 dark:border-white/10",
-                    "hover:bg-primary/[0.06] hover:border-primary/20 transition-all duration-200",
+                    "transition-all duration-200",
+                    "hover:bg-primary/[0.08] hover:border-primary/30 hover:shadow-[0_4px_12px_-2px_rgba(37,99,235,0.15)] hover:-translate-y-0.5",
+                    "hover:[&>svg]:text-primary",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
                   )}
                 >
-                  <Phone {...iconProps} className="text-muted-2" />
+                  <Phone {...iconProps} className="text-muted-2 transition-colors duration-200" />
                   {profile.phone}
                 </a>
                 <div className="flex flex-wrap items-center gap-2">
@@ -176,11 +179,11 @@ export function ContactPage() {
           </div>
         </Reveal>
 
-        {/* What helps — glass-inner, top accent */}
+        {/* What helps — same card style as resume/certification */}
         <Reveal delay={0.12}>
-          <div className="group relative mt-6 overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.12)]">
-            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60" aria-hidden />
-            <div className="glass-inner relative m-2 mt-4 rounded-xl p-6">
+          <div className="glass-card-outer group relative mt-6 overflow-hidden rounded-2xl hover:!translate-y-0">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+            <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-6 dark:border-white/10">
               <div className="flex items-start gap-3">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/20">
                   <ListChecks {...iconProps} className={cx(iconProps.className, "text-primary")} />

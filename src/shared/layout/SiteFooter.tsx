@@ -36,7 +36,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-canvas">
+    <footer className="relative overflow-hidden border-t border-ink/10 bg-white/55 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:border-transparent dark:bg-[#0a0e14]/70 dark:shadow-[0_-1px_0_0_rgba(255,255,255,0.06),0_-4px_16px_-2px_rgba(0,0,0,0.4)]">
       {/* Gradient accent + glow */}
       <div
         className="absolute inset-x-0 top-0 h-px"
@@ -47,7 +47,7 @@ export function SiteFooter() {
         }}
       />
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           background:
             "radial-gradient(ellipse 80% 50% at 50% 0%, var(--color-primary), transparent 70%)",

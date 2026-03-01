@@ -28,7 +28,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-bg backdrop-blur-md">
+    <header className="sticky top-0 z-50 bg-white/55 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.08),0_4px_20px_-4px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:bg-transparent dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06),0_4px_16px_-2px_rgba(0,0,0,0.4)]">
       <Container className="flex h-16 items-center justify-between">
         <NavLink
           to="/"
@@ -102,7 +102,7 @@ export function SiteHeader() {
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: 8, filter: "blur(6px)" }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed left-0 right-0 top-16 z-50 border-b border-line bg-bg shadow-lift-2 backdrop-blur-md"
+              className="fixed left-0 right-0 top-16 z-50 bg-white/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:bg-transparent dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06),0_4px_16px_-2px_rgba(0,0,0,0.4)]"
             >
               <Container className="py-4">
                 <div className="grid gap-1">

@@ -10,7 +10,7 @@ type ChipProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 export function Chip({ className, active, activeVariant = "default", ...props }: ChipProps) {
   const activeStyles =
     activeVariant === "primary" && active
-      ? "border-primary bg-primary/10 text-primary shadow-sm"
+      ? "border-primary bg-white text-primary shadow-sm"
       : active
         ? "border-line-strong bg-surface text-ink shadow-sm"
         : "border-line bg-surface-2 text-muted-1 hover:bg-surface hover:text-ink";

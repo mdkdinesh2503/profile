@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import { Container, Prose, ButtonLink, buttonStyles, cx } from "@/shared/ui";
 import { getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/shared/motion/Reveal";
-import { ArrowLeft, Briefcase, Calendar, CalendarDays, Check, ChevronRight, Code, ExternalLink, Link2, Tag } from "lucide-react";
+import { ArrowLeft, Briefcase, Calendar, CalendarDays, Check, ChevronRight, Code, ExternalLink, Link2, Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function ProjectDetailPage() {
@@ -45,9 +45,9 @@ export function ProjectDetailPage() {
     return (
       <section className="pt-12 md:pt-16">
         <Container>
-          <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
-            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary/80 to-primary/60" aria-hidden />
-            <div className="glass-inner m-2 mt-4 rounded-xl p-8 text-center">
+          <div className="glass-card-outer blog-latest-card relative overflow-hidden rounded-2xl">
+            <div className="absolute left-0 right-0 top-0 z-10 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+            <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-8 text-center dark:border-white/10">
               <div className="text-lg font-semibold text-ink">Project not found</div>
               <p className="mt-2 text-muted-1">
                 This case study doesn't exist yet. Check the projects list.
@@ -98,7 +98,7 @@ export function ProjectDetailPage() {
                     Projects
                   </Link>
                   <ChevronRight className="h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  <span className="font-medium text-ink" aria-current="page">
+                  <span className="font-medium text-ink line-clamp-1" aria-current="page">
                     {project.name}
                   </span>
                 </nav>
@@ -131,8 +131,9 @@ export function ProjectDetailPage() {
 
             <Reveal delay={0.02}>
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <div className="rounded-2xl bg-surface shadow-sm transition-shadow duration-300 hover:shadow-[0_8px_24px_-8px_rgba(37,99,235,0.12)]">
-                  <div className="glass-inner m-2 flex flex-wrap items-center gap-3 rounded-xl px-4 py-3.5 sm:px-5">
+                <div className="glass-card-outer blog-latest-card group relative flex-1 overflow-hidden rounded-2xl min-w-0">
+                  <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+                  <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-line px-4 py-3.5 dark:border-white/10 sm:px-5">
                     <span className="flex items-center gap-2 text-sm text-muted-1">
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <Briefcase className="h-4 w-4" aria-hidden />
@@ -228,56 +229,43 @@ export function ProjectDetailPage() {
             </Reveal>
 
             <Reveal delay={0.03}>
-              <header className="mt-6 max-w-3xl">
+              <header className="mt-8 max-w-3xl">
                 {project.tags.length > 0 && (
                   <div className="flex flex-wrap items-center gap-2 text-muted-1">
-                    <Tag className="h-4 w-4 shrink-0" aria-hidden />
+                    <Tag className="h-4 w-4 shrink-0 text-primary/80" aria-hidden />
                     {project.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-md border border-line bg-ink/5 px-2.5 py-1 text-xs font-medium text-primary dark:bg-white/10"
+                        className="rounded-md border border-primary bg-primary/5 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary dark:border-primary/35 dark:bg-primary/10"
                       >
                         {t}
                       </span>
                     ))}
                   </div>
                 )}
-                <h1 className="mt-4 text-balance text-3xl font-semibold tracking-tight text-ink md:text-4xl lg:text-[2.75rem] lg:leading-tight">
+                <h1 className="mt-4 text-balance text-3xl font-bold tracking-tight text-ink md:text-4xl lg:text-[2.75rem] lg:leading-tight">
                   {project.name}
                 </h1>
+                <div className="mt-4 h-1 w-70 rounded-full bg-gradient-to-r from-primary to-primary/60" aria-hidden />
               </header>
             </Reveal>
           </Container>
         </div>
 
-        {project.image && (
-          <Reveal delay={0.05}>
-            <Container className="mt-8">
-              <div className="relative overflow-hidden rounded-2xl bg-surface shadow-sm">
-                <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-                <div className="glass-inner relative m-2 mt-4 overflow-hidden rounded-xl">
-                  <img
-                    src={project.image}
-                    alt=""
-                    className="h-64 w-full object-cover md:h-80 lg:h-96"
-                    loading="eager"
-                  />
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent pointer-events-none"
-                    aria-hidden
-                  />
-                </div>
-              </div>
-            </Container>
-          </Reveal>
-        )}
-
         <Container>
-          <Reveal delay={project.image ? 0.07 : 0.05}>
-            <div className="relative mt-8 overflow-hidden rounded-2xl bg-surface shadow-sm md:mt-10">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-              <div className="glass-inner relative m-2 mt-4 rounded-xl p-6 md:p-10 lg:p-12">
-                <Prose className="max-w-none">
+          <Reveal delay={0.05}>
+            <div className="glass-card-outer blog-latest-card relative mt-8 overflow-hidden rounded-2xl md:mt-10">
+              <div className="absolute left-0 top-0 bottom-0 z-10 w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
+              <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-6 pl-5 dark:border-white/10 md:p-10 md:pl-6 lg:p-12 lg:pl-8">
+                {project.summary && (
+                  <div className="mb-8 rounded-xl border-l-4 border-primary bg-primary/5 py-4 pl-5 pr-5 dark:bg-primary/10">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-primary">In short</p>
+                    <p className="mt-2 text-base leading-relaxed text-ink dark:text-ink">
+                      {project.summary}
+                    </p>
+                  </div>
+                )}
+                <Prose className="blog-detail-prose max-w-none">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
@@ -290,7 +278,7 @@ export function ProjectDetailPage() {
                       pre: (props) => (
                         <pre
                           {...props}
-                          className="overflow-x-auto rounded-xl border border-line bg-ink/[0.04] py-4 shadow-inner dark:bg-white/5 dark:border-white/10"
+                          className="overflow-x-auto rounded-xl border border-line border-l-4 border-l-primary bg-ink/[0.04] py-4 pl-4 shadow-inner dark:bg-white/5 dark:border-white/10 dark:border-l-primary"
                         />
                       ),
                       code: (props) => {
@@ -314,19 +302,30 @@ export function ProjectDetailPage() {
           </Reveal>
 
           <Reveal delay={0.09}>
-            <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-10">
-              <ButtonLink
-                to="/projects"
-                variant="shine"
-                size="lg"
-                className="group"
-              >
-                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
-                All case studies
-              </ButtonLink>
-              <p className="text-sm text-muted-1">
-                More projects and case studies in Selected Work.
-              </p>
+            <div className="glass-card-outer blog-latest-card relative mt-12 overflow-hidden rounded-2xl">
+              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
+              <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center justify-between gap-6 rounded-xl border border-line p-6 dark:border-white/10 md:p-8">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Sparkles className="h-6 w-6" aria-hidden />
+                  </span>
+                  <div>
+                    <p className="font-semibold text-ink">Thanks for reading</p>
+                    <p className="mt-0.5 text-sm text-muted-1">
+                      More projects and case studies in Selected Work.
+                    </p>
+                  </div>
+                </div>
+                <ButtonLink
+                  to="/projects"
+                  variant="shine"
+                  size="lg"
+                  className="group shrink-0"
+                >
+                  <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
+                  All case studies
+                </ButtonLink>
+              </div>
             </div>
           </Reveal>
         </Container>

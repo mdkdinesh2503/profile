@@ -17,6 +17,9 @@ import {
   ShieldCheck,
   ArrowRight,
   MapPin,
+  Activity,
+  Calendar,
+  User,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { cx } from "@/shared/ui/cx";
@@ -192,11 +195,7 @@ export function HomePage() {
               return (
                 <Reveal key={c.title} delay={0.03 * idx}>
                   <motion.div
-                    className={cx(
-                      "group relative flex h-full flex-col overflow-hidden rounded-2xl transition-all duration-300 ease-out",
-                      "bg-surface shadow-sm",
-                      "hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.15),0_4px_14px_-4px_rgba(0,0,0,0.08)] hover:-translate-y-1 hover:scale-[1.02]",
-                    )}
+                    className="glass-card-outer group relative flex h-full flex-col overflow-hidden rounded-2xl ease-out"
                     whileHover={{ transition: { duration: 0.25 } }}
                   >
                     {/* Top accent bar – gradient, expands on hover */}
@@ -218,7 +217,7 @@ export function HomePage() {
                       aria-hidden
                     />
                     {/* Inner glass content panel */}
-                    <div className="glass-inner relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                    <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
                       <div className="flex items-start justify-between gap-3">
                         <div
                           className={cx(
@@ -252,66 +251,97 @@ export function HomePage() {
       </section>
 
       {/* Selected Work: Real-time projects only */}
-      <section className="mt-14 md:mt-20">
-        <Container>
-          <div className="flex items-end justify-between gap-6">
-            <SectionHeading
-              eyebrow={headings.selectedWorkRealTime.eyebrow}
-              title={headings.selectedWorkRealTime.title}
-              description={headings.selectedWorkRealTime.description}
-            />
+      <section className="realtime-section-bg relative mt-14 md:mt-20 overflow-hidden rounded-3xl py-12 md:py-16">
+        <Container className="relative">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-wrap items-center gap-3">
+              <SectionHeading
+                eyebrow={headings.selectedWorkRealTime.eyebrow}
+                title={headings.selectedWorkRealTime.title}
+                description={headings.selectedWorkRealTime.description}
+              />
+            </div>
             <div className="hidden md:block">
               <Link
                 to="/projects"
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-[var(--color-primary-hover)] transition-colors"
+                className="group/btn inline-flex items-center gap-1.5 rounded-xl border border-primary bg-primary/5 px-4 py-2 text-sm font-medium text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]"
               >
                 View all
-                <ArrowRight size={14} aria-hidden />
+                <ArrowRight size={14} className="transition-transform duration-200 group-hover/btn:translate-x-0.5" aria-hidden />
               </Link>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {realTimeFeatured.map((p, idx) => (
               <Reveal key={p.slug} delay={0.04 * idx}>
                 <Link to={`/projects/${p.slug}`} className="group flex h-full">
-                  <div
-                    className={cx(
-                      "relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm transition-all duration-300",
-                      "hover:border-primary/25 hover:shadow-lift-1",
-                    )}
-                  >
-                    <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary opacity-0 transition-opacity group-hover:opacity-100" aria-hidden />
-                    <div className="text-sm font-semibold text-ink">{p.name}</div>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-1">
-                      {p.context ?? p.summary}
-                    </p>
-                    <div className="mt-4 grid gap-2 text-xs text-muted-2">
-                      {(p.role || p.timeline || p.year || p.demoStack || p.originalStack) ? (
-                        <div>
-                          <span className="font-medium text-muted-1">
-                            {p.role ? "Role" : p.year ? "Year" : "Tech"}
-                          </span>
-                          {" "}
-                          {p.role
-                            ? p.role
-                            : p.timeline
-                              ? p.timeline
-                              : p.year
-                                ? p.year
-                                : [p.demoStack && `Demo: ${p.demoStack}`, p.originalStack && `Original: ${p.originalStack}`]
-                                    .filter(Boolean)
-                                    .join(" · ") || "—"}
+                  <div className="glass-card-outer relative flex h-full w-full flex-col overflow-hidden rounded-2xl ease-out">
+                    {/* Real-time accent: gradient bar + soft glow */}
+                    <div
+                      className={cx(
+                        "absolute left-0 right-0 top-0 h-1.5 origin-left transition-all duration-300 ease-out",
+                        "bg-gradient-to-r from-primary/60 via-primary to-primary/60",
+                        "group-hover:h-2 group-hover:opacity-100",
+                      )}
+                      aria-hidden
+                    />
+                    <div
+                      className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/[0.1] blur-2xl transition-all duration-300 group-hover:scale-150 group-hover:bg-primary/[0.15]"
+                      aria-hidden
+                    />
+                    <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                      {/* Header: Live pill + title row */}
+                      <div className="flex flex-wrap items-start justify-between gap-2">
+                        <span
+                          className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary"
+                          aria-hidden
+                        >
+                          <span className="realtime-live-dot" />
+                          Real-time
+                        </span>
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary transition-transform group-hover:scale-110">
+                          <Activity size={18} strokeWidth={2} aria-hidden />
                         </div>
-                      ) : null}
-                      <div>
-                        <span className="font-medium text-muted-1">Summary:</span>{" "}
-                        {p.summary ? (p.summary.length > 80 ? p.summary.slice(0, 80) + "…" : p.summary) : "—"}
                       </div>
-                    </div>
-                    <div className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                      Read case study
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
+                      <h3 className="mt-3 text-base font-semibold text-ink md:text-lg">
+                        {p.name}
+                      </h3>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-1 line-clamp-3">
+                        {p.context ?? p.summary}
+                      </p>
+                      {/* Tags */}
+                      {p.tags?.length > 0 && (
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          {p.tags.slice(0, 4).map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {/* Meta: role / timeline */}
+                      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-2">
+                        {p.role && (
+                          <span className="inline-flex items-center gap-1">
+                            <User size={12} className="shrink-0 text-muted-1" aria-hidden />
+                            {p.role}
+                          </span>
+                        )}
+                        {(p.timeline || p.year) && (
+                          <span className="inline-flex items-center gap-1">
+                            <Calendar size={12} className="shrink-0 text-muted-1" aria-hidden />
+                            {p.timeline ?? p.year}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                        Read case study
+                        <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
+                      </div>
                     </div>
                   </div>
                 </Link>
@@ -319,13 +349,13 @@ export function HomePage() {
             ))}
           </div>
 
-          <div className="mt-6 md:hidden">
+          <div className="mt-8 md:hidden">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:text-[var(--color-primary-hover)]"
+              className="group/btn inline-flex items-center gap-1.5 rounded-xl border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98]"
             >
               View all projects
-              <ArrowRight size={14} aria-hidden />
+              <ArrowRight size={14} className="transition-transform duration-200 group-hover/btn:translate-x-0.5" aria-hidden />
             </Link>
           </div>
         </Container>

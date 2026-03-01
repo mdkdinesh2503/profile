@@ -4,7 +4,7 @@ summary: "Portfolio implemented during college studies—self-learned and built 
 category: "self-learn"
 year: "2024"
 demoStack: "HTML, CSS, JS"
-originalStack: "HTML, CSS, JS"
+originalStack: ""
 tags: ["portfolio", "frontend", "self-learn"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/mdk/"

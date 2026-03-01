@@ -1,8 +1,8 @@
 ---
 name: "Platform UI Standardization"
 summary: "Unified fragmented UI patterns into a maintainable component system without blocking feature delivery."
-role: "Frontend Engineer (Lead)"
-timeline: "8 weeks • 2024"
+role: "Frontend Engineer"
+timeline: "2024"
 category: "real-time"
 context: "Multiple teams shipped UI quickly over time; the product felt inconsistent and changes were expensive."
 stackNote: "React, TypeScript, Tailwind, design tokens, migration strategy."

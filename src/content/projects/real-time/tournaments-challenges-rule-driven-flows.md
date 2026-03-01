@@ -1,8 +1,8 @@
 ---
 name: "Tournaments, Challenges & Rule-Driven Flows"
 summary: "Delivered core domain workflows for challenges, tournaments, and rule-driven flows with maintainable business logic and clear edge-case handling."
-role: "Associate Software Engineer"
-timeline: "2024 — Present"
+role: "Software Engineer"
+timeline: "2024"
 category: "real-time"
 context: "Product required robust workflows for challenges, tournaments, and rule-driven flows. Logic had to stay maintainable while handling many edge cases and integration points."
 stackNote: "Full-stack, gRPC, GraphQL, REST, Postgres, DynamoDB, Redis."

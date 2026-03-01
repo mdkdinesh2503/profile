@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
-import { Card } from "@/shared/ui/Card";
 import { Reveal } from "@/shared/motion/Reveal";
 import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/data/experience";
 import { Chip } from "@/shared/ui/Chip";
@@ -67,48 +66,48 @@ export function ExperiencePage() {
                 key={item.roles?.length ? item.company : `${item.company}-${item.startDate}`}
                 delay={0.04 * idx}
               >
-                <article className="group relative overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/20">
+                <article className="surface-light group relative overflow-hidden rounded-2xl border border-line shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/20">
                   <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
 
                   <div className="pl-4 pr-4 py-4 sm:pl-5">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div className="flex flex-wrap items-start gap-3 min-w-0 flex-1">
-                      <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
-                        {/* Circular ring: 4 primary arcs with gaps */}
-                        <div
-                          className="absolute inset-0 rounded-full p-[2px] transition-[transform] duration-300 group-hover:animate-[spin_6s_linear_infinite]"
-                          style={{
-                            background: "conic-gradient(from 0deg, rgba(37,99,235,0.4) 0deg, var(--color-primary) 72deg, transparent 72deg 90deg, rgba(37,99,235,0.4) 90deg, var(--color-primary) 162deg, transparent 162deg 180deg, rgba(37,99,235,0.4) 180deg, var(--color-primary) 252deg, transparent 252deg 270deg, rgba(37,99,235,0.4) 270deg, var(--color-primary) 342deg, transparent 342deg 360deg)",
-                          }}
-                          aria-hidden
-                        >
-                          <div className="h-full w-full rounded-full bg-surface" />
+                        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
+                          {/* Circular ring: 4 primary arcs with gaps */}
+                          <div
+                            className="absolute inset-0 rounded-full p-[2px] transition-[transform] duration-300 group-hover:animate-[spin_6s_linear_infinite]"
+                            style={{
+                              background: "conic-gradient(from 0deg, rgba(37,99,235,0.4) 0deg, var(--color-primary) 72deg, transparent 72deg 90deg, rgba(37,99,235,0.4) 90deg, var(--color-primary) 162deg, transparent 162deg 180deg, rgba(37,99,235,0.4) 180deg, var(--color-primary) 252deg, transparent 252deg 270deg, rgba(37,99,235,0.4) 270deg, var(--color-primary) 342deg, transparent 342deg 360deg)",
+                            }}
+                            aria-hidden
+                          >
+                            <div className="h-full w-full rounded-full bg-transparent" />
+                          </div>
+                          <div className="absolute inset-[2px] z-10 flex items-center justify-center overflow-hidden rounded-full bg-transparent">
+                            {item.logo ? (
+                              <img src={item.logo} alt="" className="h-11 w-11 object-contain" />
+                            ) : (
+                              <span className="text-xs font-bold tracking-tight text-primary">{item.company.slice(0, 2).toUpperCase()}</span>
+                            )}
+                          </div>
                         </div>
-                        <div className="absolute inset-[2px] z-10 flex items-center justify-center overflow-hidden rounded-full bg-surface">
-                          {item.logo ? (
-                            <img src={item.logo} alt="" className="h-11 w-11 object-contain" />
-                          ) : (
-                            <span className="text-xs font-bold tracking-tight text-primary">{item.company.slice(0, 2).toUpperCase()}</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="min-w-0 flex-1 ">
-                        <h3 className="text-lg font-bold tracking-tight text-ink">
-                          {titleLine}
-                        </h3>
-                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-2">
-                          {item.location && (
+                        <div className="min-w-0 flex-1 ">
+                          <h3 className="text-lg font-bold tracking-tight text-ink">
+                            {titleLine}
+                          </h3>
+                          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-2">
+                            {item.location && (
+                              <span className="flex items-center gap-1.5">
+                                <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                                {item.location}
+                              </span>
+                            )}
                             <span className="flex items-center gap-1.5">
-                              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                              {item.location}
+                              <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                              {displayDateRange}
                             </span>
-                          )}
-                          <span className="flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                            {displayDateRange}
-                          </span>
+                          </div>
                         </div>
-                      </div>
                       </div>
                       {!item.endDate && (
                         <span className="shrink-0 rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-semibold text-primary ring-1 ring-primary/20">
@@ -212,7 +211,7 @@ export function ExperiencePage() {
           </div>
 
           <Reveal>
-            <Card className="mt-4 p-6">
+            <div className="surface-light mt-4 rounded-2xl border border-line p-6 shadow-sm">
               <div className="flex flex-wrap gap-2">
                 {activeSkills.map((s) => (
                   <span
@@ -225,7 +224,7 @@ export function ExperiencePage() {
                   </span>
                 ))}
               </div>
-            </Card>
+            </div>
           </Reveal>
         </div>
 
@@ -247,11 +246,11 @@ export function ExperiencePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-24px" }}
                   transition={{ duration: 0.35, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-surface shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-[1.01] hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.12),0_4px_14px_-4px_rgba(0,0,0,0.06)]"
+                  className="glass-card-outer group relative flex h-full flex-col overflow-hidden rounded-2xl ease-out"
                 >
                   {/* Top accent only */}
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70 transition-all duration-300 group-hover:h-1.5" aria-hidden />
-                  <div className="glass-inner relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                  <div className="absolute left-0 right-0 top-0 h-1 transition-all duration-300 group-hover:h-1.5" aria-hidden />
+                  <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 dark:border-white/10">
                     <div className="flex flex-1 items-start gap-4">
                       <button
                         type="button"

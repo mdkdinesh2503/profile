@@ -16,9 +16,9 @@ export function SectionHeading({
   children,
 }: SectionHeadingProps) {
   return (
-    <div className={cx("max-w-2xl", className)}>
+    <div className={cx("max-w-2xl cursor-default", className)}>
       {eyebrow ? (
-        <div className="text-xs font-medium tracking-wide text-primary">
+        <div className="text-xs font-medium tracking-wide text-primary uppercase">
           {eyebrow}
         </div>
       ) : null}
