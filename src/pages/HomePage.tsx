@@ -70,9 +70,6 @@ export function HomePage() {
                     <MapPin className="h-3.5 w-3.5" aria-hidden />
                     {profile.location}
                   </span>
-                  <span className="rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary ring-1 ring-primary/20">
-                    {profile.role}
-                  </span>
                 </div>
               </Reveal>
               <Reveal delay={0.04}>
