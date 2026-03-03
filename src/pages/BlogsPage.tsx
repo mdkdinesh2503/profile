@@ -34,14 +34,6 @@ function LatestListCard({ b, index }: { b: BlogMeta; index: number }) {
                 loading="eager"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0" aria-hidden />
-              <span className="absolute left-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-md bg-white/95 text-[10px] font-bold tabular-nums text-primary shadow-sm dark:bg-ink/95">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              {b.readTime ? (
-                <span className="absolute bottom-2 right-2 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white">
-                  {b.readTime}m
-                </span>
-              ) : null}
             </div>
             {/* Content */}
             <div className="flex min-w-0 flex-1 flex-col justify-center">

@@ -113,7 +113,7 @@ export const experience: ExperienceItem[] = [
     logo: "./experience/Aspire_Systems.jpg",
     title: "Frontend Developer",
     location: "Chennai, Tamil Nadu, India · Remote",
-    domains: ["Software Development", "IT Services"],
+    domains: ["Software Development"],
     startDate: "Sep 2022",
     endDate: "Dec 2023",
     roles: [
