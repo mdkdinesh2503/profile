@@ -57,7 +57,7 @@ export const profile: Profile = {
   links: {
     github: "https://github.com/mdkdinesh2503",
     linkedin: "https://www.linkedin.com/in/mdkdinesh2503",
-    instagram: "https://www.instagram.com/mdkdinesh2503",
+    instagram: "https://www.instagram.com/mdk_.me/",
   },
   certifications,
 };

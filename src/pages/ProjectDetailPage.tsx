@@ -269,12 +269,19 @@ export function ProjectDetailPage() {
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      a: (props) => (
-                        <a
-                          {...props}
-                          className="font-medium text-primary no-underline underline-offset-2 hover:underline"
-                        />
-                      ),
+                      a: (props) => {
+                        const { href, ...rest } = props;
+                        const isExternal = typeof href === "string" && /^https?:\/\//.test(href);
+                        return (
+                          <a
+                            href={href}
+                            {...rest}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                            className="font-medium text-primary no-underline underline-offset-2 hover:underline"
+                          />
+                        );
+                      },
                       pre: (props) => (
                         <pre
                           {...props}

@@ -1,47 +1,71 @@
 ---
-name: "Platform UI Standardization"
-summary: "Unified fragmented UI patterns into a maintainable component system without blocking feature delivery."
+name: "Platform UI Standardization & Multi-App Frontend"
+summary: "Standardized UI across multiple white-label apps using a shared monorepo structure with reusable components and centralized authentication."
 role: "Frontend Engineer"
-timeline: "2024"
+timeline: "2026"
 category: "real-time"
-context: "Multiple teams shipped UI quickly over time; the product felt inconsistent and changes were expensive."
-stackNote: "React, TypeScript, Tailwind, design tokens, migration strategy."
-tags: ["frontend", "design-systems", "accessibility"]
+stackNote: "Next.js, TypeScript, Turborepo, Tailwind."
+tags: ["frontend", "monorepo", "ui-architecture", "accessibility"]
 image: "/default/Blog.svg"
 ---
 
 ## Problem
 
-The UI had subtle inconsistencies (spacing, typography, states) that made the product feel less trustworthy. Engineers avoided refactors because "fixing one screen breaks another."
+- Maintain one consistent UI style across all apps.
+- Avoid duplicating components and authentication logic.
+- Handle loading, error, and empty states properly.
+- Migrate safely without breaking existing features.
 
-## Constraints
+The goal was to create a shared system that supported multiple apps without slowing down development.
 
-- No dedicated design sprint: improvements needed to ride along real product work.
-- Existing screens couldn't be frozen; migration had to be incremental.
-- Accessibility requirements: focus states and semantics had to be reliable.
+---
 
-## Approach
+## My Role
 
-### Establish primitives first
+- Designed the monorepo structure to organize shared logic and app-specific code.
+- Built reusable UI components (buttons, inputs, cards, layouts).
+- Ensured all apps followed the same UI behavior and state handling.
+- Created simple documentation so other developers could use shared components easily.
 
-Created a small set of stable, well-documented primitives (buttons, inputs, cards, layout) aligned to tokens, not one-off styling.
+---
 
-### Migrate where it pays back
+## Edge Cases Handled
 
-Targeted high-traffic screens and shared flows first, so consistency improvements were noticeable quickly.
+- Consistent loading and error states across apps.
+- Prevented shared UI updates from breaking individual apps.
 
-### Bake quality into defaults
+This made the system stable and predictable.
 
-Made the right choice the easy choice: sensible spacing, focus styles, and states came for free with the primitives.
+---
 
-## Highlights
+## Design System & UI Architecture
 
-- Built a compact design token layer for spacing, radius, borders, and color roles.
-- Standardized interactive states (hover, focus, disabled) across components.
-- Added lightweight visual regression checks for key components.
+- Tailwind-based tokens for spacing, color, and typography.
+- Core (auth, utils) → shared UI package → app packages; Turborepo for builds. One design language, many branded entry points.
 
-## Impact
+---
 
-- Faster feature development through reuse and clearer patterns.
-- More consistent and accessible UI with fewer edge-case bugs.
-- Lower long-term maintenance cost: fewer custom one-off components.
+## Data & Integration
+
+- Kept UI components focused on presentation.
+- Handled data and API logic inside shared hooks.
+- Managed authentication at route level.
+- Avoided duplicate logic across apps.
+
+**Principle:**  
+Reusable UI + shared logic = faster development and fewer bugs.
+
+---
+
+## What I Learned
+
+- Reusable components reduce long-term maintenance cost.
+- Clear structure prevents code duplication.
+- Centralized authentication improves consistency.
+- Planning for loading and error states improves user trust.
+
+---
+
+## Key Takeaway
+
+By structuring the frontend properly and centralizing shared logic, I helped build multiple white-label apps that were consistent, maintainable, and scalable — without slowing down feature delivery.

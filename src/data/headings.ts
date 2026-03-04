@@ -54,7 +54,7 @@ export const headings = {
     eyebrow: "Writing",
     title: "Engineering notes",
     description:
-      "Clean, practical writing about shipping and maintaining software.",
+      "Practical notes on building, shipping, and maintaining software—focused on decisions and outcomes.",
   } satisfies SelectedSectionHeading,
 
   resume: {

@@ -145,22 +145,25 @@ export const experience: ExperienceItem[] = [
 export const skills: SkillGroup[] = [
   {
     group: "Frontend",
-    items: ["Angular", "React", "Next.js", "TypeScript", "Tailwind"],
+    items: ["Angular", "React", "Next.js", "TypeScript", "Tailwind CSS"],
   },
   {
     group: "Backend",
     items: [
       "Java",
-      "Spring Boot",
       "Rust",
       "Node.js",
       "NestJS",
+      "Spring Boot",
       "gRPC",
       "GraphQL",
       "REST",
     ],
   },
-  { group: "Data", items: ["PostgreSQL", "MySQL", "DynamoDB"] },
+  { group: "Data", items: ["PostgreSQL", "MySQL", "DynamoDB", "MongoDB"] },
   { group: "Infra", items: ["Redis (caching)"] },
-  { group: "Tools", items: ["Git", "Bitbucket", "GitHub", "GitLab"] },
+  {
+    group: "Tools",
+    items: ["Git", "Bitbucket", "GitHub", "GitLab", "Netlify"],
+  },
 ];

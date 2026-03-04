@@ -122,16 +122,6 @@ function AcademicProjectCard({
         </p>
         {hasTech && (
           <div className="mt-3 flex flex-wrap gap-1.5">
-            {p.demoStack
-              ? parseStack(p.demoStack).map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary"
-                  >
-                    {tech}
-                  </span>
-                ))
-              : null}
             {p.originalStack
               ? parseStack(p.originalStack).map((tech) => (
                   <span

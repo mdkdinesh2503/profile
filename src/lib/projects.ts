@@ -133,12 +133,24 @@ function parseProject(path: string, raw: string): ProjectPost {
   };
 }
 
+/** Sort by year ascending (oldest first); projects without year go last. */
+function sortByYear(projects: ProjectPostMeta[]): ProjectPostMeta[] {
+  return [...projects].sort((a, b) => {
+    const yearA = a.year ?? "";
+    const yearB = b.year ?? "";
+    if (yearA && yearB) return yearA.localeCompare(yearB);
+    if (yearA) return -1;
+    if (yearB) return 1;
+    return 0;
+  });
+}
+
 export function getAllProjects(): ProjectPostMeta[] {
   const projects = Object.entries(rawByPath).map(([path, raw]) =>
     parseProject(path, raw),
   );
-
-  return projects.map(({ content: _c, ...meta }) => meta);
+  const metaList = projects.map(({ content: _c, ...meta }) => meta);
+  return sortByYear(metaList);
 }
 
 export function getProjectBySlug(slug: string): ProjectPost | null {
@@ -149,10 +161,26 @@ export function getProjectBySlug(slug: string): ProjectPost | null {
   return parseProject(entry[0], entry[1]);
 }
 
+/** Year-like string for sorting (prefer year, else timeline e.g. "2025") */
+function sortYear(meta: ProjectPostMeta): string {
+  return meta.year ?? meta.timeline ?? "";
+}
+
 export function getProjectsByCategory(
   category: ProjectCategory,
 ): ProjectPostMeta[] {
-  return getAllProjects().filter((p) => p.category === category);
+  const list = getAllProjects().filter((p) => p.category === category);
+  if (category === "real-time") {
+    return [...list].sort((a, b) => {
+      const ya = sortYear(a);
+      const yb = sortYear(b);
+      if (ya && yb) return yb.localeCompare(ya);
+      if (ya) return -1;
+      if (yb) return 1;
+      return 0;
+    });
+  }
+  return list;
 }
 
 /** Academic + self-learn projects (same section, View/Code links) */

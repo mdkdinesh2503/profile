@@ -1,53 +1,100 @@
 ---
-name: "Tournaments, Challenges & Rule-Driven Flows"
-summary: "Delivered core domain workflows for challenges, tournaments, and rule-driven flows with maintainable business logic and clear edge-case handling."
+name: "Tournaments, Challenges & Rule-Driven Workflows"
+summary: "Designed and delivered robust domain workflows with strong state modeling, clear edge-case handling, and scalable persistence/API design."
 role: "Software Engineer"
-timeline: "2024"
+timeline: "2025"
 category: "real-time"
-context: "Product required robust workflows for challenges, tournaments, and rule-driven flows. Logic had to stay maintainable while handling many edge cases and integration points."
-stackNote: "Full-stack, gRPC, GraphQL, REST, Postgres, DynamoDB, Redis."
-tags: ["backend", "domain", "apis"]
+stackNote: "Rust, gRPC, GraphQL, REST, PostgreSQL, DynamoDB, Redis."
+tags: ["backend", "domain-design", "apis", "databases", "Gaming"]
 image: "/default/Blog.svg"
 ---
 
 ## Problem
 
-Core domain (challenges, tournaments, rules) needed consistent behavior across clients and services while supporting different integration styles and strict correctness expectations.
+I worked on a core domain where tournaments, challenges, and rule-driven flows power most of the product. The system had to:
 
-## Constraints
+- Strict correctness across multiple state transitions.
+- Consistent behavior across gRPC, GraphQL, and REST APIs.
+- Clear handling of eligibility rules, lifecycle changes, and invalid operations.
+- Performance stability under increasing production load.
 
-- Multiple API styles in use: gRPC for internal services, GraphQL and REST for clients—design had to fit each without duplicating business rules.
-- Edge cases around tournament lifecycle, challenge eligibility, and rule evaluation had to be explicit and testable.
-- Performance and correctness had to hold under real production load and data growth.
+The system had to support evolving requirements without turning business logic into tightly coupled API code.
 
-## Approach
+---
 
-### Centralize domain logic, expose via appropriate APIs
+## My Role
 
-Kept tournament, challenge, and rule-driven logic in a single domain layer and exposed it through gRPC, GraphQL, and REST depending on the consumer, so behavior stayed consistent and testable.
+- Designed and implemented core domain workflows.
+- Modeled lifecycle state machines for tournaments and challenges.
+- Built and exposed APIs across gRPC (internal) and GraphQL/REST (clients).
+- Designed database schemas and optimized read/write paths.
+- Applied caching and validation strategies to improve performance and reliability.
 
-### Model rules and state transitions explicitly
+---
 
-Defined clear state machines and rule evaluation paths so edge cases (eligibility, transitions, invalidation) were explicit and easier to reason about and test.
+## Edge Cases Handled
 
-### Target caching and validation where it mattered
+- Invalid lifecycle transitions (e.g., publishing incomplete entities).
+- Duplicate submissions and idempotent operations.
+- Eligibility conflicts (e.g., participation rules, state-based restrictions).
+- Rollback and correction scenarios.
+- Concurrent updates affecting rankings or status changes.
+- Data inconsistencies between cache and primary storage.
 
-Applied Redis caching and validation at boundaries to improve response times and ensure correctness under real production constraints without over-engineering.
+Explicit state modeling made these scenarios predictable and testable.
 
-## Highlights
+---
 
-- Delivered core domain workflows (challenges, tournaments, and rule-driven flows) with maintainable business logic and clear edge-case handling.
-- Designed and implemented APIs across gRPC, GraphQL, and REST depending on the integration and client needs.
-- Improved response times by applying targeted Redis caching and validating correctness under real production constraints.
-- Worked across Postgres and DynamoDB persistence, including schema design and pragmatic data modeling for evolving requirements.
+## Database Design
 
-## Impact
+### PostgreSQL (Primary Source of Truth)
 
-- Core workflows shipped with predictable behavior and fewer production surprises.
-- Faster and more reliable APIs for clients and internal services.
-- Solid foundation for future tournament and challenge features with clear rules and state.
+- Normalized schema for tournaments, participants, matches, and rules.
+- Transactional integrity for critical updates (enrollment, scoring, reward issuance).
+- Append-only patterns and event/audit tables where historical traceability mattered.
+- Indexed read-heavy paths (leaderboards, participant lookups, active challenges).
 
-## What I learned
+### DynamoDB (Aggregates / Flexible Data)
 
-- Domain logic belongs in one place; API shape can vary by consumer without duplicating rules.
-- Explicit state and rule modeling pays off for correctness and debugging in production.
+- Used for scalable stats, global aggregates, and per‑player challenge snapshots.
+- Designed with partition keys aligned to high-read entities (tournament + region, player + season).
+
+### Redis (Performance Layer)
+
+- Leaderboards using sorted sets (ZSET).
+- Targeted caching of frequently accessed domain objects.
+- Cache invalidation at state boundaries.
+
+Focus: durability in primary DB, speed in cache, flexibility in aggregate store—while keeping mental models simple for developers and operators.
+
+---
+
+## API Design
+
+- Centralized domain logic in a service layer.
+- Exposed behavior via:
+  - gRPC for internal services
+  - GraphQL for flexible client queries
+  - REST for compatibility and simpler integrations
+- Ensured no duplication of business rules across transport layers.
+- Structured error mapping for predictable API responses.
+- Role-based access validation at request boundaries.
+
+Principle: **Domain first, transport second.**
+
+---
+
+## What I Learned
+
+- Global ranking systems demand transactional integrity and rollback design from day one.
+- Redis is powerful for real-time ranking, but durability must remain in the primary database.
+- Clear state machines dramatically reduce production ambiguity and on‑call stress.
+- Separating domain logic from API transport keeps the codebase evolvable as products and clients change.
+- Designing for reversibility (not just correctness) builds operational confidence.
+- The combination of explicit rules, strong invariants, and good observability makes even complex domains feel manageable.
+
+---
+
+## Key Takeaway
+
+Strong domain modeling, explicit state handling, and clear separation between business logic and API transport are what allowed me to ship a tournament/challenge engine that feels fast to players, predictable to product, and boring (in a good way) to operate.
