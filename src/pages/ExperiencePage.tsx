@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Reveal } from "@/shared/motion/Reveal";
+import { PageMeta } from "@/shared/seo/PageMeta";
 import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/data/experience";
 import { Chip } from "@/shared/ui/Chip";
 import { headings } from "@/data/headings";
@@ -44,6 +45,11 @@ export function ExperiencePage() {
 
   return (
     <section className="pt-12 md:pt-16">
+      <PageMeta
+        title={headings.experience.title}
+        description={headings.experience.description}
+        path="/experience"
+      />
       <Container>
         <SectionHeading
           eyebrow={headings.experience.eyebrow}
@@ -307,7 +313,7 @@ export function ExperiencePage() {
                         <a
                           href={c.verifyLink}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-ink/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-line transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong dark:bg-white/5 dark:ring-white/10"
                         >
                           <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
@@ -370,7 +376,7 @@ export function ExperiencePage() {
                         <a
                           href={selectedCert.pdf}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className={cx(buttonStyles.base, buttonStyles.sizes.md, buttonStyles.variants.primary)}
                         >
                           Open PDF

@@ -2,7 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Container, Prose, ButtonLink, buttonStyles, cx } from "@/shared/ui";
+import { Container, Prose, ButtonLink, buttonStyles, cx, GlassCard } from "@/shared/ui";
+import { PageMeta } from "@/shared/seo/PageMeta";
 import { getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/shared/motion/Reveal";
 import { ArrowLeft, Briefcase, Calendar, CalendarDays, Check, ChevronRight, Code, ExternalLink, Link2, Sparkles, Tag } from "lucide-react";
@@ -45,9 +46,7 @@ export function ProjectDetailPage() {
     return (
       <section className="pt-12 md:pt-16">
         <Container>
-          <div className="glass-card-outer blog-latest-card relative overflow-hidden rounded-2xl">
-            <div className="absolute left-0 right-0 top-0 z-10 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-            <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-8 text-center dark:border-white/10">
+          <GlassCard blogStyle accent="top" panelClassName="p-8 text-center">
               <div className="text-lg font-semibold text-ink">Project not found</div>
               <p className="mt-2 text-muted-1">
                 This case study doesn't exist yet. Check the projects list.
@@ -56,8 +55,7 @@ export function ProjectDetailPage() {
                 <ArrowLeft className="h-4 w-4" />
                 Back to projects
               </ButtonLink>
-            </div>
-          </div>
+          </GlassCard>
         </Container>
       </section>
     );
@@ -65,6 +63,12 @@ export function ProjectDetailPage() {
 
   return (
     <>
+      <PageMeta
+        title={project.name}
+        description={project.summary || project.context || `${project.name} – case study`}
+        path={`/projects/${project.slug}`}
+        ogType="article"
+      />
       <div
         className="fixed left-0 right-0 top-0 z-50 h-0.5 bg-ink/10"
         aria-hidden
@@ -131,9 +135,7 @@ export function ProjectDetailPage() {
 
             <Reveal delay={0.02}>
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <div className="glass-card-outer blog-latest-card group relative flex-1 overflow-hidden rounded-2xl min-w-0">
-                  <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-                  <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-line px-4 py-3.5 dark:border-white/10 sm:px-5">
+                <GlassCard className="flex-1 min-w-0" blogStyle accent="top" panelClassName="flex flex-wrap items-center gap-3 px-4 py-3.5 sm:px-5">
                     <span className="flex items-center gap-2 text-sm text-muted-1">
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <Briefcase className="h-4 w-4" aria-hidden />
@@ -196,8 +198,7 @@ export function ProjectDetailPage() {
                         <span className="text-xs text-muted-2">{project.stackNote}</span>
                       </>
                     ) : null}
-                  </div>
-                </div>
+                </GlassCard>
                 {(project.category === "academic" || project.category === "self-learn") &&
                 (project.demoUrl || project.repoUrl) ? (
                   <div className="flex flex-wrap items-center gap-2">
@@ -254,9 +255,7 @@ export function ProjectDetailPage() {
 
         <Container>
           <Reveal delay={0.05}>
-            <div className="glass-card-outer blog-latest-card relative mt-8 overflow-hidden rounded-2xl md:mt-10">
-              <div className="absolute left-0 top-0 bottom-0 z-10 w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
-              <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-6 pl-5 dark:border-white/10 md:p-10 md:pl-6 lg:p-12 lg:pl-8">
+            <GlassCard className="mt-8 md:mt-10" blogStyle accent="left" panelClassName="p-6 pl-5 md:p-10 md:pl-6 lg:p-12 lg:pl-8">
                 {project.summary && (
                   <div className="mb-8 rounded-xl border-l-4 border-primary bg-primary/5 py-4 pl-5 pr-5 dark:bg-primary/10">
                     <p className="text-xs font-semibold uppercase tracking-widest text-primary">In short</p>
@@ -304,14 +303,11 @@ export function ProjectDetailPage() {
                     {project.content}
                   </ReactMarkdown>
                 </Prose>
-              </div>
-            </div>
+            </GlassCard>
           </Reveal>
 
           <Reveal delay={0.09}>
-            <div className="glass-card-outer blog-latest-card relative mt-12 overflow-hidden rounded-2xl">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-              <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center justify-between gap-6 rounded-xl border border-line p-6 dark:border-white/10 md:p-8">
+            <GlassCard className="mt-12" blogStyle accent="top" panelClassName="flex flex-wrap items-center justify-between gap-6 p-6 md:p-8">
                 <div className="flex items-center gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Sparkles className="h-6 w-6" aria-hidden />
@@ -332,8 +328,7 @@ export function ProjectDetailPage() {
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
                   All case studies
                 </ButtonLink>
-              </div>
-            </div>
+            </GlassCard>
           </Reveal>
         </Container>
       </section>

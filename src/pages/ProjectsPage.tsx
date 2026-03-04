@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/shared/ui/Container";
 import { Reveal } from "@/shared/motion/Reveal";
+import { PageMeta } from "@/shared/seo/PageMeta";
 import { getProjectsByCategory, getLearningProjects } from "@/lib/projects";
 import { headings } from "@/data/headings";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
@@ -203,6 +204,11 @@ export function ProjectsPage() {
 
   return (
     <div className="relative pt-12 md:pt-16">
+      <PageMeta
+        title={headings.selectedWork.title}
+        description={headings.selectedWork.description}
+        path="/projects"
+      />
       <Reveal delay={0}>
         <Container className="mb-10 md:mb-12">
           <SectionHeading

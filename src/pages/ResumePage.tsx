@@ -1,5 +1,6 @@
-import { Container, SectionHeading, buttonStyles, cx } from "@/shared/ui";
+import { Container, SectionHeading, buttonStyles, cx, GlassCard } from "@/shared/ui";
 import { Reveal } from "@/shared/motion/Reveal";
+import { PageMeta } from "@/shared/seo/PageMeta";
 import { profile } from "@/data/profile";
 import { headings } from "@/data/headings";
 import { Download, ExternalLink, FileText, Sparkles } from "lucide-react";
@@ -9,6 +10,11 @@ export function ResumePage() {
 
   return (
     <section className="pt-12 md:pt-16">
+      <PageMeta
+        title={headings.resume.title}
+        description={headings.resume.description}
+        path="/resume"
+      />
       <Container>
         <Reveal delay={0}>
           <SectionHeading
@@ -20,9 +26,7 @@ export function ResumePage() {
 
         {/* At-a-glance: role, experience, PDF ready — same 2-layer structure as certification */}
         <Reveal delay={0.06}>
-          <div className="glass-card-outer group relative mt-8 overflow-hidden rounded-2xl hover:!translate-y-0">
-            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-            <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-line px-4 py-3.5 dark:border-white/10 sm:px-5">
+          <GlassCard className="mt-8" noHover accent="top" panelClassName="flex flex-wrap items-center gap-3 px-4 py-3.5 sm:px-5">
               <span className="flex items-center gap-2 text-sm text-muted-1">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Sparkles className="h-4 w-4" aria-hidden />
@@ -38,8 +42,7 @@ export function ResumePage() {
                 <FileText className="h-3.5 w-3.5" aria-hidden />
                 PDF ready
               </span>
-            </div>
-          </div>
+          </GlassCard>
         </Reveal>
 
         {/* CTAs */}
@@ -56,7 +59,7 @@ export function ResumePage() {
             <a
               href={profile.resume.pdfSrc}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={cx(
                 buttonStyles.base,
                 "rounded-xl px-4 py-2.5 text-sm gap-2",
@@ -71,9 +74,7 @@ export function ResumePage() {
 
         {/* PDF preview — same card style as certification */}
         <Reveal delay={0.12}>
-          <div className="glass-card-outer group relative mt-8 overflow-hidden rounded-2xl hover:!translate-y-0">
-            <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-            <div className="glass-card-panel relative m-2 mt-4 flex flex-col overflow-hidden rounded-xl border border-line dark:border-white/10">
+          <GlassCard className="mt-8" noHover accent="top" panelClassName="flex flex-col overflow-hidden p-0">
               {/* Viewer chrome */}
               <div className="flex items-center gap-3 px-4 py-3 sm:px-5 border-b border-line dark:border-white/10">
                 <div className="flex gap-1.5" aria-hidden>
@@ -98,8 +99,7 @@ export function ResumePage() {
                   />
                 </div>
               </div>
-            </div>
-          </div>
+          </GlassCard>
         </Reveal>
       </Container>
     </section>

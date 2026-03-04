@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mdkdinesh2503.netlify.app/sitemap.xml

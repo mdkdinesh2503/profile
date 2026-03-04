@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Container } from "@/shared/ui/Container";
+import { PageMeta } from "@/shared/seo/PageMeta";
 
 const container = {
   hidden: { opacity: 0 },
@@ -33,6 +34,11 @@ const float = {
 export function NotFoundPage() {
   return (
     <section className="relative flex h-[calc(100vh-var(--header-height,250px))] md:h-[calc(100vh-var(--header-height,80px))] flex-1 flex-col items-center justify-center overflow-hidden px-4 sm:px-6">
+      <PageMeta
+        title="Page Not Found"
+        description="This page doesn't exist. Back to Dinesh Kumar M's profile."
+        path="/404"
+      />
       {/* Subtle grid background */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"

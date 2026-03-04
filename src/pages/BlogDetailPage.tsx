@@ -2,7 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Container, Prose, ButtonLink, buttonStyles, cx } from "@/shared/ui";
+import { Container, Prose, ButtonLink, buttonStyles, cx, GlassCard } from "@/shared/ui";
+import { PageMeta } from "@/shared/seo/PageMeta";
 import { getBlogBySlug } from "@/lib/blogs";
 import { Reveal } from "@/shared/motion/Reveal";
 import { ArrowLeft, BookOpen, Calendar, Check, ChevronRight, Clock, Link2, Sparkles, Tag } from "lucide-react";
@@ -54,9 +55,7 @@ export function BlogDetailPage() {
     return (
       <section className="pt-12 md:pt-16">
         <Container>
-          <div className="glass-card-outer blog-latest-card relative overflow-hidden rounded-2xl">
-            <div className="absolute left-0 right-0 top-0 z-10 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-            <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-8 text-center dark:border-white/10">
+          <GlassCard blogStyle accent="top" panelClassName="p-8 text-center">
               <div className="text-lg font-semibold text-ink">Blog not found</div>
               <p className="mt-2 text-muted-1">
                 This post doesn't exist yet. Check the blog list.
@@ -65,8 +64,7 @@ export function BlogDetailPage() {
                 <ArrowLeft className="h-4 w-4" />
                 Back to blogs
               </ButtonLink>
-            </div>
-          </div>
+          </GlassCard>
         </Container>
       </section>
     );
@@ -74,6 +72,12 @@ export function BlogDetailPage() {
 
   return (
     <>
+      <PageMeta
+        title={blog.title}
+        description={blog.summary || `${blog.title} – engineering notes`}
+        path={`/blogs/${blog.slug}`}
+        ogType="article"
+      />
       {/* Scroll progress bar – fixed at top */}
       <div
         className="fixed left-0 right-0 top-0 z-50 h-0.5 bg-ink/10"
@@ -141,9 +145,7 @@ export function BlogDetailPage() {
 
             {/* At-a-glance strip — same 2-layer style as Resume / Blogs list */}
             <Reveal delay={0.02}>
-              <div className="glass-card-outer blog-latest-card group relative mt-6 overflow-hidden rounded-2xl">
-                <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-                <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-line px-4 py-3.5 dark:border-white/10 sm:px-5">
+              <GlassCard className="mt-6" blogStyle accent="top" panelClassName="flex flex-wrap items-center gap-3 px-4 py-3.5 sm:px-5">
                   <span className="flex items-center gap-2 text-sm text-muted-1">
                     <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       <BookOpen className="h-4 w-4" aria-hidden />
@@ -159,8 +161,7 @@ export function BlogDetailPage() {
                     <Clock className="h-3.5 w-3.5" aria-hidden />
                     {blog.readTime ?? 1} min read
                   </span>
-                </div>
-              </div>
+              </GlassCard>
             </Reveal>
 
             <Reveal delay={0.03}>
@@ -193,10 +194,8 @@ export function BlogDetailPage() {
         {blog.image && (
           <Reveal delay={0.05}>
             <Container className="mt-8">
-              <div className="glass-card-outer blog-latest-card relative overflow-hidden rounded-2xl">
-                <div className="absolute left-0 right-0 top-0 z-10 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-                <div className="glass-card-panel relative m-2 mt-4 overflow-hidden rounded-xl border border-line dark:border-white/10">
-                  <img
+              <GlassCard blogStyle accent="top" panelClassName="overflow-hidden p-0">
+                <img
                     src={blog.image}
                     alt=""
                     className="h-64 w-full object-cover md:h-80 lg:h-96"
@@ -206,8 +205,7 @@ export function BlogDetailPage() {
                     className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-transparent pointer-events-none"
                     aria-hidden
                   />
-                </div>
-              </div>
+              </GlassCard>
             </Container>
           </Reveal>
         )}
@@ -215,9 +213,7 @@ export function BlogDetailPage() {
         {/* Article body — same 2-layer style with left accent as blog cards */}
         <Container>
           <Reveal delay={blog.image ? 0.07 : 0.05}>
-            <div className="glass-card-outer blog-latest-card relative mt-8 overflow-hidden rounded-2xl md:mt-10">
-              <div className="absolute left-0 top-0 bottom-0 z-10 w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
-              <div className="glass-card-panel relative m-2 mt-4 rounded-xl border border-line p-6 pl-5 dark:border-white/10 md:p-10 md:pl-6 lg:p-12 lg:pl-8">
+            <GlassCard className="mt-8 md:mt-10" blogStyle accent="left" panelClassName="p-6 pl-5 md:p-10 md:pl-6 lg:p-12 lg:pl-8">
                 {blog.summary && (
                   <div className="mb-8 rounded-xl border-l-4 border-primary bg-primary/5 py-4 pl-5 pr-5 dark:bg-primary/10">
                     <p className="text-xs font-semibold uppercase tracking-widest text-primary">In short</p>
@@ -230,12 +226,20 @@ export function BlogDetailPage() {
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      a: (props) => (
-                        <a
-                          {...props}
-                          className="font-medium text-primary no-underline underline-offset-2 hover:underline"
-                        />
-                      ),
+                      a: (props) => {
+                        const { href, ...rest } = props;
+                        const isExternal =
+                          typeof href === "string" && /^https?:\/\//i.test(href);
+                        return (
+                          <a
+                            href={href}
+                            {...rest}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                            className="font-medium text-primary no-underline underline-offset-2 hover:underline"
+                          />
+                        );
+                      },
                       pre: (props) => (
                         <pre
                           {...props}
@@ -258,15 +262,12 @@ export function BlogDetailPage() {
                     {blog.content}
                   </ReactMarkdown>
                 </Prose>
-              </div>
-            </div>
+            </GlassCard>
           </Reveal>
 
           {/* Footer CTA – creative card */}
           <Reveal delay={0.09}>
-            <div className="glass-card-outer blog-latest-card relative mt-12 overflow-hidden rounded-2xl">
-              <div className="absolute left-0 right-0 top-0 h-1 bg-gradient-to-r from-primary/70 via-primary to-primary/70" aria-hidden />
-              <div className="glass-card-panel relative m-2 mt-4 flex flex-wrap items-center justify-between gap-6 rounded-xl border border-line p-6 dark:border-white/10 md:p-8">
+            <GlassCard className="mt-12" blogStyle accent="top" panelClassName="flex flex-wrap items-center justify-between gap-6 p-6 md:p-8">
                 <div className="flex items-center gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                     <Sparkles className="h-6 w-6" aria-hidden />
@@ -287,8 +288,7 @@ export function BlogDetailPage() {
                   <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" aria-hidden />
                   All posts
                 </ButtonLink>
-              </div>
-            </div>
+            </GlassCard>
           </Reveal>
         </Container>
       </section>

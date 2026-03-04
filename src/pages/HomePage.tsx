@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
+import { PageMeta } from "@/shared/seo/PageMeta";
+import { profile } from "@/data/profile";
 import { Reveal } from "@/shared/motion/Reveal";
 import { getProjectsByCategory } from "@/lib/projects";
 import { Card } from "@/shared/ui/Card";
-import { profile } from "@/data/profile";
 import { headings } from "@/data/headings";
 import { skills } from "@/data/experience";
 import { HeroPortrait, ButtonLink } from "@/shared/ui";
@@ -54,6 +55,12 @@ export function HomePage() {
 
   return (
     <>
+      <PageMeta
+        title="Dinesh Kumar M"
+        description={profile.hero.subhead}
+        path="/"
+        ogType="profile"
+      />
       {/* Hero */}
       <section className="relative overflow-x-hidden pt-14 md:pt-20">
         <Container>
