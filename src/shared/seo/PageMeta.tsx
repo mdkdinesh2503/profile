@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { SITE_URL, absolutePath } from "@/config/site";
+import { absolutePath } from "@/config/site";
 
 type PageMetaProps = {
   title: string;

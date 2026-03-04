@@ -6,7 +6,7 @@ import { Container, Prose, ButtonLink, buttonStyles, cx, GlassCard } from "@/sha
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { getBlogBySlug } from "@/lib/blogs";
 import { Reveal } from "@/shared/motion/Reveal";
-import { ArrowLeft, BookOpen, Calendar, Check, ChevronRight, Clock, Link2, Sparkles, Tag } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, ChevronRight, Clock, Link2, Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
 
 function formatDate(iso: string) {

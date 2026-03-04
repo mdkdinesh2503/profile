@@ -7,9 +7,9 @@ A personal portfolio site built from scratch with **React**, **Vite**, and **Typ
 ## What This Project Is
 
 - **Multi-page portfolio** for a software engineer (home, projects, experience, blog, resume, contact).
-- **Content-driven**: Profile, projects, experience, and certifications live in TypeScript/data files; blog posts are Markdown with frontmatter.
+- **Content-driven**: Profile, projects, experience, and certifications live in TypeScript/data files; blog posts and project case studies are Markdown with frontmatter.
 - **SPA with client-side routing** — all routes work on direct links and refresh (Netlify redirects).
-- **Deploy-ready** — configured for Netlify with `netlify.toml` and `public/_redirects`.
+- **Deploy-ready** — configured for Netlify with `netlify.toml` and `public/_redirects`. Build produces `sitemap.xml` and `robots.txt` for SEO.
 
 ---
 
@@ -60,6 +60,8 @@ bun run build
 bun run preview
 ```
 
+**Scripts:** `build` runs TypeScript check, Vite build, then `scripts/generate-sitemap.mjs` (writes `dist/sitemap.xml` and `dist/robots.txt`). Set `VITE_SITE_URL` in the build environment to your production URL for correct sitemap links.
+
 ---
 
 ## Deploy on Netlify
@@ -69,7 +71,8 @@ bun run preview
 3. Build settings are read from `netlify.toml`:
    - **Build command:** `bun run build`
    - **Publish directory:** `dist`
-4. Deploy. Direct URLs and refresh work via `public/_redirects` (SPA fallback to `index.html`).
+4. (Optional) Set **Build environment variable** `VITE_SITE_URL` to your site URL (e.g. `https://yoursite.netlify.app`) so the generated sitemap uses correct absolute URLs.
+5. Deploy. Direct URLs and refresh work via `public/_redirects` (SPA fallback to `index.html`).
 
 For **Bun** on Netlify: ensure Bun is available in the build (e.g. use a [Netlify build image](https://docs.netlify.com/configure-builds/build-plugins/#netlify-build-image) that includes Bun, or add a build step to install it). Node version is set to `20` in `netlify.toml` for compatibility.
 
@@ -80,12 +83,14 @@ For **Bun** on Netlify: ensure Bun is available in the build (e.g. use a [Netlif
 | What | Where |
 |------|--------|
 | **Profile & site identity** | `src/data/profile.ts` |
+| **Page headings / copy** | `src/data/headings.ts` |
 | **Projects** | `src/data/projects.ts` |
 | **Experience & skills** | `src/data/experience.ts` |
 | **Certifications** | `src/data/certifications.ts` |
 | **Contact** | `src/data/contact.ts` |
 | **Blog posts** | `src/content/blogs/*.md` |
-| **Resume PDF** | Put file in `public/` (e.g. `public/Resume.pdf`) and set `RESUME_URL` in `src/pages/ResumePage.tsx` |
+| **Project case studies** | `src/content/projects/<category>/*.md` |
+| **Resume PDF** | Put file in `public/` (e.g. `public/resume/Resume.pdf`) and set `resume.pdfSrc` and `resume.pdfTitle` in `src/data/profile.ts` |
 
 ---
 
@@ -93,12 +98,15 @@ For **Bun** on Netlify: ensure Bun is available in the build (e.g. use a [Netlif
 
 ```
 src/
-├── data/           # Profile, projects, experience, certifications, contact
-├── content/blogs/  # Markdown blog posts
+├── config/        # Site config (e.g. site URL)
+├── data/          # Profile, projects, experience, certifications, contact, headings
+├── content/
+│   ├── blogs/     # Markdown blog posts
+│   └── projects/  # Markdown project case studies (by category)
 ├── pages/         # Route-level pages (Home, Projects, Experience, Blogs, Resume, Contact)
-├── shared/        # Layout (header, footer), UI components, motion (Reveal, PageTransition)
+├── shared/        # Layout (header, footer), UI components, motion (Reveal, PageTransition), SEO (PageMeta)
 ├── contexts/      # Theme (e.g. ThemeContext)
-├── lib/           # Blog loading (frontmatter, etc.)
+├── lib/           # Blog/project loading (frontmatter, etc.)
 ├── router/        # AnimatedRoutes
 └── types.ts       # Shared TypeScript types
 ```

@@ -1,8 +1,3 @@
-/**
- * Shared YAML frontmatter parser for Markdown content.
- * Used by blogs and projects; validates and applies sensible defaults.
- */
-
 export function stripQuotes(s: string): string {
   const t = s.trim();
   if (

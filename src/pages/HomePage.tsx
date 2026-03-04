@@ -5,7 +5,6 @@ import { PageMeta } from "@/shared/seo/PageMeta";
 import { profile } from "@/data/profile";
 import { Reveal } from "@/shared/motion/Reveal";
 import { getProjectsByCategory } from "@/lib/projects";
-import { Card } from "@/shared/ui/Card";
 import { headings } from "@/data/headings";
 import { skills } from "@/data/experience";
 import { HeroPortrait, ButtonLink } from "@/shared/ui";
