@@ -120,6 +120,53 @@ body {
   background-size: 64px 64px;
 }
 
+/* Mobile menu: same gradient as page background, subtle grid, primary accent */
+.mobile-menu-glass {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 1rem 1rem;
+  background: var(--gradient-bg);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-top: 0;
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    0 0 48px -12px rgba(37, 99, 235, 0.18);
+}
+.mobile-menu-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+.mobile-menu-glass::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-primary) 50%, transparent 100%);
+  opacity: 0.9;
+}
+.dark .mobile-menu-glass {
+  background: var(--gradient-bg);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 48px -12px rgba(37, 99, 235, 0.25);
+}
+.dark .mobile-menu-glass::before {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+}
+
 /* Blog featured card: soft glow behind the card */
 .blog-featured-glow {
   box-shadow:

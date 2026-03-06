@@ -15,6 +15,20 @@ const navigation: { to: string; label: string; end?: boolean }[] = [
   { to: "/contact", label: "Contact" },
 ];
 
+const overlayTransition = { duration: 0.28, ease: [0.32, 0.72, 0, 1] as const };
+const panelSpring = { type: "spring" as const, stiffness: 380, damping: 30 };
+const panelExit = { duration: 0.22, ease: [0.32, 0.72, 0, 1] as const };
+const navContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.045, delayChildren: 0.12 },
+  },
+};
+const navItemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -89,48 +103,59 @@ export function SiteHeader() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden"
+            transition={overlayTransition}
+            className="fixed inset-0 z-[100] md:hidden"
           >
-            <div
-              className="fixed inset-0 z-40 bg-ink/20 backdrop-blur-sm"
+            <fm.div
+              className="absolute inset-0 bg-ink/35 backdrop-blur-md"
               onClick={() => setMobileOpen(false)}
               aria-hidden
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={overlayTransition}
             />
             <fm.div
-              initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: 8, filter: "blur(6px)" }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed left-0 right-0 top-16 z-50 bg-white/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:bg-transparent dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06),0_4px_16px_-2px_rgba(0,0,0,0.4)]"
+              initial={{ opacity: 0, y: -24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1, transition: panelSpring }}
+              exit={{ opacity: 0, y: -16, scale: 0.98, transition: panelExit }}
+              className="mobile-menu-glass absolute left-0 right-0 top-16 z-10"
             >
-              <Container className="py-4">
-                <div className="grid gap-1">
+              <Container className="relative z-10 py-4">
+                <fm.div
+                  className="grid gap-1"
+                  variants={navContainerVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   {navigation.map((item) => (
-                    <NavLink
-                      key={item.to}
-                      to={item.to}
-                      onClick={() => setMobileOpen(false)}
-                      end={item.end ?? item.to === "/"}
-                      className={({ isActive }) =>
-                        [
-                          "rounded-xl px-3 py-2 text-sm font-medium ring-1 transition",
-                          isActive
-                            ? "bg-primary/12 text-primary ring-primary/30"
-                            : "text-ink-light ring-transparent hover:bg-ink/[0.08] hover:text-ink",
-                        ].join(" ")
-                      }
-                    >
-                      {item.label}
-                    </NavLink>
+                    <fm.div key={item.to} variants={navItemVariants}>
+                      <NavLink
+                        to={item.to}
+                        onClick={() => setMobileOpen(false)}
+                        end={item.end ?? item.to === "/"}
+                        className={({ isActive }) =>
+                          [
+                            "block rounded-xl px-3 py-2 text-sm font-medium ring-1 transition",
+                            isActive
+                              ? "bg-primary/12 text-primary ring-primary/30"
+                              : "text-ink ring-transparent hover:bg-ink/[0.08] hover:text-ink",
+                          ].join(" ")
+                        }
+                      >
+                        {item.label}
+                      </NavLink>
+                    </fm.div>
                   ))}
-                  <a
+                  <fm.a
                     href={`mailto:${profile.email}`}
-                    className="mt-2 rounded-xl px-3 py-2 text-sm text-ink-light ring-1 ring-line transition hover:bg-ink/[0.08] hover:text-ink"
+                    onClick={() => setMobileOpen(false)}
+                    className="mt-2 block rounded-xl px-3 py-2 text-sm text-ink ring-1 ring-line transition hover:bg-ink/[0.08] hover:text-ink"
+                    variants={navItemVariants}
                   >
                     Email
-                  </a>
-                </div>
+                  </fm.a>
+                </fm.div>
               </Container>
             </fm.div>
           </fm.div>

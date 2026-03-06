@@ -1,4 +1,5 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import { SiteHeader } from "@/shared/layout/SiteHeader";
 import { SiteFooter } from "@/shared/layout/SiteFooter";
 import { ScrollToTop } from "@/shared/layout/ScrollToTop";
@@ -18,7 +19,15 @@ function GlobalPageBackground() {
   );
 }
 
+const footerTransition = {
+  delay: 0.32,
+  duration: 0.28,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
 export function SiteLayout() {
+  const location = useLocation();
+
   return (
     <div className="relative flex min-h-dvh flex-col">
       <GlobalPageBackground />
@@ -26,7 +35,14 @@ export function SiteLayout() {
       <main className="flex-1 pb-16">
         <Outlet />
       </main>
-      <SiteFooter />
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={footerTransition}
+      >
+        <SiteFooter />
+      </motion.div>
       <ScrollToTop />
     </div>
   );
