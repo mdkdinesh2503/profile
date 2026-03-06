@@ -60,8 +60,7 @@ export function HomePage() {
         path="/"
         ogType="profile"
       />
-      {/* Hero */}
-      <section className="relative overflow-x-hidden pt-14 md:pt-20">
+      <section className="relative overflow-x-clip pt-14 md:pt-20">
         <Container>
           <div className="flex flex-col-reverse items-start gap-10 md:grid md:grid-cols-[1fr_360px] md:gap-14">
             <div className="max-w-2xl">

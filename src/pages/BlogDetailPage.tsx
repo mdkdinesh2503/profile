@@ -73,7 +73,7 @@ export function BlogDetailPage() {
   return (
     <>
       <PageMeta
-        title={blog.title}
+        title={`${blog.slug}`}
         description={blog.summary || `${blog.title} – engineering notes`}
         path={`/blogs/${blog.slug}`}
         ogType="article"

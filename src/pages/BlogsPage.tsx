@@ -187,7 +187,7 @@ export function BlogsPage() {
   return (
     <section className="relative pt-12 md:pt-16">
       <PageMeta
-        title={headings.blogs.title}
+        title={headings.blogs.eyebrow}
         description={headings.blogs.description}
         path="/blogs"
       />

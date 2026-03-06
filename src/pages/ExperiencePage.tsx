@@ -46,7 +46,7 @@ export function ExperiencePage() {
   return (
     <section className="pt-12 md:pt-16">
       <PageMeta
-        title={headings.experience.title}
+        title={headings.experience.eyebrow}
         description={headings.experience.description}
         path="/experience"
       />

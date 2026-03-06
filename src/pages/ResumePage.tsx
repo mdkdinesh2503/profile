@@ -11,7 +11,7 @@ export function ResumePage() {
   return (
     <section className="pt-12 md:pt-16">
       <PageMeta
-        title={headings.resume.title}
+        title={headings.resume.eyebrow}
         description={headings.resume.description}
         path="/resume"
       />

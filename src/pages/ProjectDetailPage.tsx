@@ -64,7 +64,7 @@ export function ProjectDetailPage() {
   return (
     <>
       <PageMeta
-        title={project.name}
+        title={project.slug}
         description={project.summary || project.context || `${project.name} – case study`}
         path={`/projects/${project.slug}`}
         ogType="article"

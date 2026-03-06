@@ -205,7 +205,7 @@ export function ProjectsPage() {
   return (
     <div className="relative pt-12 md:pt-16">
       <PageMeta
-        title={headings.selectedWork.title}
+        title={headings.selectedWork.eyebrow}
         description={headings.selectedWork.description}
         path="/projects"
       />

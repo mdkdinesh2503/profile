@@ -35,7 +35,7 @@ export function ContactPage() {
   return (
     <section className="relative pt-12 md:pt-16 overflow-hidden">
       <PageMeta
-        title={headings.contact.title}
+        title={headings.contact.eyebrow}
         description={headings.contact.description}
         path="/contact"
       />
