@@ -160,10 +160,10 @@ export const skills: SkillGroup[] = [
       "REST",
     ],
   },
-  { group: "Data", items: ["PostgreSQL", "MySQL", "DynamoDB", "MongoDB"] },
+  { group: "Data", items: ["PostgreSQL", "MySQL", "DynamoDB"] },
   { group: "Infra", items: ["Redis (caching)"] },
   {
     group: "Tools",
-    items: ["Git", "Bitbucket", "GitHub", "GitLab", "Netlify"],
+    items: ["Git", "BloomRPC", "Postman", "Bitbucket", "GitHub", "GitLab", "Netlify"],
   },
 ];
