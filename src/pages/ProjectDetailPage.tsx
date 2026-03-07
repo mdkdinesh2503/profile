@@ -134,10 +134,10 @@ export function ProjectDetailPage() {
             </Reveal>
 
             <Reveal delay={0.02}>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <GlassCard className="flex-1 min-w-0" blogStyle accent="top" panelClassName="flex flex-wrap items-center gap-3 px-4 py-3.5 sm:px-5">
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+                <GlassCard className="min-w-0 flex-1 sm:min-w-0" blogStyle accent="top" panelClassName="flex flex-col gap-3 px-4 py-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:px-5">
                     <span className="flex items-center gap-2 text-sm text-muted-1">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <Briefcase className="h-4 w-4" aria-hidden />
                       </span>
                       <span className="font-semibold text-ink">
@@ -146,70 +146,72 @@ export function ProjectDetailPage() {
                           : "Case study"}
                       </span>
                     </span>
-                    {(project.role || project.timeline || project.year || project.demoStack || project.originalStack) ? (
-                      <>
-                        {project.role ? (
-                          <>
-                            <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                            <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
-                              {project.role}
-                            </span>
-                          </>
-                        ) : null}
-                        {project.timeline ? (
-                          <>
-                            <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                            <span className="flex items-center gap-1.5 rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
-                              <Calendar className="h-3.5 w-3.5" aria-hidden />
-                              {project.timeline}
-                            </span>
-                          </>
-                        ) : null}
-                        {project.year ? (
-                          <>
-                            <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                            <span className="flex items-center gap-1.5 rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
-                              <CalendarDays className="h-3.5 w-3.5" aria-hidden />
-                              {project.year}
-                            </span>
-                          </>
-                        ) : null}
-                        {project.demoStack ? (
-                          <>
-                            <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                            <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10" title="Demo">
-                              Demo: {project.demoStack}
-                            </span>
-                          </>
-                        ) : null}
-                        {project.originalStack ? (
-                          <>
-                            <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                            <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10" title="Original / Code">
-                              Original: {project.originalStack}
-                            </span>
-                          </>
-                        ) : null}
-                      </>
-                    ) : null}
-                    {project.stackNote ? (
-                      <>
-                        <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-                        <span className="text-xs text-muted-2">{project.stackNote}</span>
-                      </>
-                    ) : null}
+                    <div className="flex flex-wrap items-center gap-2 sm:contents">
+                      {(project.role || project.timeline || project.year || project.demoStack || project.originalStack) ? (
+                        <>
+                          {project.role ? (
+                            <>
+                              <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                              <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
+                                {project.role}
+                              </span>
+                            </>
+                          ) : null}
+                          {project.timeline ? (
+                            <>
+                              <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                              <span className="flex items-center gap-1.5 rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
+                                <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                                {project.timeline}
+                              </span>
+                            </>
+                          ) : null}
+                          {project.year ? (
+                            <>
+                              <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                              <span className="flex items-center gap-1.5 rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
+                                <CalendarDays className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                                {project.year}
+                              </span>
+                            </>
+                          ) : null}
+                          {project.demoStack ? (
+                            <>
+                              <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                              <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10" title="Demo">
+                                Demo: {project.demoStack}
+                              </span>
+                            </>
+                          ) : null}
+                          {project.originalStack ? (
+                            <>
+                              <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                              <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10" title="Original / Code">
+                                Original: {project.originalStack}
+                              </span>
+                            </>
+                          ) : null}
+                        </>
+                      ) : null}
+                      {project.stackNote ? (
+                        <>
+                          <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
+                          <span className="text-xs text-muted-2">{project.stackNote}</span>
+                        </>
+                      ) : null}
+                    </div>
                 </GlassCard>
                 {(project.category === "academic" || project.category === "self-learn") &&
                 (project.demoUrl || project.repoUrl) ? (
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex w-full shrink-0 gap-2 sm:w-auto">
                     {project.demoUrl ? (
                       <a
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line transition-all hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10"
+                        className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line transition-all hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 sm:flex-initial"
                       >
-                        <ExternalLink className="h-4 w-4" aria-hidden />
+                        <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
                         View
                       </a>
                     ) : null}
@@ -218,9 +220,9 @@ export function ProjectDetailPage() {
                         href={project.repoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line transition-all hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10"
+                        className="inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-xl border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink ring-1 ring-line transition-all hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 sm:flex-initial"
                       >
-                        <Code className="h-4 w-4" aria-hidden />
+                        <Code className="h-4 w-4 shrink-0" aria-hidden />
                         Code
                       </a>
                     ) : null}
