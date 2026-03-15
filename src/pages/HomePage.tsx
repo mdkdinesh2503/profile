@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { PageMeta } from "@/shared/seo/PageMeta";
@@ -52,6 +53,12 @@ export function HomePage() {
     FEATURED_PER_SECTION,
   );
 
+  const heroImageHref = profile.avatar
+    ? profile.avatar.startsWith("./")
+      ? profile.avatar.slice(1)
+      : profile.avatar
+    : null;
+
   return (
     <>
       <PageMeta
@@ -60,6 +67,11 @@ export function HomePage() {
         path="/"
         ogType="profile"
       />
+      {heroImageHref && (
+        <Helmet>
+          <link rel="preload" as="image" href={heroImageHref} />
+        </Helmet>
+      )}
       <section className="relative overflow-x-clip pt-14 md:pt-20">
         <Container>
           <div className="flex flex-col-reverse items-start gap-10 md:grid md:grid-cols-[1fr_360px] md:gap-14">

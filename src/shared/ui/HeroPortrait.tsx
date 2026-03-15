@@ -18,6 +18,7 @@ export function HeroPortrait({
   yearsExperience,
 }: HeroPortraitProps) {
   const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const hasImage = Boolean(src?.trim());
 
   const initialsBlock = useMemo(() => {
@@ -63,16 +64,21 @@ export function HeroPortrait({
 
         <div className="relative p-3">
           <div className="relative aspect-[4/5] w-[260px] overflow-hidden rounded-[22px] bg-ink/[0.05] shadow-glass-inset md:w-[320px]">
-            {hasImage && !failed ? (
+            {/* Placeholder (initials) shown until image loads or on error */}
+            {(!loaded || !hasImage || failed) && initialsBlock}
+            {hasImage && !failed && (
               <img
                 src={src}
                 alt={alt}
-                className="h-full w-full object-cover"
+                className={cx(
+                  "absolute inset-0 h-full w-full object-cover transition-opacity duration-300",
+                  loaded ? "opacity-100" : "opacity-0",
+                )}
                 loading="eager"
+                fetchPriority="high"
+                onLoad={() => setLoaded(true)}
                 onError={() => setFailed(true)}
               />
-            ) : (
-              initialsBlock
             )}
 
             {/* Years experience badge */}

@@ -96,7 +96,7 @@ export const experience: ExperienceItem[] = [
     logo: "./experience/Aretedge.jpg",
     title: "Software Engineer",
     location: "Hyderabad, Telangana, India · On-site",
-    domains: ["Gaming", "Web3"],
+    domains: ["Gaming"],
     startDate: "Aug 2024",
     endDate: null,
     summary:
@@ -164,6 +164,6 @@ export const skills: SkillGroup[] = [
   { group: "Infra", items: ["Redis (caching)"] },
   {
     group: "Tools",
-    items: ["Git", "BloomRPC", "Postman", "Bitbucket", "GitHub", "GitLab", "Netlify"],
+    items: ["Git", "BloomRPC", "Postman", "Whimsical"],
   },
 ];
