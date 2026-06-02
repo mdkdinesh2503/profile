@@ -68,7 +68,7 @@ function formatDateRange(
 
 /** Duration only, e.g. "1 yr 2 mos", for use with a calendar icon. */
 export function getDisplayDuration(item: ExperienceItem): string {
-  const months = getItemDurationMonths(item);
+  const months = getItemDurationMonths(item) + 1;
   return formatDuration(months);
 }
 
@@ -131,7 +131,7 @@ export const experience: ExperienceItem[] = [
       {
         title: "Frontend Developer",
         employmentType: "Apprenticeship",
-        timeframe: "Apr 2023 — Jun 2024 · 1 yr 2 mos",
+        timeframe: "Apr 2023 — Jun 2024 · 1 yr 3 mos",
       },
       {
         title: "Frontend Developer",
