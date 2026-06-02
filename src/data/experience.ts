@@ -77,10 +77,17 @@ export function getDisplayDateRange(item: ExperienceItem): string {
   return formatDateRange(item.startDate, item.endDate);
 }
 
-export function getYearsExperience(items: ExperienceItem[]): string {
-  const total = items
+export function getYearsExperience(
+  items: ExperienceItem[],
+  includeInternship: boolean = false,
+): string {
+  let total = items
     .filter((item) => !EXCLUDED_FROM_YEARS.has(item.company))
     .reduce((sum, item) => sum + getItemDurationMonths(item) / 12, 0);
+
+  if (includeInternship) {
+    total += 3 / 12;
+  }
 
   if (total < 1) return "1";
   const full = Math.floor(total);
@@ -94,11 +101,11 @@ export const experience: ExperienceItem[] = [
   {
     company: "Aretedge Innovations Pvt Ltd",
     logo: "./experience/Aretedge.jpg",
-    title: "Software Engineer",
+    title: "Associate Software Engineer",
     location: "Hyderabad, Telangana, India · On-site",
     domains: ["Gaming"],
     startDate: "Aug 2024",
-    endDate: null,
+    endDate: "May 2026",
     summary:
       "Full-stack work across frontend, backend, and data layers. Focused on shipping end-to-end features with clear system behavior and measurable performance improvements.",
     outcomes: [
@@ -115,12 +122,12 @@ export const experience: ExperienceItem[] = [
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: ["Software Development"],
     startDate: "Sep 2022",
-    endDate: "Dec 2023",
+    endDate: "Jun 2024",
     roles: [
       {
         title: "Frontend Developer",
         employmentType: "Apprenticeship",
-        timeframe: "Apr 2023 — Dec 2023 · 9 mos",
+        timeframe: "Apr 2023 — Jun 2024 · 9 mos",
       },
       {
         title: "Frontend Developer",
@@ -144,26 +151,33 @@ export const experience: ExperienceItem[] = [
 
 export const skills: SkillGroup[] = [
   {
-    group: "Frontend",
-    items: ["Angular", "React", "Next.js", "TypeScript", "Tailwind CSS"],
+    group: "Languages",
+    items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"]
   },
   {
-    group: "Backend",
+    group: "Backend & APIs",
     items: [
-      "Java",
-      "Rust",
-      "Node.js",
       "NestJS",
       "Spring Boot",
-      "gRPC",
-      "GraphQL",
+      "Node.js",
       "REST",
+      "GraphQL",
+      "gRPC",
+      "Microservices"
     ],
   },
-  { group: "Data", items: ["PostgreSQL", "MySQL", "DynamoDB"] },
-  { group: "Infra", items: ["Redis (caching)"] },
   {
-    group: "Tools",
-    items: ["Git", "BloomRPC", "Postman", "Whimsical"],
+    group: "Frontend",
+    items: ["Angular", "React", "Next.js", "Tailwind CSS"],
   },
+  { group: "Databases", items: ["PostgreSQL", "DynamoDB", "MySQL", "Redis"] },
+  {
+    group: "Tools & Technologies",
+    items: ["Git", "GraphQL Gateway", "Redis Streams"],
+  },
+  {
+    group: "Architecture & Concepts",
+    items: ["Distributed Systems", "Event-Driven Architecture", "Concurrency Control", "Scalability", "RBAC",
+      "Authentication & Authorization", "API Gateway", "Caching", "Database Design", "System Design"]
+  }
 ];

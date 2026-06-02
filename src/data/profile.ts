@@ -24,7 +24,7 @@ export const profile: Profile = {
     subhead:
       "I design and ship end-to-end features across UI, APIs, and data layers — focusing on clear architecture, maintainable business logic, and performance-aware implementation.",
     technologiesLabel: "Technologies I work with",
-    yearsExperience: getYearsExperience(experience),
+    yearsExperience: getYearsExperience(experience, true),
   },
   howICanHelp: {
     cards: [

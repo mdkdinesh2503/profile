@@ -112,7 +112,15 @@ export function getProjectsByCategory(
 
 /** Academic + self-learn projects (same section, View/Code links) */
 export function getLearningProjects(): ProjectPostMeta[] {
-  return getAllProjects().filter(
+  const list = getAllProjects().filter(
     (p) => p.category === "academic" || p.category === "self-learn",
   );
+  return list.sort((a, b) => {
+    const ya = sortYear(a);
+    const yb = sortYear(b);
+    if (ya && yb) return yb.localeCompare(ya);
+    if (ya) return -1;
+    if (yb) return 1;
+    return 0;
+  });
 }

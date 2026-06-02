@@ -242,7 +242,13 @@ export function ExperiencePage() {
           />
 
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {profile.certifications.map((c, idx) => {
+            {[...profile.certifications]
+              .sort((a, b) => {
+                if (!a.year) return 1;
+                if (!b.year) return -1;
+                return new Date(b.year).getTime() - new Date(a.year).getTime();
+              })
+              .map((c, idx) => {
               const selected = certModalOpen && idx === selectedCertIdx;
               const dateBadge = c.year ? `${c.year.slice(0, 3)} ${c.year.slice(-4)}` : "";
               return (

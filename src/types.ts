@@ -19,7 +19,7 @@ export type ExperienceItem = {
 };
 
 export type SkillGroup = {
-  group: "Frontend" | "Backend" | "Data" | "Infra" | "Tools";
+  group: string;
   items: string[];
 };
 
