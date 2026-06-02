@@ -109,10 +109,14 @@ export const experience: ExperienceItem[] = [
     summary:
       "Full-stack work across frontend, backend, and data layers. Focused on shipping end-to-end features with clear system behavior and measurable performance improvements.",
     outcomes: [
-      "Core workflows for tournaments, challenges, casual games, membership, events, and leaderboard.",
-      "APIs (gRPC, GraphQL, REST) for game services, events, and user features.",
-      "Redis caching and performance improvements under production constraints.",
-      "Postgres and DynamoDB for tournaments, events, leaderboard; schema and data modeling.",
+      "Owned end-to-end design of Challenge Module, including backend workflows, database design, and API orchestration.",
+      "Architected leaderboard allocation systems for ranking computation, updates, and concurrent score aggregation.",
+      "Maintained gaming platform features (tournaments, matchmaking, rewards) serving 20K+ active users.",
+      "Designed scalable microservices using Rust, Java, and NestJS for modular, independent deployment.",
+      "Implemented REST, GraphQL, and gRPC APIs for low-latency and cross-service communication.",
+      "Optimized PostgreSQL and DynamoDB schemas for transactional integrity and real-time read-heavy workloads.",
+      "Improved performance using Redis caching, rate limiting, and API gateway patterns.",
+      "Managed concurrency-sensitive reward processing and event-driven workflows ensuring system reliability.",
     ],
   },
   {
@@ -127,7 +131,7 @@ export const experience: ExperienceItem[] = [
       {
         title: "Frontend Developer",
         employmentType: "Apprenticeship",
-        timeframe: "Apr 2023 — Jun 2024 · 9 mos",
+        timeframe: "Apr 2023 — Jun 2024 · 1 yr 2 mos",
       },
       {
         title: "Frontend Developer",
@@ -141,10 +145,10 @@ export const experience: ExperienceItem[] = [
       },
     ],
     outcomes: [
-      "Completed a successful internship with hands-on full-stack exposure and enterprise delivery workflows.",
-      "Successfully completed 2–3 projects using Angular, Java, and MySQL with focus on correctness and usability.",
-      "Collaborated with the team on student/admin portal and e-commerce flows; strengthened API design and debugging skills.",
-      "Demonstrated proficiency in front-end development and actively participated in project planning and communication.",
+      "Completed comprehensive enterprise training in Angular, Java, Node.js, and MySQL, applying skills to internal full-stack applications.",
+      "Developed and integrated Angular frontends with Java backend APIs, adhering to strict SDLC and enterprise coding standards.",
+      "Collaborated on multi-faceted projects, including student/admin portals and e-commerce flows, focusing on correctness, usability, and API design.",
+      "Contributed to UI/UX improvements, active debugging, and feature development within agile project planning workflows.",
     ],
   },
 ];
