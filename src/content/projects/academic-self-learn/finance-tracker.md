@@ -1,21 +1,27 @@
 ---
 name: "Finance Tracker"
-summary: "Personal finance tracker built with Next.js App Router and PostgreSQL with advanced categorization, rules engine, and row-level security."
+summary: "Full-stack expense management application with real-time data synchronization and direct database integration using Supabase."
 category: "academic"
 year: "2024"
 demoStack: ""
-originalStack: "Next.js, Tailwind CSS, PostgreSQL"
-tags: ["nextjs", "postgresql", "finance", "full-stack", "react"]
+originalStack: "Next.js, Tailwind CSS, Supabase, PostgreSQL"
+tags: ["nextjs", "supabase", "finance", "full-stack", "react", "postgresql"]
 image: "/default/Blog.svg"
-demoUrl: "https://mdkdinesh2503.netlify.app/satt"
+demoUrl: "https://mdkdinesh2503.netlify.app/finance-tracker"
 repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
 ---
 
-## About
+## Overview
 
-This project is a comprehensive, self-hosted personal finance management application. It is designed to give you complete control over your financial data with a fast, modern interface. It allows you to track expenses, income, and investments, all while supporting advanced categorization rules and robust analytics.
+Built a comprehensive, full-stack expense management application designed for real-time financial tracking and analytics. By directly integrating Supabase for real-time data synchronization, it offers users an interactive dashboard, deep categorization, and time-based aggregation for robust financial health monitoring.
 
-## Features
+## Key Accomplishments
+
+- **Full-Stack Architecture**: Built an expense management application with real-time data synchronization and direct database integration using Supabase.
+- **Advanced Features**: Implemented transaction tracking, hierarchical categorization, automated rules engine, and time-based aggregation capabilities.
+- **API-Driven UI/UX**: Developed highly responsive user interfaces and API-driven workflows leveraging Next.js App Router for seamless personal financial data management.
+
+## Core Features
 
 - **Secure Authentication**: Full user login, registration, and session management.
 - **Interactive Dashboard**: A high-level, visual overview of your financial health.
@@ -29,13 +35,9 @@ This project is a comprehensive, self-hosted personal finance management applica
 - **Bulk Data Import**: Easily import historical transactions from CSV files.
 - **Row-Level Security (RLS)**: Enforces strict data isolation at the database level to ensure privacy.
 
-## Architecture
-
-The application leverages Next.js App Router for full-stack capabilities, utilizing React Server Components and Server Actions to interact securely with the PostgreSQL database. The database is designed with strong referential integrity, supporting multi-dimensional transaction tagging and row-level security.
-
 ## Tech Stack
 
 - **Framework**: Next.js (App Router, Server Components, Server Actions)
-- **Database**: PostgreSQL (No ORM)
+- **Database**: PostgreSQL (No ORM), Supabase
 - **State Management**: Zustand
 - **Styling**: Tailwind CSS, Radix UI

@@ -15,6 +15,7 @@ export const profile: Profile = {
   },
   resume: {
     pdfSrc: "./resume/Dinesh_Resume.pdf",
+    // pdfSrc: "./resume/Final_Resume.pdf",
     pdfTitle: "Dinesh Resume",
   },
   hero: {
@@ -24,7 +25,7 @@ export const profile: Profile = {
     subhead:
       "I design and ship end-to-end features across UI, APIs, and data layers — focusing on clear architecture, maintainable business logic, and performance-aware implementation.",
     technologiesLabel: "Technologies I work with",
-    yearsExperience: getYearsExperience(experience, true),
+    yearsExperience: getYearsExperience(experience, false),
   },
   howICanHelp: {
     cards: [

@@ -1,42 +1,46 @@
 ---
-name: "E-commerce (Shopie)"
-summary: "Online shopping website—static demo in HTML/CSS/JS and Spring Boot version with product listing, cart, and admin flows."
+name: "E-commerce System"
+summary: "Extensible e-commerce platform featuring product management, order processing, and a layered backend architecture using Spring Boot."
 category: "academic"
 year: "2024"
 demoStack: "HTML, CSS, JS"
-originalStack: "Java, Spring Boot"
-tags: ["ecommerce", "full-stack", "spring-boot", "java"]
+originalStack: "Java, Spring Boot, JavaScript"
+tags: ["ecommerce", "full-stack", "spring-boot", "java", "javascript"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Ecom-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Ecom-V2"
 ---
 
-## About
+## Overview
 
-E-commerce site (Shopie) in two versions: an HTML/CSS/JS prototype for layout and flows, and a Java Spring Boot version with product listing, cart, and admin flows in place.
+Architected an online shopping ecosystem that evolved from a static prototype to a robust, backend-driven platform using Java and Spring Boot. The system incorporates layered architectures and modular service separation, designed for extensibility and scale.
 
-## Features
+## Key Accomplishments
+
+- **Layered Architecture**: Developed e-commerce workflows leveraging a layered backend architecture and strict modular service separation principles.
+- **Business Logic Implementation**: Engineered core product management, shopping cart operations, order processing, and administrative functionalities using Spring Boot.
+- **API & Extensibility**: Designed robust backend services and RESTful APIs tailored to support scalable, extensible application features.
+
+## Core Features
 
 - **Version 1 (HTML, CSS, JS)**
-  - Static prototype to validate layout and user flows for the online shopping site
-  - Demo hosted on GitHub Pages for sharing
+  - Static prototype built to validate intuitive e-commerce layouts and user flows.
+  - Hosted and shared via GitHub Pages.
 
 - **Version 2 (Java, Spring Boot)**
-  - Product listing and browsing
-  - Shopping cart and checkout flows
-  - Admin flows for managing products and orders
-  - Backend and data persistence with Spring Boot
+  - Dynamic product catalog listing and browsing capabilities.
+  - End-to-end shopping cart integration and seamless checkout flows.
+  - Administrative dashboard for comprehensive product and order management.
+  - Reliable data persistence integrated with Spring Boot components.
 
 ## Implementation history
 
-- **Ecom-V1**: Static prototype in HTML, CSS, and JavaScript to validate the layout and flows for the e-commerce concept.
-- **Ecom-V2**: Web application with Java Spring Boot backend, implementing product listing, cart, and admin management with data persistence.
+- **Ecom-V1**: Initial layout validation using HTML, CSS, and JS to test shopping and cart interactions.
+- **Ecom-V2**: Fully functional backend web application developed with Java and Spring Boot, establishing solid data persistence for product management.
 
-## Demos & code
+## Demos & Code
 
 - **HTML, CSS & JS** (Ecom-V1) — static prototype for layout and flows  
   - [Live demo](https://mdkdinesh2503.github.io/Ecom-V1/) · [Source code](https://github.com/mdkdinesh2503/Ecom-V1)
 - **Java, Spring Boot** (Ecom-V2) — e-commerce app with Spring Boot backend  
   - [Source code](https://github.com/mdkdinesh2503/Ecom-V2)
-
-The **View** and **Code** buttons above link to the HTML prototype demo and the Spring Boot repository.

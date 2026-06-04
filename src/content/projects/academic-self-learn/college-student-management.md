@@ -1,55 +1,52 @@
 ---
-name: "College Website & Student Management System"
-summary: "College institute website plus student and admin portal—demo in HTML/CSS; full system in Angular with MySQL and a Java/MySQL version."
+name: "Student Management System"
+summary: "Academic management platform supporting attendance, examinations, fee management, and student administration workflows."
 category: "academic"
 year: "2023"
 demoStack: "HTML, CSS, JS"
-originalStack: "Angular | Java, MySQL"
-tags: ["full-stack", "angular", "mysql", "student-management"]
+originalStack: "Angular, Java, Node.js, MySQL"
+tags: ["full-stack", "angular", "mysql", "java", "nodejs"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/SMS-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/SMS-V2"
 ---
 
-## About
+## Overview
 
-College institute website and student/teacher management system. Started with an HTML/CSS/JS prototype, then the full application in Angular with MySQL, and a backend-focused Java + MySQL version.
+Engineered an end-to-end academic management platform featuring dedicated portals for students, teachers, and administrators. Starting from an interactive frontend prototype, the system evolved into a full-fledged Angular application backed by a scalable, relational database architecture (MySQL).
 
-## Features
+## Key Accomplishments
+
+- **Academic Workflows**: Developed a platform supporting comprehensive attendance tracking, examination logistics, fee management, and student administration workflows.
+- **Security & Data Modeling**: Implemented Role-Based Access Control (RBAC) and robust relational database designs to ensure secure data access and isolation.
+- **Modular Architecture**: Built highly modular frontend and backend components to support maintainable application development and easy feature extension.
+
+## Core Features
 
 - **Student view**
   - View personal student details
   - Mark and track daily attendance
   - View class timetable
-  - View college fee details and (in the full system) initiate fee payment flows
+  - View college fee details and initiate fee payment flows
   - View exam details such as exam hall allocations, exam timetable, and exam fee information
   - Access a dedicated exam results page
   - Submit queries through an enquiry form
 
 - **Admin / Teacher view**
-  - Dashboard with:
-    - Total number of students
-    - Total number of teachers
-    - Attendance summary for the current day
-  - CRUD operations for:
-    - Student records (create, update, delete)
-    - Timetables
-  - Attendance management with present/absent counts
-  - College fees management with list of paid fees
-  - Exam management:
-    - Exam hall allocation forms
-    - Exam timetable creation
-    - Exam fee payment list
-  - Exam results management (post, update, or delete results; view results)
-  - Parents report form that can trigger an email notification
+  - Dashboard with summary analytics (students, teachers, attendance)
+  - Full CRUD operations for student records and timetables
+  - Attendance management with present/absent tracking
+  - Financial tracking with a list of paid college fees
+  - Comprehensive exam management (allocations, timetables, fee payments, result processing)
+  - Parents report form with email notification capabilities
 
 ## Implementation history
 
-- **Initial demo**: Static prototype in HTML, CSS, and JavaScript to validate the layout and flows for student and admin.
-- **Full web app**: Reimplemented as a full-featured Angular + MySQL application with real CRUD, dashboards, and data persistence.
-- **Backend-focused version**: Later rebuilt core functionality as a Java + MySQL application to focus on backend and database design while keeping similar business logic.
+- **Initial demo**: Static prototype in HTML, CSS, and JavaScript to validate layout and user flows.
+- **Full web app**: Reimplemented as a feature-rich Angular + MySQL application offering real data persistence, CRUD operations, and dashboards.
+- **Backend-focused iteration**: Rebuilt core functionalities as a Java + MySQL application emphasizing backend patterns and database design.
 
-## Demos & code
+## Demos & Code
 
 - **HTML, CSS & JS** — static prototype for layout and flows  
   - [Live demo](https://mdkdinesh2503.github.io/SMS-V1/) · [Source code](https://github.com/mdkdinesh2503/SMS-V1)
@@ -61,5 +58,3 @@ College institute website and student/teacher management system. Started with an
 > **Demo login**  
 > - **Student view**: username `mdk`, password `mdk`  
 > - **Admin view**: username `admin`, password `admin`
-
-The **View** and **Code** buttons above link to the HTML prototype demo and the Angular repository.

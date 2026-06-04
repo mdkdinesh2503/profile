@@ -47,3 +47,8 @@ A **Contact** page with a way for visitors to reach me—e.g. email, social link
 - Learned to plan and implement a multi-page portfolio without a framework.
 - Gained practice in responsive layout and clean, maintainable markup.
 - Structured content around clear sections: about, skills, work, projects, and contact.
+
+## Demos & Code
+
+- **HTML, CSS & JS** — static portfolio implementation  
+  - [Live demo](https://mdkdinesh2503.github.io/mdk/) · [Source code](https://github.com/mdkdinesh2503/mdk)

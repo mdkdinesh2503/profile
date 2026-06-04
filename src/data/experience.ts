@@ -21,7 +21,6 @@ const MONTH_LABELS = [
 
 const PRESENT = "Present";
 const DATE_RANGE_SEP = " — ";
-const DURATION_SEP = " · ";
 
 // ─── Date & duration helpers ───────────────────────────────────────────────
 
@@ -90,9 +89,17 @@ export function getYearsExperience(
   }
 
   if (total < 1) return "1";
+
   const full = Math.floor(total);
-  const hasFraction = total - full > 0.001;
-  return hasFraction ? `${full}+` : `${full}`;
+  const fraction = total - full;
+
+  if (fraction >= 0.5) {
+    return `${full}.5+`;
+  } else if (fraction > 0.001) {
+    return `${full}+`;
+  }
+
+  return `${full}`;
 }
 
 // ─── Data ──────────────────────────────────────────────────────────────────
@@ -103,20 +110,21 @@ export const experience: ExperienceItem[] = [
     logo: "./experience/Aretedge.jpg",
     title: "Associate Software Engineer",
     location: "Hyderabad, Telangana, India · On-site",
-    domains: ["Gaming"],
+    domains: ["Gaming and ESports", "Software Development", "Digital Platform Engineering"],
     startDate: "Aug 2024",
     endDate: "May 2026",
     summary:
       "Full-stack work across frontend, backend, and data layers. Focused on shipping end-to-end features with clear system behavior and measurable performance improvements.",
     outcomes: [
-      "Owned end-to-end design of Challenge Module, including backend workflows, database design, and API orchestration.",
-      "Architected leaderboard allocation systems for ranking computation, updates, and concurrent score aggregation.",
-      "Maintained gaming platform features (tournaments, matchmaking, rewards) serving 20K+ active users.",
-      "Designed scalable microservices using Rust, Java, and NestJS for modular, independent deployment.",
-      "Implemented REST, GraphQL, and gRPC APIs for low-latency and cross-service communication.",
-      "Optimized PostgreSQL and DynamoDB schemas for transactional integrity and real-time read-heavy workloads.",
-      "Improved performance using Redis caching, rate limiting, and API gateway patterns.",
-      "Managed concurrency-sensitive reward processing and event-driven workflows ensuring system reliability.",
+      "Owned the end-to-end design and implementation of the Challenge Module, including backend workflows, API orchestration, business logic implementation, and database design.",
+      "Architected leaderboard allocation and ranking systems supporting score computation, rank updates, and concurrency-sensitive aggregation workflows.",
+      "Developed and maintained backend services powering tournaments, matchmaking, rewards, and gaming platform functionality serving 20K+ active users.",
+      "Engineered scalable microservices using Rust, Java, and NestJS, enabling modular deployment and maintainable service-oriented architecture.",
+      "Implemented REST APIs, GraphQL integrations, and gRPC services to support low-latency communication and cross-service interoperability.",
+      "Designed and optimized PostgreSQL and DynamoDB data models for transactional processing and real-time read-heavy workloads.",
+      "Enhanced backend performance through Redis caching strategies, rate limiting mechanisms, and API gateway integration patterns.",
+      "Implemented event-driven workflows and concurrency-aware reward processing systems to improve reliability and consistency across distributed services.",
+      "Collaborated with cross-functional teams to deliver production-ready software features across backend and platform components."
     ],
   },
   {
@@ -124,7 +132,7 @@ export const experience: ExperienceItem[] = [
     logo: "./experience/Aspire_Systems.jpg",
     title: "Frontend Developer",
     location: "Chennai, Tamil Nadu, India · Remote",
-    domains: ["Software Development"],
+    domains: ["Banking/Finance (BFS)", "Retail/Commerce", "Software Development", "Product Engineering"],
     startDate: "Sep 2022",
     endDate: "Jun 2024",
     roles: [
@@ -145,10 +153,10 @@ export const experience: ExperienceItem[] = [
       },
     ],
     outcomes: [
-      "Completed comprehensive enterprise training in Angular, Java, Node.js, and MySQL, applying skills to internal full-stack applications.",
-      "Developed and integrated Angular frontends with Java backend APIs, adhering to strict SDLC and enterprise coding standards.",
-      "Collaborated on multi-faceted projects, including student/admin portals and e-commerce flows, focusing on correctness, usability, and API design.",
-      "Contributed to UI/UX improvements, active debugging, and feature development within agile project planning workflows.",
+      "Completed enterprise-focused training in Java, Angular, Node.js, MySQL, software development practices, and application architecture fundamentals.",
+      "Integrated Angular-based user interfaces with Java backend services and REST APIs following enterprise SDLC processes and coding standards.",
+      "Contributed to feature implementation, debugging, testing, and UI enhancements for internal enterprise applications.",
+      "Participated in software development lifecycle activities including requirement analysis, development, issue resolution, and code reviews."
     ],
   },
 ];
@@ -159,29 +167,45 @@ export const skills: SkillGroup[] = [
     items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"]
   },
   {
-    group: "Backend & APIs",
+    group: "Backend Development & APIs",
     items: [
-      "NestJS",
       "Spring Boot",
+      "NestJS",
       "Node.js",
-      "REST",
+      "REST APIs",
+      "RESTful Services",
       "GraphQL",
       "gRPC",
-      "Microservices"
+      "Microservices",
+      "API Design",
+      "Backend Services",
+      "Service Integration"
     ],
   },
   {
     group: "Frontend",
-    items: ["Angular", "React", "Next.js", "Tailwind CSS"],
+    items: ["Next.js", "React.js", "Angular", "Tailwind CSS"],
   },
   { group: "Databases", items: ["PostgreSQL", "DynamoDB", "MySQL", "Redis"] },
   {
-    group: "Tools & Technologies",
-    items: ["Git", "GraphQL Gateway", "Redis Streams"],
+    group: "Architecture & Engineerings",
+    items: [
+      "Distributed Systems",
+      "Event-Driven Architecture",
+      "Data Modeling",
+      "Database Design",
+      "Scalability",
+      "Concurrency Control",
+      "Authentication",
+      "Authorization",
+      "RBAC",
+      "API Gateway",
+      "Caching",
+      "System Design"
+    ]
   },
   {
-    group: "Architecture & Concepts",
-    items: ["Distributed Systems", "Event-Driven Architecture", "Concurrency Control", "Scalability", "RBAC",
-      "Authentication & Authorization", "API Gateway", "Caching", "Database Design", "System Design"]
+    group: "Tools & Technologies",
+    items: ["Git", "GraphQL Gateway", "Redis Streams"],
   }
 ];
