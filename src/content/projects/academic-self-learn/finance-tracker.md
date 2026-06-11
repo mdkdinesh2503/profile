@@ -1,23 +1,23 @@
 ---
 name: "Finance Tracker"
-summary: "Full-stack expense management application with real-time data synchronization and direct database integration using Supabase."
+summary: "Full-stack expense management application with real-time data synchronization and direct database integration using NeonDB."
 category: "academic"
 year: "2024"
 demoStack: ""
-originalStack: "Next.js, Tailwind CSS, Supabase, PostgreSQL"
-tags: ["nextjs", "supabase", "finance", "full-stack", "react", "postgresql"]
+originalStack: "Next.js, Tailwind CSS, NeonDB, PostgreSQL"
+tags: ["nextjs", "neondb", "finance", "full-stack", "react", "postgresql"]
 image: "/default/Blog.svg"
-demoUrl: "https://mdkdinesh2503.netlify.app/finance-tracker"
+demoUrl: "https://mdk-expense.vercel.app"
 repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
 ---
 
 ## Overview
 
-Built a comprehensive, full-stack expense management application designed for real-time financial tracking and analytics. By directly integrating Supabase for real-time data synchronization, it offers users an interactive dashboard, deep categorization, and time-based aggregation for robust financial health monitoring.
+Built a comprehensive, full-stack expense management application designed for real-time financial tracking and analytics. By directly integrating NeonDB for real-time data synchronization, it offers users an interactive dashboard, deep categorization, and time-based aggregation for robust financial health monitoring.
 
 ## Key Accomplishments
 
-- **Full-Stack Architecture**: Built an expense management application with real-time data synchronization and direct database integration using Supabase.
+- **Full-Stack Architecture**: Built an expense management application with real-time data synchronization and direct database integration using NeonDB.
 - **Advanced Features**: Implemented transaction tracking, hierarchical categorization, automated rules engine, and time-based aggregation capabilities.
 - **API-Driven UI/UX**: Developed highly responsive user interfaces and API-driven workflows leveraging Next.js App Router for seamless personal financial data management.
 
@@ -38,6 +38,6 @@ Built a comprehensive, full-stack expense management application designed for re
 ## Tech Stack
 
 - **Framework**: Next.js (App Router, Server Components, Server Actions)
-- **Database**: PostgreSQL (No ORM), Supabase
+- **Database**: PostgreSQL (No ORM), NeonDB
 - **State Management**: Zustand
 - **Styling**: Tailwind CSS, Radix UI
