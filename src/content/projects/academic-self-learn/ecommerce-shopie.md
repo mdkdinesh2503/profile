@@ -4,8 +4,8 @@ summary: "Extensible e-commerce platform featuring product management, order pro
 category: "academic"
 year: "2024"
 demoStack: "HTML, CSS, JS"
-originalStack: "Java, Spring Boot, JavaScript"
-tags: ["ecommerce", "full-stack", "spring-boot", "java", "javascript"]
+originalStack: "Java, Spring Boot, Spring Data JPA, JavaScript"
+tags: ["ecommerce", "full-stack", "spring-boot", "java", "spring-boot-jpa", "javascript"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Ecom-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Ecom-V2"
@@ -27,7 +27,7 @@ Architected an online shopping ecosystem that evolved from a static prototype to
   - Static prototype built to validate intuitive e-commerce layouts and user flows.
   - Hosted and shared via GitHub Pages.
 
-- **Version 2 (Java, Spring Boot)**
+- **Version 2 (Java, Spring Boot, Spring Boot JPA)**
   - Dynamic product catalog listing and browsing capabilities.
   - End-to-end shopping cart integration and seamless checkout flows.
   - Administrative dashboard for comprehensive product and order management.

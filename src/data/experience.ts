@@ -106,7 +106,8 @@ export function getYearsExperience(
 
 export const experience: ExperienceItem[] = [
   {
-    company: "Aretedge Innovations Pvt Ltd",
+    category: "Professional Experience",
+    company: "Aretedge Innovations Pvt. Ltd.",
     logo: "./experience/Aretedge.jpg",
     title: "Associate Software Engineer",
     location: "Hyderabad, Telangana, India · On-site",
@@ -116,47 +117,47 @@ export const experience: ExperienceItem[] = [
     summary:
       "Full-stack work across frontend, backend, and data layers. Focused on shipping end-to-end features with clear system behavior and measurable performance improvements.",
     outcomes: [
-      "Owned the end-to-end design and implementation of the Challenge Module, including backend workflows, API orchestration, business logic implementation, and database design.",
-      "Architected leaderboard allocation and ranking systems supporting score computation, rank updates, and concurrency-sensitive aggregation workflows.",
-      "Developed and maintained backend services powering tournaments, matchmaking, rewards, and gaming platform functionality serving 20K+ active users.",
-      "Engineered scalable microservices using Rust, Java, and NestJS, enabling modular deployment and maintainable service-oriented architecture.",
-      "Implemented REST APIs, GraphQL integrations, and gRPC services to support low-latency communication and cross-service interoperability.",
-      "Designed and optimized PostgreSQL and DynamoDB data models for transactional processing and real-time read-heavy workloads.",
-      "Enhanced backend performance through Redis caching strategies, rate limiting mechanisms, and API gateway integration patterns.",
-      "Implemented event-driven workflows and concurrency-aware reward processing systems to improve reliability and consistency across distributed services.",
-      "Collaborated with cross-functional teams to deliver production-ready software features across backend and platform components."
+      "Owned the end-to-end design and implementation of the Challenge Module, delivering backend workflows, business logic, API orchestration, and database design.",
+      "Architected leaderboard allocation and ranking systems supporting score computation, rank updates, and concurrency-aware aggregation workflows.",
+      "Delivered backend services supporting tournament management, matchmaking, rewards, and core gaming platform functionality serving more than 20K active users.",
+      "Engineered scalable microservices using Java, Spring Boot, Rust, and NestJS following service-oriented architecture principles for modular deployment and maintainability.",
+      "Designed and integrated RESTful APIs, GraphQL endpoints, and gRPC services to enable efficient communication across distributed services.",
+      "Modeled relational schemas in PostgreSQL while optimizing DynamoDB access patterns for transactional and read-intensive workloads.",
+      "Enhanced service responsiveness through Redis caching, API Gateway integration, and request rate-limiting strategies.",
+      "Built event-driven reward processing workflows with concurrency-aware execution to improve consistency and reliability across distributed services.",
+      "Monitored production services, analyzed application logs, investigated backend issues, and resolved production defects while supporting release activities using Docker, Jenkins, and ArgoCD.",
+      "Collaborated with product managers, QA engineers, and cross-functional teams in Agile Scrum environments through sprint planning, code reviews, defect resolution, and iterative production releases."
     ],
   },
   {
+    category: "Internship Experience",
     company: "Aspire Systems",
     logo: "./experience/Aspire_Systems.jpg",
-    title: "Frontend Developer",
+    title: "Software Engineering Intern",
+    location: "Chennai, Tamil Nadu, India · Remote",
+    domains: ["Banking/Finance (BFS)", "Retail/Commerce", "Software Development", "Product Engineering"],
+    startDate: "Jan 2023",
+    endDate: "Mar 2023",
+    outcomes: [
+      "Developed enterprise application features using Angular, Java, Node.js, and MySQL.",
+      "Integrated Angular frontends with Java backend services and RESTful APIs following enterprise development standards.",
+      "Enhanced application functionality through debugging, testing, issue resolution, and UI improvements.",
+      "Participated in Agile development activities including requirement discussions, peer code reviews, and sprint delivery."
+    ],
+  },
+  {
+    category: "Professional Training",
+    company: "Aspire Systems",
+    logo: "./experience/Aspire_Systems.jpg",
+    title: "Software Engineer Trainee",
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: ["Banking/Finance (BFS)", "Retail/Commerce", "Software Development", "Product Engineering"],
     startDate: "Sep 2022",
     endDate: "Jun 2024",
-    roles: [
-      {
-        title: "Frontend Developer",
-        employmentType: "Apprenticeship",
-        timeframe: "Apr 2023 — Jun 2024 · 1 yr 3 mos",
-      },
-      {
-        title: "Frontend Developer",
-        employmentType: "Internship",
-        timeframe: "Jan 2023 — Mar 2023 · 3 mos",
-      },
-      {
-        title: "Frontend Developer",
-        employmentType: "Apprenticeship",
-        timeframe: "Sep 2022 — Dec 2022 · 4 mos",
-      },
-    ],
     outcomes: [
-      "Completed enterprise-focused training in Java, Angular, Node.js, MySQL, software development practices, and application architecture fundamentals.",
-      "Integrated Angular-based user interfaces with Java backend services and REST APIs following enterprise SDLC processes and coding standards.",
-      "Contributed to feature implementation, debugging, testing, and UI enhancements for internal enterprise applications.",
-      "Participated in software development lifecycle activities including requirement analysis, development, issue resolution, and code reviews."
+      "Completed structured enterprise training in Java, Spring Boot, Angular, Node.js, MySQL, object-oriented programming, software engineering principles, SDLC, and application architecture.",
+      "Built full-stack applications and completed project-based assignments following enterprise coding standards and development best practices.",
+      "Strengthened practical knowledge of REST APIs, database design, debugging, testing, version control, and collaborative software development."
     ],
   },
 ];
@@ -167,50 +168,55 @@ export const skills: SkillGroup[] = [
     items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"],
   },
   {
-    group: "Backend & APIs",
+    group: "Backend Technologies",
     items: [
+      "Spring Framework",
       "Spring Boot",
+      "Spring MVC",
+      "Spring Data JPA",
       "NestJS",
       "Node.js",
-      "Express.js",
-      "REST APIs",
-      "GraphQL",
-      "gRPC",
     ],
   },
+  { group: "API & Communication", items: ["RESTfull APIs", "GraphQL", "gRPC"] },
   {
-    group: "Frontend", 
-    items: ["Next.js", "Angular", "React.js", "Tailwind CSS"],
+    group: "Frontend",
+    items: ["React.js", "Next.js", "Angular", "Tailwind CSS"],
   },
   {
-    group: "Databases & Caching",
-    items: ["PostgreSQL", "DynamoDB", "MySQL", "MongoDB", "Redis"],
+    group: "Databases",
+    items: ["PostgreSQL", "MySQL", "DynamoDB", "Redis", "MongoDB", "NeonDB"],
   },
   {
-    group: "Architecture & Engineerings",
+    group: "Architecture & Engineering",
     items: [
       "Microservices",
       "Distributed Systems",
       "Event-Driven Architecture",
-      "System Design",
       "API Design",
+      "Backend Services",
+      "Database Design",
       "Data Modeling",
-      "Scalability",
-      "Performance Optimization",
       "Security & Auth (RBAC)",
+      "API Gateway",
+      "Caching",
+      "Concurrency Control",
+      "Scalability",
+      "System Design"
     ],
   },
   {
-    group: "DevOps, Tools & Infrastructure",
+    group: "Tools & Technologies",
     items: [
       "Git",
       "GitHub",
+      "Maven",
+      "Docker",
       "Jenkins",
       "ArgoCD",
-      "API Gateway",
+      "Cursor",
       "Redis Streams",
       "GraphQL Gateway",
-      "Cursor",
     ],
   },
 ];

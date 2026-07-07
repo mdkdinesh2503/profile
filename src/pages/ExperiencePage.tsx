@@ -57,21 +57,32 @@ export function ExperiencePage() {
           description={headings.experience.description}
         />
 
-        <div className="mt-10 space-y-6">
-          {experience.map((item, idx) => {
-            const displayDuration = getDisplayDuration(item);
-            const displayDateRange = getDisplayDateRange(item);
-            const hasRoles = Boolean(item.roles?.length);
-            const titleLine =
-              item.title
-                ? `${item.title} · ${item.company}`
-                : item.company;
-
+        <div className="mt-10 space-y-12">
+          {Array.from(new Set(experience.map(item => item.category))).map((cat, catIdx) => {
+            const categoryItems = experience.filter(item => item.category === cat);
+            
             return (
-              <Reveal
-                key={item.roles?.length ? item.company : `${item.company}-${item.startDate}`}
-                delay={0.04 * idx}
-              >
+              <div key={cat || `cat-${catIdx}`}>
+                {cat && (
+                  <h3 className="mb-6 text-xl font-bold tracking-tight text-ink border-b border-line pb-2">
+                    {cat}
+                  </h3>
+                )}
+                <div className="space-y-6">
+                  {categoryItems.map((item, idx) => {
+                    const displayDuration = getDisplayDuration(item);
+                    const displayDateRange = getDisplayDateRange(item);
+                    const hasRoles = Boolean(item.roles?.length);
+                    const titleLine =
+                      item.title
+                        ? `${item.title} · ${item.company}`
+                        : item.company;
+
+                    return (
+                      <Reveal
+                        key={item.roles?.length ? item.company : `${item.company}-${item.startDate}`}
+                        delay={0.04 * idx}
+                      >
                 <article className="surface-light group relative overflow-hidden rounded-2xl border border-line shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/20">
                   <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
 
@@ -192,6 +203,10 @@ export function ExperiencePage() {
                   </div>
                 </article>
               </Reveal>
+                    );
+                  })}
+                </div>
+              </div>
             );
           })}
         </div>

@@ -5,6 +5,7 @@ export type ExperienceRole = {
 };
 
 export type ExperienceItem = {
+  category?: string;
   company: string;
   logo?: string;
   location?: string;

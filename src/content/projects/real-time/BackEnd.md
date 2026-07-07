@@ -1,7 +1,7 @@
 ---
 name: "Tournaments, Challenges & Rule-Driven Workflows"
 summary: "Designed and delivered robust domain workflows with strong state modeling, clear edge-case handling, and scalable persistence/API design."
-role: "Software Engineer"
+role: "Backend Engineer"
 timeline: "2025"
 category: "real-time"
 stackNote: "Rust, gRPC, GraphQL, REST, PostgreSQL, DynamoDB, Redis."
