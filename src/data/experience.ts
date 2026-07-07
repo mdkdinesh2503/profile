@@ -164,48 +164,53 @@ export const experience: ExperienceItem[] = [
 export const skills: SkillGroup[] = [
   {
     group: "Languages",
-    items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"]
+    items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"],
   },
   {
-    group: "Backend Development & APIs",
+    group: "Backend & APIs",
     items: [
       "Spring Boot",
       "NestJS",
       "Node.js",
+      "Express.js",
       "REST APIs",
-      "RESTful Services",
       "GraphQL",
       "gRPC",
-      "Microservices",
-      "API Design",
-      "Backend Services",
-      "Service Integration"
     ],
   },
   {
-    group: "Frontend",
-    items: ["Next.js", "React.js", "Angular", "Tailwind CSS"],
+    group: "Frontend", 
+    items: ["Next.js", "Angular", "React.js", "Tailwind CSS"],
   },
-  { group: "Databases", items: ["PostgreSQL", "DynamoDB", "MySQL", "Redis"] },
+  {
+    group: "Databases & Caching",
+    items: ["PostgreSQL", "DynamoDB", "MySQL", "MongoDB", "Redis"],
+  },
   {
     group: "Architecture & Engineerings",
     items: [
+      "Microservices",
       "Distributed Systems",
       "Event-Driven Architecture",
+      "System Design",
+      "API Design",
       "Data Modeling",
-      "Database Design",
       "Scalability",
-      "Concurrency Control",
-      "Authentication",
-      "Authorization",
-      "RBAC",
-      "API Gateway",
-      "Caching",
-      "System Design"
-    ]
+      "Performance Optimization",
+      "Security & Auth (RBAC)",
+    ],
   },
   {
-    group: "Tools & Technologies",
-    items: ["Git", "GraphQL Gateway", "Redis Streams"],
-  }
+    group: "DevOps, Tools & Infrastructure",
+    items: [
+      "Git",
+      "GitHub",
+      "Jenkins",
+      "ArgoCD",
+      "API Gateway",
+      "Redis Streams",
+      "GraphQL Gateway",
+      "Cursor",
+    ],
+  },
 ];
