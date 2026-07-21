@@ -24,6 +24,14 @@ export type SkillGroup = {
   items: string[];
 };
 
+export type EducationItem = {
+  institution: string;
+  degree: string;
+  location?: string;
+  startDate: string;
+  endDate?: string | null;
+};
+
 export type ExperienceSectionHeading = {
   eyebrow: string;
   title: string;

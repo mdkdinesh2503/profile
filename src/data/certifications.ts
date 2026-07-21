@@ -10,7 +10,7 @@ export const certifications: Certification[] = [
     // verifyLink: "https://www.coursera.org/account/accomplishments/records/Z2HOYRLR8MPC",
   },
   {
-    name: "AWS DynamoDB",
+    name: "AWS DynamoDB Fundamentals",
     issuer: "Meta",
     year: "Jun 16, 2025",
     thumbnail: "./default/certificate.svg",
@@ -32,12 +32,5 @@ export const certifications: Certification[] = [
     thumbnail: "./default/certificate.svg",
     pdf: "./certification/Google_Prompting_Essentials.pdf",
     // verifyLink: "https://www.coursera.org/account/accomplishments/records/XJITQC4NHDM1",
-  },
-  {
-    name: "Aspire Systems Intern",
-    issuer: "Aspire Systems",
-    year: "Mar 14, 2023",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/Aspire_Systems_Intern.pdf",
   },
 ];

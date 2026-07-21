@@ -1,11 +1,11 @@
 ---
 name: "Travel Agency Platform"
-summary: "Travel booking and management workflows built with responsive user interfaces and modular REST APIs using the MEAN stack."
+summary: "Modular travel management platform with authentication, backend services, and MongoDB-backed data models built on Angular and Node.js."
 category: "academic"
 year: "2023"
 demoStack: "HTML, CSS, JS"
 originalStack: "Angular, Node.js, MongoDB"
-tags: ["full-stack", "angular", "mongodb", "nodejs", "travel"]
+tags: ["angular", "mongodb", "nodejs", "travel"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Travel-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Travel-V2"

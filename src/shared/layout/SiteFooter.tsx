@@ -68,7 +68,7 @@ export function SiteFooter() {
               </span>
             </div>
             <p className="pl-6 text-xs text-muted-1 sm:pl-7 sm:text-sm md:pl-8">
-              {profile.role}. Building reliable systems, end to end.
+              {profile.role}. Building scalable backend systems.
             </p>
           </div>
 

@@ -1,11 +1,11 @@
 ---
-name: "E-commerce System"
-summary: "Extensible e-commerce platform featuring product management, order processing, and a layered backend architecture using Spring Boot."
+name: "E-Commerce Platform"
+summary: "Layered Spring Boot backend with REST APIs, Spring Data JPA, and relational database modeling for product, shopping cart, and order management."
 category: "academic"
 year: "2024"
 demoStack: "HTML, CSS, JS"
-originalStack: "Java, Spring Boot, Spring Data JPA, JavaScript"
-tags: ["ecommerce", "full-stack", "spring-boot", "java", "spring-boot-jpa", "javascript"]
+originalStack: "Spring Boot, Spring Data JPA, MySQL"
+tags: ["ecommerce", "spring-boot", "java", "spring-data-jpa", "mysql"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Ecom-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Ecom-V2"

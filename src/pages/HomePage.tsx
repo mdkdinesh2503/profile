@@ -37,12 +37,12 @@ const howICanHelpIcons = [
 ] as const;
 
 const howICanHelpTags = [
-  "Features",
-  "Full-Stack",
+  "Ownership",
   "APIs",
+  "Databases",
   "Workflows",
   "Performance",
-  "Reliability",
+  "Production",
 ] as const;
 
 const FEATURED_PER_SECTION = 3;
@@ -92,7 +92,7 @@ export function HomePage() {
               <Reveal delay={0.04}>
                 <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.15] tracking-tight text-ink md:text-5xl lg:text-[2.75rem]">
                   {(() => {
-                    const highlight = "calm, reliable systems";
+                    const highlight = "scalable, production-ready systems";
                     const i = profile.hero.headline.indexOf(highlight);
                     if (i === -1) return profile.hero.headline;
                     return (

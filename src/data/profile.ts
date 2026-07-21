@@ -4,8 +4,8 @@ import { experience, getYearsExperience } from "./experience";
 
 export const profile: Profile = {
   name: "Dinesh Kumar M",
-  role: "Full-Stack Software Engineer",
-  location: "Namakkal, Tamil Nadu, India",
+  role: "Software Engineer | Backend Engineer",
+  location: "Hyderabad, Telangana, India",
   phone: "+91 97879 43467",
   email: "mdkdinesh2503@gmail.com",
   avatar: "./profile/mdk.jpg",
@@ -21,37 +21,37 @@ export const profile: Profile = {
   hero: {
     initials: "DK",
     headline:
-      "Full‑stack engineer shipping calm, reliable systems—front to back.",
+      "Backend engineer building scalable, production-ready systems for gaming platforms.",
     subhead:
-      "I design and ship end-to-end features across UI, APIs, and data layers — focusing on clear architecture, maintainable business logic, and performance-aware implementation.",
+      "Experienced in designing and shipping backend systems for a gaming platform serving 20K+ users — REST, GraphQL, and gRPC APIs, PostgreSQL and DynamoDB data modeling, Redis caching, and production support across Java monoliths and Rust microservices.",
     technologiesLabel: "Technologies I work with",
-    yearsExperience: getYearsExperience(experience, false),
+    yearsExperience: getYearsExperience(experience, true),
   },
   howICanHelp: {
     cards: [
       {
-        title: "Product Feature Development",
-        body: "Deliver end-to-end features across UI and backend with clear structure, reliable behavior, and maintainable domain logic.",
+        title: "Backend Module Ownership",
+        body: "Own end-to-end backend implementation — from requirement analysis and API design through database modeling, deployment validation, and post-release production support.",
       },
       {
-        title: "Full-Stack Application Development",
-        body: "Build responsive interfaces backed by scalable backend services using consistent patterns and reusable components.",
+        title: "API Design & Integration",
+        body: "Design and deliver REST, GraphQL, and gRPC APIs with clear contracts, service-to-service communication, and reliable third-party integrations.",
       },
       {
-        title: "APIs & Backend Systems",
-        body: "Design REST, GraphQL, and gRPC APIs that are predictable, scalable, and aligned with real workflow needs.",
+        title: "Database Engineering",
+        body: "Model PostgreSQL schemas, DynamoDB access patterns, indexes, and migrations — optimizing queries for transactional and high-read workloads.",
       },
       {
         title: "Complex Business Workflows",
-        body: "Implement domain-heavy workflows such as tournaments and state-driven processes with strong attention to correctness and edge cases.",
+        body: "Translate domain rules — tournaments, challenges, rewards, leaderboards — into maintainable backend logic with strong attention to correctness.",
       },
       {
-        title: "Performance & Data Optimization",
-        body: "Improve efficiency using Redis caching, query optimization, and thoughtful database design across SQL and NoSQL systems.",
+        title: "Performance & Caching",
+        body: "Reduce database load with Redis caching strategies, TTL-based invalidation, and query optimization while maintaining data consistency.",
       },
       {
-        title: "Ownership & System Reliability",
-        body: "Own critical modules, debug production issues, and deliver stable incremental improvements with long-term maintainability in mind.",
+        title: "Production Support & Reliability",
+        body: "Validate releases, investigate incidents, deliver hotfixes, and support controlled rollouts with root cause analysis and cross-team coordination.",
       },
     ],
   },

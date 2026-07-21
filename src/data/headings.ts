@@ -5,7 +5,7 @@ export const headings = {
     eyebrow: "Practical ways I contribute",
     title: "How I Can Help",
     description:
-      "I contribute most when building full-stack features with meaningful business logic, reliable APIs, and maintainable, production-ready systems.",
+      "I contribute most when building backend systems with meaningful business logic, reliable APIs, and production-ready data layers.",
   } satisfies SelectedSectionHeading,
 
   selectedWork: {
@@ -33,14 +33,21 @@ export const headings = {
     eyebrow: "Experience",
     title: "Results-first, systems-aware",
     description:
-      "I focus on outcomes: reliability, speed, and maintainability—so teams can keep shipping with confidence.",
+      "Backend engineering across APIs, databases, and production systems — focused on reliability, performance, and maintainability.",
   } satisfies SelectedSectionHeading,
 
   skills: {
     eyebrow: "Skills",
     title: "Built to ship",
     description:
-      "Real stack, real systems—no self-scores. Just the areas and tech I've delivered in and own.",
+      "Real stack, real systems — no self-scores. Just the areas and tech I've delivered in and own.",
+  } satisfies SelectedSectionHeading,
+
+  education: {
+    eyebrow: "Education",
+    title: "Academic foundation",
+    description:
+      "Formal training in computer science and software engineering.",
   } satisfies SelectedSectionHeading,
 
   credentials: {
@@ -54,14 +61,14 @@ export const headings = {
     eyebrow: "Writing",
     title: "Engineering notes",
     description:
-      "Practical notes on building, shipping, and maintaining software—focused on decisions and outcomes.",
+      "Practical notes on building, shipping, and maintaining software — focused on decisions and outcomes.",
   } satisfies SelectedSectionHeading,
 
   resume: {
     eyebrow: "Resume",
     title: "One document. Your full story.",
     description:
-      "A concise snapshot of my experience, stack, and outcomes—ready to download or view. Built for recruiters and teams who care about shipping.",
+      "A concise snapshot of my experience, stack, and outcomes — ready to download or view. Built for recruiters and teams who care about shipping.",
   } satisfies SelectedSectionHeading,
 
   contact: {

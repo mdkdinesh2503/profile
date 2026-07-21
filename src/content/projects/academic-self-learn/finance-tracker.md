@@ -1,11 +1,11 @@
 ---
-name: "Finance Tracker"
-summary: "Full-stack expense management application with real-time data synchronization and direct database integration using NeonDB."
+name: "Personal Finance Tracker"
+summary: "Personal finance management application for expense tracking, lending, borrowing, investments, and financial analytics with secure authentication and Row-Level Security."
 category: "academic"
 year: "2024"
 demoStack: ""
-originalStack: "Next.js, Tailwind CSS, NeonDB, PostgreSQL"
-tags: ["nextjs", "neondb", "finance", "full-stack", "react", "postgresql"]
+originalStack: "Next.js, TypeScript, PostgreSQL, NeonDB, Zustand"
+tags: ["nextjs", "typescript", "neondb", "finance", "postgresql", "zustand"]
 image: "/default/Blog.svg"
 demoUrl: "https://mdk-expense.vercel.app"
 repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
@@ -13,13 +13,13 @@ repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
 
 ## Overview
 
-Built a comprehensive, full-stack expense management application designed for real-time financial tracking and analytics. By directly integrating NeonDB for real-time data synchronization, it offers users an interactive dashboard, deep categorization, and time-based aggregation for robust financial health monitoring.
+Designed and developed a personal finance management application to centralize expense tracking, lending, borrowing, investments, repayment management, and financial analytics through a unified dashboard. Implemented secure authentication, responsive user interfaces, Row-Level Security (RLS), and API-driven workflows for reliable financial data management.
 
 ## Key Accomplishments
 
-- **Full-Stack Architecture**: Built an expense management application with real-time data synchronization and direct database integration using NeonDB.
-- **Advanced Features**: Implemented transaction tracking, hierarchical categorization, automated rules engine, and time-based aggregation capabilities.
-- **API-Driven UI/UX**: Developed highly responsive user interfaces and API-driven workflows leveraging Next.js App Router for seamless personal financial data management.
+- **Architecture Evolution**: Improved application responsiveness by replacing an earlier Supabase + Drizzle ORM implementation with a simplified Neon PostgreSQL architecture after evaluating authentication latency and architectural trade-offs.
+- **Financial Workflows**: Implemented CSV import/export functionality and categorized financial transactions to support reporting and long-term expense analysis.
+- **Secure Data Access**: Enforced strict data isolation at the database level using Row-Level Security (RLS) to ensure privacy across user accounts.
 
 ## Core Features
 
