@@ -35,7 +35,7 @@ function RealtimeProjectCard({ p, idx }: { p: ProjectPostMeta; idx: number }) {
             className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/[0.1] blur-2xl transition-all duration-300 group-hover:scale-150 group-hover:bg-primary/[0.15]"
             aria-hidden
           />
-          <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+          <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/10">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <span
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary"
@@ -114,7 +114,7 @@ function AcademicProjectCard({
         className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/[0.1] blur-2xl transition-all duration-300 group-hover:scale-150 group-hover:bg-primary/[0.15]"
         aria-hidden
       />
-      <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+      <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/10">
         <h2 className="mt-3 line-clamp-2 text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary md:text-lg">
           {p.name}
         </h2>
@@ -164,13 +164,13 @@ function AcademicProjectCard({
           <Link to={`/projects/${p.slug}`} className="group flex min-h-0 flex-1 flex-col outline-none">
             {cardContent}
           </Link>
-          <div className="glass-card-panel m-2.5 mt-2 flex flex-wrap items-center gap-2 rounded-xl border border-line px-4 py-2.5 dark:border-white/10">
+          <div className="glass-card-panel m-2.5 mt-2 flex flex-wrap items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5">
             {hasDemo && (
               <a
                 href={p.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/btn inline-flex items-center gap-2 rounded-lg border border-primary bg-primary/10 px-3.5 py-2 text-xs font-semibold text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/20 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:bg-primary/15 dark:hover:bg-primary/25"
+                className="group/btn inline-flex items-center gap-2 rounded-lg border border-primary bg-primary/15 px-3.5 py-2 text-xs font-semibold text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/25 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <ExternalLink className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/btn:translate-x-0.5" aria-hidden />
                 View
@@ -181,7 +181,7 @@ function AcademicProjectCard({
                 href={p.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/btn inline-flex items-center gap-2 rounded-lg border border-primary bg-primary/10 px-3.5 py-2 text-xs font-semibold text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/20 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:bg-primary/15 dark:hover:bg-primary/25"
+                className="group/btn inline-flex items-center gap-2 rounded-lg border border-primary bg-primary/15 px-3.5 py-2 text-xs font-semibold text-primary shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/25 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
                 <Code className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/btn:scale-110" aria-hidden />
                 Code
@@ -242,7 +242,7 @@ export function ProjectsPage() {
                 <RealtimeProjectCard key={p.slug} p={p} idx={idx} />
               ))
             ) : (
-              <div className="col-span-full rounded-2xl border border-dashed border-line bg-surface/50 py-10 text-center text-sm text-muted-1 dark:border-white/15">
+              <div className="col-span-full rounded-2xl border border-dashed border-white/15 bg-surface/50 py-10 text-center text-sm text-muted-1">
                 No real-time projects yet.
               </div>
             )}
@@ -275,7 +275,7 @@ export function ProjectsPage() {
                 <AcademicProjectCard key={p.slug} p={p} idx={idx} />
               ))
             ) : (
-              <div className="col-span-full rounded-2xl border border-dashed border-line bg-surface/50 py-10 text-center text-sm text-muted-1 dark:border-white/15">
+              <div className="col-span-full rounded-2xl border border-dashed border-white/15 bg-surface/50 py-10 text-center text-sm text-muted-1">
                 No academic or self-learn projects yet.
               </div>
             )}

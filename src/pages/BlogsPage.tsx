@@ -62,15 +62,15 @@ function LatestListCard({ b, index }: { b: BlogMeta; index: number }) {
                   {b.tags.slice(0, 4).map((t) => (
                     <span
                       key={t}
-                      className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary dark:border-primary/35 dark:bg-primary/10"
+                      className="rounded-md border border-primary/35 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
               )}
-              <div className="mt-4 flex items-center gap-2 border-t border-line pt-4 dark:border-white/10">
-                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/20 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30 dark:ring-primary/30">
+              <div className="mt-4 flex items-center gap-2 border-t border-white/10 pt-4">
+                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/30 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30">
                   Read article
                   <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
                 </span>
@@ -128,7 +128,7 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
                     {b.tags.slice(0, 4).map((t) => (
                       <span
                         key={t}
-                        className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary dark:border-primary/35 dark:bg-primary/10"
+                        className="rounded-md border border-primary/35 bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary"
                       >
                         {t}
                       </span>
@@ -136,8 +136,8 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
                   </div>
                 )}
               </div>
-              <div className="mt-4 flex shrink-0 items-center gap-2 border-t border-line pt-4 dark:border-white/10">
-                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/20 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30 dark:ring-primary/30">
+              <div className="mt-4 flex shrink-0 items-center gap-2 border-t border-white/10 pt-4">
+                <span className="inline-flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-1.5 text-sm font-semibold text-primary ring-1 ring-primary/30 transition-colors group-hover:bg-primary/15 group-hover:ring-primary/30">
                   Read article
                   <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />
                 </span>
@@ -218,7 +218,7 @@ export function BlogsPage() {
                     className={`rounded-full px-3 py-1.5 text-xs font-medium ring-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg ${
                       isActive
                         ? "bg-primary text-white ring-primary/30 hover:bg-primary/90"
-                        : "bg-ink/5 text-ink ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 dark:hover:ring-primary/20"
+                        : "bg-white/5 text-ink ring-white/10 hover:bg-primary/10 hover:text-primary hover:ring-primary/20"
                     }`}
                   >
                     {tag}
@@ -255,7 +255,7 @@ export function BlogsPage() {
             {rest.length > 0 && (
               <div className="mt-14">
                 <div className="mb-6 flex items-center gap-3">
-                  <span className="h-px flex-1 max-w-24 bg-gradient-to-r from-primary to-transparent dark:from-white/20" aria-hidden />
+                  <span className="h-px flex-1 max-w-24 bg-gradient-to-r from-white/20 to-transparent" aria-hidden />
                   <p className="text-[11px] font-semibold uppercase tracking-widest text-primary">
                     More articles
                   </p>
@@ -277,7 +277,7 @@ export function BlogsPage() {
           </>
         ) : (
           <Reveal delay={0.05}>
-            <div className="mt-10 flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-surface/50 px-8 py-16 text-center dark:border-white/15">
+            <div className="mt-10 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/15 bg-surface/50 px-8 py-16 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                 <FileText className="h-7 w-7" aria-hidden />
               </span>

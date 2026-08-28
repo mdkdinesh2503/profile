@@ -2,10 +2,10 @@ import type { SelectedSectionHeading } from "@/types";
 
 export const headings = {
   howICanHelp: {
+    title: "My Approach",
     eyebrow: "Practical ways I contribute",
-    title: "How I Can Help",
     description:
-      "I contribute most when building backend systems with meaningful business logic, reliable APIs, and production-ready data layers.",
+      "I bring a balanced perspective to software engineering—combining strong technical execution with empathy, design thinking, and collaborative problem-solving.",
   } satisfies SelectedSectionHeading,
 
   selectedWork: {

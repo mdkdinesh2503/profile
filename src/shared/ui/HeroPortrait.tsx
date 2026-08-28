@@ -40,13 +40,13 @@ export function HeroPortrait({
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-8 rounded-[34px] bg-[radial-gradient(400px_260px_at_70%_75%,rgba(37,99,235,0.18),transparent_55%)] blur-2xl"
+        className="pointer-events-none absolute -inset-8 rounded-[34px] bg-[radial-gradient(400px_260px_at_70%_75%,rgba(56,189,248,0.28),transparent_55%)] blur-2xl"
       />
 
       <motion.div
         className={cx(
           "relative overflow-hidden rounded-[28px] border border-line bg-surface/80 shadow-lift-1",
-          "backdrop-blur-xl ring-1 ring-white/[0.08] dark:ring-white/[0.06]",
+          "backdrop-blur-xl ring-1 ring-white/[0.06]",
         )}
         style={{ backdropFilter: "blur(20px)" }}
         whileHover={{ scale: 1.02 }}
@@ -55,11 +55,11 @@ export function HeroPortrait({
         {/* Inner highlights */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_400px_at_25%_10%,rgba(255,255,255,0.25),transparent_50%)] opacity-60 dark:opacity-20"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_400px_at_25%_10%,rgba(255,255,255,0.25),transparent_50%)] opacity-20"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(500px_350px_at_75%_70%,rgba(37,99,235,0.12),transparent_50%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(500px_350px_at_75%_70%,rgba(56,189,248,0.16),transparent_50%)]"
         />
 
         <div className="relative p-3">

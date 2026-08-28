@@ -10,7 +10,7 @@ const socialLinks = [
     label: "GitHub",
     icon: Github,
     classHover:
-      "hover:bg-[#24292f] hover:text-white hover:border-[#24292f] dark:hover:bg-[#2f363d] dark:hover:border-[#2f363d]",
+      "hover:bg-[#2f363d] hover:text-white hover:border-[#2f363d]",
   },
   {
     href: profile.links.linkedin,
@@ -36,14 +36,14 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-ink/10 bg-white/55 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:border-transparent dark:bg-[#0a0e14]/70 dark:shadow-[0_-1px_0_0_rgba(255,255,255,0.06),0_-4px_16px_-2px_rgba(0,0,0,0.4)]">
+    <footer className="relative overflow-hidden border-t border-transparent bg-[#02040a]/80 shadow-[0_-1px_0_0_rgba(255,255,255,0.06),0_-4px_16px_-2px_rgba(0,0,0,0.4)] backdrop-blur-xl">
       {/* Gradient accent + glow */}
       <div
         className="absolute inset-x-0 top-0 h-px"
         style={{
           background:
             "linear-gradient(90deg, transparent 5%, var(--color-primary) 50%, transparent 95%)",
-          boxShadow: "0 0 16px 2px rgba(37, 99, 235, 0.25)",
+          boxShadow: "0 0 18px 2px rgba(56, 189, 248, 0.35)",
         }}
       />
       <div

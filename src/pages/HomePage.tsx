@@ -7,15 +7,15 @@ import { profile } from "@/data/profile";
 import { Reveal } from "@/shared/motion/Reveal";
 import { getProjectsByCategory } from "@/lib/projects";
 import { headings } from "@/data/headings";
-import { skills } from "@/data/experience";
 import { HeroPortrait, ButtonLink } from "@/shared/ui";
 import {
   Layout,
-  Code2,
-  Server,
+  Lightbulb,
   GitBranch,
-  Zap,
-  ShieldCheck,
+  Heart,
+  Database,
+  CheckCircle2,
+  Users,
   ArrowRight,
   MapPin,
   Activity,
@@ -25,24 +25,22 @@ import {
 import { motion } from "framer-motion";
 import { cx } from "@/shared/ui/cx";
 
-const heroSkillItems = skills.flatMap((g) => g.items);
-
 const howICanHelpIcons = [
-  Layout,
-  Code2,
-  Server,
+  Lightbulb,
   GitBranch,
-  Zap,
-  ShieldCheck,
+  Heart,
+  Database,
+  CheckCircle2,
+  Users,
 ] as const;
 
 const howICanHelpTags = [
+  "Creativity",
+  "Design",
+  "Empathy",
+  "Data",
   "Ownership",
-  "APIs",
-  "Databases",
-  "Workflows",
-  "Performance",
-  "Production",
+  "Teamwork",
 ] as const;
 
 const FEATURED_PER_SECTION = 3;
@@ -92,7 +90,7 @@ export function HomePage() {
               <Reveal delay={0.04}>
                 <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.15] tracking-tight text-ink md:text-5xl lg:text-[2.75rem]">
                   {(() => {
-                    const highlight = "scalable, production-ready systems";
+                    const highlight = "flawless digital experiences.";
                     const i = profile.hero.headline.indexOf(highlight);
                     if (i === -1) return profile.hero.headline;
                     return (
@@ -145,48 +143,37 @@ export function HomePage() {
               </Reveal>
             </div>
           </div>
+        </Container>
+      </section>
 
-          {/* Technologies marquee */}
-          <section className="mt-10 md:mt-12" aria-label="Technologies">
-            <Reveal delay={0.08}>
-              <div className="group relative overflow-hidden rounded-2xl py-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/[0.03] via-transparent to-primary/[0.03]" aria-hidden />
-                <div className="relative">
-                  <div className="flex items-center justify-center gap-1">
-                    <span className="dot-two-layer dot-two-layer-blink" aria-hidden>
-                      <span className="dot-outer" />
-                      <span className="dot-core" />
-                    </span>
-                    <p className="text-center text-xs font-medium tracking-wide text-muted-1">
-                      {profile.hero.technologiesLabel}
-                    </p>
-                    <span className="dot-two-layer dot-two-layer-blink" aria-hidden>
-                      <span className="dot-outer" />
-                      <span className="dot-core" />
-                    </span>
-                  </div>
-                  <div
-                    className="mt-5 overflow-hidden cursor-default"
-                    style={{
-                      maskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-                      WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-                    }}
-                  >
-                    <div className="flex w-max animate-marquee-left gap-10 px-4 group-hover:[animation-play-state:paused]">
-                      {[...heroSkillItems, ...heroSkillItems].map((name, i) => (
-                        <span
-                          key={`${name}-${i}`}
-                          className="shrink-0 cursor-default text-base font-medium text-ink transition-colors hover:text-primary md:text-lg"
-                        >
-                          {name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+      {/* Philosophy Section */}
+      <section className="relative mt-16 md:mt-24">
+        <Container>
+          <Reveal>
+            <div className="group relative rounded-3xl bg-surface/40 border border-line p-8 md:p-14 overflow-hidden shadow-sm transition-shadow hover:shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
+              <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.05] blur-3xl" aria-hidden />
+              <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-indigo-500/[0.05] blur-3xl transition-all duration-500 group-hover:bg-indigo-500/[0.08]" aria-hidden />
+
+              <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto">
+                <blockquote className="text-2xl md:text-3xl lg:text-4xl font-medium text-ink leading-[1.3] mb-8 tracking-tight">
+                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-5xl inline-block align-top mr-2">"</span>
+                  Code is read much more often than it is written. I build for the humans maintaining the system, not just the machines running it.
+                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-5xl inline-block align-bottom ml-2">"</span>
+                </blockquote>
+
+                <div className="flex items-center gap-4 text-sm font-semibold uppercase tracking-widest text-primary mb-6">
+                  <span className="h-px w-10 bg-primary/30" />
+                  <span>A Thoughtful Approach</span>
+                  <span className="h-px w-10 bg-primary/30" />
                 </div>
+
+                <p className="text-muted-1 max-w-2xl text-base md:text-lg leading-relaxed">
+                  I believe in a holistic approach to software engineering. Beyond writing efficient algorithms, I prioritize clean architecture, empathetic collaboration, and delivering robust systems that gracefully scale with the business.
+                </p>
               </div>
-            </Reveal>
-          </section>
+            </div>
+          </Reveal>
         </Container>
       </section>
 
@@ -231,7 +218,7 @@ export function HomePage() {
                       aria-hidden
                     />
                     {/* Inner glass content panel */}
-                    <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                    <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 group-hover:bg-primary/10">
                       <div className="flex items-start justify-between gap-3">
                         <div
                           className={cx(
@@ -304,7 +291,7 @@ export function HomePage() {
                       className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-primary/[0.1] blur-2xl transition-all duration-300 group-hover:scale-150 group-hover:bg-primary/[0.15]"
                       aria-hidden
                     />
-                    <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/[0.06] dark:group-hover:bg-primary/10">
+                    <div className="glass-card-panel relative m-2.5 mt-5 flex flex-1 flex-col rounded-xl p-5 md:p-6 transition-all duration-300 group-hover:bg-primary/10">
                       {/* Header: Live pill + title row */}
                       <div className="flex flex-wrap items-start justify-between gap-2">
                         <span

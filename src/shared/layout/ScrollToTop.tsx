@@ -68,7 +68,7 @@ export function ScrollToTop() {
             style={{
               background: "var(--gradient-primary)",
               boxShadow:
-                "0 0 0 1px rgba(37, 99, 235, 0.25), 0 4px 16px -2px rgba(37, 99, 235, 0.4), 0 0 28px -6px rgba(37, 99, 235, 0.3)",
+                "0 0 0 1px rgba(56, 189, 248, 0.35), 0 4px 16px -2px rgba(61, 142, 255, 0.45), 0 0 28px -6px rgba(56, 189, 248, 0.35)",
             }}
             aria-hidden
           />

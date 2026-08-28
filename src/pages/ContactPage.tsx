@@ -14,7 +14,7 @@ const tel = `tel:${profile.phone.replace(/\s+/g, "")}`;
 const iconProps = { size: 20, className: "shrink-0", "aria-hidden": true } as const;
 
 const socialLinks = [
-  { href: profile.links.github, icon: Github, label: "GitHub", color: "bg-[#24292f] hover:bg-[#2f363d] dark:bg-[#21262d] dark:hover:bg-[#30363d] ring-[#24292f]" },
+  { href: profile.links.github, icon: Github, label: "GitHub", color: "bg-[#21262d] hover:bg-[#30363d] ring-[#24292f]" },
   { href: profile.links.linkedin, icon: Linkedin, label: "LinkedIn", color: "bg-[#0A66C2] hover:bg-[#004182] ring-[#0A66C2]" },
   ...(profile.links.instagram ? [{ href: profile.links.instagram, icon: Instagram, label: "Instagram", color: "bg-[#E4405F] hover:bg-[#C13584] ring-[#E4405F]" as const }] : []),
 ];
@@ -67,7 +67,7 @@ export function ContactPage() {
                 </span>
                 Best for projects & collaboration
               </span>
-              <span className="hidden sm:inline h-4 w-px bg-line dark:bg-white/20" aria-hidden />
+              <span className="hidden sm:inline h-4 w-px bg-white/20" aria-hidden />
               <span className="rounded-full bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary ring-1 ring-primary/20">
                 Usually replies within 24h
               </span>
@@ -77,7 +77,7 @@ export function ContactPage() {
         {/* Primary contact block — same card style as resume/certification */}
         <Reveal delay={0.08}>
           <GlassCard className="mt-6" noHover accent="top" panelClassName="flex flex-col overflow-hidden p-0">
-              <div className="relative border-b border-line dark:border-white/10 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent px-6 py-6 sm:px-8 sm:py-7">
+              <div className="relative border-b border-white/10 bg-gradient-to-br from-primary/[0.06] via-transparent to-transparent px-6 py-6 sm:px-8 sm:py-7">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-4">
                     <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary shadow-[0_0_20px_rgba(37,99,235,0.1)] ring-1 ring-primary/20 transition-shadow group-hover:shadow-[0_0_24px_rgba(37,99,235,0.15)]">
@@ -99,7 +99,7 @@ export function ContactPage() {
                         "ring-1 transition-all duration-200",
                         copied
                           ? "bg-primary text-white ring-primary/30 hover:bg-primary-hover"
-                          : "bg-ink/5 text-ink ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 dark:hover:ring-primary/20"
+                          : "bg-white/5 text-ink ring-white/10 hover:bg-primary/10 hover:text-primary hover:ring-primary/20"
                       )}
                     >
                       <AnimatePresence mode="wait">
@@ -144,7 +144,7 @@ export function ContactPage() {
                 <a
                   href={tel}
                   className={cx(
-                    "inline-flex items-center gap-3 rounded-xl border border-line bg-ink/[0.03] px-4 py-3 text-sm font-medium text-ink dark:bg-white/5 dark:border-white/10",
+                    "inline-flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-ink",
                     "transition-all duration-200",
                     "hover:bg-primary/[0.08] hover:border-primary/30 hover:shadow-[0_4px_12px_-2px_rgba(37,99,235,0.15)] hover:-translate-y-0.5",
                     "hover:[&>svg]:text-primary",

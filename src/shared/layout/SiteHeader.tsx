@@ -1,9 +1,7 @@
 import { AnimatePresence, motion as fm } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { useTheme } from "@/contexts/ThemeContext";
 import { Container } from "@/shared/ui/Container";
 import { profile } from "@/data/profile";
 
@@ -31,7 +29,6 @@ const navItemVariants = {
 
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -42,7 +39,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/55 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.08),0_4px_20px_-4px_rgba(0,0,0,0.04)] backdrop-blur-xl dark:bg-transparent dark:shadow-[0_1px_0_0_rgba(255,255,255,0.06),0_4px_16px_-2px_rgba(0,0,0,0.4)]">
+    <header className="sticky top-0 z-50 bg-transparent shadow-[0_1px_0_0_rgba(255,255,255,0.06),0_4px_16px_-2px_rgba(0,0,0,0.4)] backdrop-blur-xl">
       <Container className="flex h-16 items-center justify-between">
         <NavLink
           to="/"
@@ -76,14 +73,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-line bg-transparent text-ink-light transition hover:bg-ink/[0.08] hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20"
-            aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-          >
-            {theme === "dark" ? <Sun size={20} aria-hidden /> : <Moon size={20} aria-hidden />}
-          </button>
           <button
             type="button"
             onClick={() => setMobileOpen((v) => !v)}

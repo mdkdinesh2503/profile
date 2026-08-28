@@ -21,37 +21,37 @@ export const profile: Profile = {
   hero: {
     initials: "DK",
     headline:
-      "Backend engineer building scalable, production-ready systems for gaming platforms.",
+      "Engineering the unseen logic behind flawless digital experiences.",
     subhead:
-      "Experienced in designing and shipping backend systems for a gaming platform serving 20K+ users — REST, GraphQL, and gRPC APIs, PostgreSQL and DynamoDB data modeling, Redis caching, and production support across Java monoliths and Rust microservices.",
+      "I transform complex business rules into lightning-fast, scalable infrastructure. Currently orchestrating data and microservices to deliver seamless interactions for thousands of concurrent users.",
     technologiesLabel: "Technologies I work with",
     yearsExperience: getYearsExperience(experience, true),
   },
   howICanHelp: {
     cards: [
       {
-        title: "Backend Module Ownership",
-        body: "Own end-to-end backend implementation — from requirement analysis and API design through database modeling, deployment validation, and post-release production support.",
+        title: "Creative Problem Solving",
+        body: "Approach complex business challenges with innovative thinking, translating intricate domain rules into elegant, maintainable backend logic.",
       },
       {
-        title: "API Design & Integration",
-        body: "Design and deliver REST, GraphQL, and gRPC APIs with clear contracts, service-to-service communication, and reliable third-party integrations.",
+        title: "Architecture & Design",
+        body: "Design scalable REST, GraphQL, and gRPC APIs with clear contracts, focusing on long-term maintainability and service-to-service reliability.",
+      },
+      {
+        title: "User-Centric Development",
+        body: "Always keep the end-user in mind. Even deep in the backend, every microsecond saved and every query optimized translates to a better user experience.",
       },
       {
         title: "Database Engineering",
-        body: "Model PostgreSQL schemas, DynamoDB access patterns, indexes, and migrations — optimizing queries for transactional and high-read workloads.",
+        body: "Model PostgreSQL schemas and DynamoDB access patterns, carefully balancing transactional integrity with high-read performance needs.",
       },
       {
-        title: "Complex Business Workflows",
-        body: "Translate domain rules — tournaments, challenges, rewards, leaderboards — into maintainable backend logic with strong attention to correctness.",
+        title: "End-to-End Ownership",
+        body: "Take pride in owning features from inception to deployment. From requirements analysis to production support, I ensure quality at every step.",
       },
       {
-        title: "Performance & Caching",
-        body: "Reduce database load with Redis caching strategies, TTL-based invalidation, and query optimization while maintaining data consistency.",
-      },
-      {
-        title: "Production Support & Reliability",
-        body: "Validate releases, investigate incidents, deliver hotfixes, and support controlled rollouts with root cause analysis and cross-team coordination.",
+        title: "Collaborative Teamwork",
+        body: "Believe that the best software is built by communicative teams. I actively share knowledge, review code with empathy, and mentor peers.",
       },
     ],
   },

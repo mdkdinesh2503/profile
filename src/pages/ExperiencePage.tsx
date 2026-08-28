@@ -324,7 +324,7 @@ export function ExperiencePage() {
                 >
                   {/* Top accent only */}
                   <div className="absolute left-0 right-0 top-0 h-1 transition-all duration-300 group-hover:h-1.5" aria-hidden />
-                  <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 dark:border-white/10">
+                  <div className="glass-card-panel relative m-2 mt-4 flex flex-1 flex-col rounded-xl p-4 transition-all duration-300 border-white/10">
                     <div className="flex flex-1 items-start gap-4">
                       <button
                         type="button"
@@ -354,13 +354,13 @@ export function ExperiencePage() {
                         <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-ink">
                           {c.name}
                         </h3>
-                        <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-ink/5 px-2.5 py-0.5 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
+                        <span className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-0.5 text-xs font-medium text-muted-2 ring-1 ring-white/10">
                           <Award className="h-3 w-3 text-primary/70" aria-hidden />
                           {c.issuer}
                         </span>
                       </div>
                     </div>
-                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-4 dark:border-white/10">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4">
                       <button
                         type="button"
                         onClick={() => {
@@ -382,7 +382,7 @@ export function ExperiencePage() {
                           href={c.verifyLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-ink/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-line transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong dark:bg-white/5 dark:ring-white/10"
+                          className="inline-flex cursor-pointer items-center gap-1.5 rounded-full bg-white/5 px-3 py-2 text-xs font-medium text-ink ring-1 ring-white/10 transition-all duration-200 hover:bg-ink/10 hover:ring-line-strong"
                         >
                           <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
                           Verify

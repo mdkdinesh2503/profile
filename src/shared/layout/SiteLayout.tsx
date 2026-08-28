@@ -8,12 +8,13 @@ import { ScrollToTop } from "@/shared/layout/ScrollToTop";
 function GlobalPageBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden>
-      <div className="absolute inset-0 hero-grid-bg opacity-50" />
+      <div className="absolute inset-0 hero-grid-bg opacity-[0.28]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.55)_100%)]" />
       <div className="absolute inset-0">
-        <div className="absolute -right-40 top-0 h-[420px] w-[420px] rounded-full bg-primary/[0.08] blur-3xl" />
-        <div className="absolute right-1/4 -top-20 h-72 w-72 rounded-full bg-primary/[0.05] blur-3xl" />
-        <div className="absolute left-0 top-1/2 h-80 w-80 rounded-full bg-primary/[0.04] blur-3xl" />
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/3 h-px w-full max-w-2xl bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        <div className="absolute -right-32 -top-24 h-[520px] w-[520px] rounded-full bg-sky-400/[0.14] blur-3xl" />
+        <div className="absolute right-1/4 -top-10 h-80 w-80 rounded-full bg-primary/[0.1] blur-3xl" />
+        <div className="absolute -left-24 top-[42%] h-[380px] w-[380px] rounded-full bg-indigo-500/[0.1] blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-64 w-[70%] -translate-x-1/2 rounded-full bg-sky-400/[0.06] blur-3xl" />
       </div>
     </div>
   );

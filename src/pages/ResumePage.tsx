@@ -34,7 +34,7 @@ export function ResumePage() {
                 <span className="font-semibold text-ink">{profile.role}</span>
               </span>
               <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
-              <span className="rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-line dark:bg-white/5 dark:ring-white/10">
+              <span className="rounded-full bg-white/5 px-2.5 py-1 text-xs font-medium text-muted-2 ring-1 ring-white/10">
                 {years} years experience
               </span>
               <span className="hidden text-muted-2 sm:inline" aria-hidden>·</span>
@@ -63,7 +63,7 @@ export function ResumePage() {
               className={cx(
                 buttonStyles.base,
                 "rounded-xl px-4 py-2.5 text-sm gap-2",
-                "bg-ink/5 text-ink ring-1 ring-line hover:bg-primary/10 hover:text-primary hover:ring-primary/20 dark:bg-white/5 dark:ring-white/10 dark:hover:bg-primary/10 dark:hover:ring-primary/20"
+                "bg-white/5 text-ink ring-1 ring-white/10 hover:bg-primary/10 hover:text-primary hover:ring-primary/20"
               )}
             >
               <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
@@ -76,13 +76,13 @@ export function ResumePage() {
         <Reveal delay={0.12}>
           <GlassCard className="mt-8" noHover accent="top" panelClassName="flex flex-col overflow-hidden p-0">
               {/* Viewer chrome */}
-              <div className="flex items-center gap-3 px-4 py-3 sm:px-5 border-b border-line dark:border-white/10">
+              <div className="flex items-center gap-3 px-4 py-3 sm:px-5 border-b border-white/10">
                 <div className="flex gap-1.5" aria-hidden>
                   <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
                 </div>
-                <div className="min-w-0 flex-1 flex items-center gap-2 rounded-lg bg-ink/5 px-3 py-2 dark:bg-white/5">
+                <div className="min-w-0 flex-1 flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2">
                   <FileText className="h-4 w-4 shrink-0 text-muted-2" aria-hidden />
                   <span className="truncate text-sm font-medium text-ink">
                     {profile.resume.pdfTitle}.pdf
@@ -90,8 +90,8 @@ export function ResumePage() {
                 </div>
               </div>
               {/* Document frame */}
-              <div className="p-2 bg-ink/5 dark:bg-black/20">
-                <div className="overflow-hidden rounded-lg border border-line bg-paper shadow-inner dark:border-white/10 min-h-[70vh] h-[72vh] max-h-[720px]">
+              <div className="p-2 bg-black/20">
+                <div className="overflow-hidden rounded-lg border border-white/10 bg-paper shadow-inner min-h-[70vh] h-[72vh] max-h-[720px]">
                   <iframe
                     title={profile.resume.pdfTitle}
                     src={profile.resume.pdfSrc}

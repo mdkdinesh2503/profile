@@ -15,7 +15,7 @@ type GlassCardProps = PropsWithChildren<{
 const outerBase =
   "glass-card-outer relative overflow-hidden rounded-2xl";
 const panelBase =
-  "glass-card-panel relative m-2 mt-4 rounded-xl border border-line dark:border-white/10";
+  "glass-card-panel relative m-2 mt-4 rounded-xl border border-white/10";
 
 export function GlassCard({
   className,
