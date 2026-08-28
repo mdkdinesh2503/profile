@@ -30,6 +30,8 @@ export type EducationItem = {
   location?: string;
   startDate: string;
   endDate?: string | null;
+  grade?: string;
+  coursework?: string;
 };
 
 export type ExperienceSectionHeading = {
@@ -118,7 +120,6 @@ export type Hero = {
   headline: string;
   subhead: string;
   initials?: string;
-  technologiesLabel: string;
   yearsExperience?: string;
 };
 
@@ -142,7 +143,6 @@ export type Profile = {
   avatar?: string;
   primaryCta: PrimaryCta;
   hero: Hero;
-  howICanHelp: HowICanHelp;
   links: ProfileLinks;
   certifications: Certification[];
   resume: Resume;

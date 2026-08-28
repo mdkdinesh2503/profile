@@ -50,7 +50,7 @@ const variants: Record<ButtonVariant, string> = {
   pill:
     "rounded-full bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/30 focus-visible:ring-primary/40",
   shine:
-    "bg-[var(--color-primary)] text-white shadow-sm hover:bg-[var(--color-primary-hover)] hover:-translate-y-0.5 hover:shadow-lg btn-shine-wrap focus-visible:ring-primary",
+    "bg-gradient-to-r from-primary to-indigo-500 text-white shadow-sm hover:bg-[var(--color-primary-hover)] hover:-translate-y-0.5 hover:shadow-lg btn-shine-wrap focus-visible:ring-primary",
   "outline-gradient":
     "btn-outline-gradient text-primary hover:bg-primary/5 hover:shadow-md focus-visible:ring-primary/40",
 };

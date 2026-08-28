@@ -3,27 +3,16 @@ import { Container } from "@/shared/ui/Container";
 import { SectionHeading } from "@/shared/ui/SectionHeading";
 import { Reveal } from "@/shared/motion/Reveal";
 import { PageMeta } from "@/shared/seo/PageMeta";
-import { experience, getDisplayDateRange, getDisplayDuration, skills } from "@/data/experience";
-import { education } from "@/data/education";
-import { Chip } from "@/shared/ui/Chip";
+import { experience, getDisplayDateRange, getDisplayDuration } from "@/data/experience";
 import { headings } from "@/data/headings";
-import type { SkillGroup } from "@/types";
 import { Button, buttonStyles, cx } from "@/shared/ui";
 import { profile } from "@/data/profile";
 import { AnimatePresence, motion } from "framer-motion";
-import { Calendar, MapPin, Clock, ChevronRight, Tag, Award, ExternalLink, Download, GraduationCap } from "lucide-react";
-
-/** Order of skill group tabs; derived from experience data. */
-const skillGroups = skills.map((g) => g.group);
+import { Calendar, MapPin, Clock, ChevronRight, Tag, Award, ExternalLink, Download } from "lucide-react";
 
 export function ExperiencePage() {
-  const [active, setActive] = useState<SkillGroup["group"]>(skills[0].group);
   const [selectedCertIdx, setSelectedCertIdx] = useState(0);
   const [certModalOpen, setCertModalOpen] = useState(false);
-
-  const activeSkills = useMemo(() => {
-    return skills.find((g) => g.group === active)?.items ?? [];
-  }, [active]);
 
   const selectedCert = profile.certifications[selectedCertIdx];
 
@@ -212,89 +201,7 @@ export function ExperiencePage() {
           })}
         </div>
 
-        <div className="mt-14">
-          <SectionHeading
-            eyebrow={headings.education.eyebrow}
-            title={headings.education.title}
-            description={headings.education.description}
-          />
 
-          <div className="mt-6 space-y-6">
-            {education.map((item, idx) => (
-              <Reveal key={item.institution} delay={0.04 * idx}>
-                <article className="surface-light group relative overflow-hidden rounded-2xl border border-line shadow-sm transition-all duration-300 hover:shadow-lift-1 hover:border-primary/20">
-                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary via-primary/80 to-secondary" aria-hidden />
-
-                  <div className="pl-4 pr-4 py-4 sm:pl-5">
-                    <div className="flex flex-wrap items-start gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">
-                        <GraduationCap className="h-5 w-5" aria-hidden />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="text-lg font-bold tracking-tight text-ink">
-                          {item.degree}
-                        </h3>
-                        <p className="mt-1 text-sm font-medium text-primary">
-                          {item.institution}
-                        </p>
-                        <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-2">
-                          {item.location && (
-                            <span className="flex items-center gap-1.5">
-                              <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                              {item.location}
-                            </span>
-                          )}
-                          <span className="flex items-center gap-1.5">
-                            <Calendar className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                            {item.startDate} — {item.endDate ?? "Present"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-14">
-          <SectionHeading
-            eyebrow={headings.skills.eyebrow}
-            title={headings.skills.title}
-            description={headings.skills.description}
-          />
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {skillGroups.map((g) => (
-              <Chip
-                key={g}
-                active={active === g}
-                activeVariant="primary"
-                onClick={() => setActive(g)}
-              >
-                {g}
-              </Chip>
-            ))}
-          </div>
-
-          <Reveal>
-            <div className="surface-light mt-4 rounded-2xl border border-line p-6 shadow-sm">
-              <div className="flex flex-wrap gap-2">
-                {activeSkills.map((s) => (
-                  <span
-                    key={s}
-                    className="inline-flex cursor-default items-center gap-1.5 rounded-full bg-ink/5 px-2.5 py-1 text-xs font-medium text-ink ring-1 ring-line transition-colors hover:text-primary"
-                    aria-label="Skill"
-                  >
-                    <Tag className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden />
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        </div>
 
         <div className="mt-14">
           <SectionHeading

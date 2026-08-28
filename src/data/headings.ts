@@ -1,25 +1,19 @@
 import type { SelectedSectionHeading } from "@/types";
 
 export const headings = {
-  howICanHelp: {
-    title: "My Approach",
-    eyebrow: "Practical ways I contribute",
-    description:
-      "I bring a balanced perspective to software engineering—combining strong technical execution with empathy, design thinking, and collaborative problem-solving.",
-  } satisfies SelectedSectionHeading,
 
   selectedWork: {
-    eyebrow: "Selected work",
-    title: "Case studies focused on decisions",
+    eyebrow: "Selected Work",
+    title: "Projects I've Built",
     description:
-      "A few projects where trade-offs, constraints, and operational realities mattered.",
+      "A curated set of projects that showcase how I approach real problems — from system design to shipping working software.",
   } satisfies SelectedSectionHeading,
 
   selectedWorkRealTime: {
     eyebrow: "Real-time projects",
     title: "Production & industry work",
     description:
-      "Projects delivered in professional or client contexts—shipping features, reliability, and scale.",
+      "Projects I delivered in professional and industry settings — real deadlines, real users, and real systems running in production.",
   } satisfies SelectedSectionHeading,
 
   selectedWorkAcademic: {
@@ -30,45 +24,45 @@ export const headings = {
   } satisfies SelectedSectionHeading,
 
   experience: {
-    eyebrow: "Experience",
-    title: "Results-first, systems-aware",
+    eyebrow: "Work Experience",
+    title: "Where I've Worked",
     description:
-      "Backend engineering across APIs, databases, and production systems — focused on reliability, performance, and maintainability.",
+      "My professional journey as a software engineer — the roles I've held, the teams I've worked with, and the impact I've made.",
   } satisfies SelectedSectionHeading,
 
   skills: {
-    eyebrow: "Skills",
-    title: "Built to ship",
+    eyebrow: "Technical Skills",
+    title: "Technologies I Work With",
     description:
-      "Real stack, real systems — no self-scores. Just the areas and tech I've delivered in and own.",
+      "A hands-on overview of the languages, frameworks, databases, and tools I use to design and deliver production systems.",
   } satisfies SelectedSectionHeading,
 
   education: {
     eyebrow: "Education",
-    title: "Academic foundation",
+    title: "Where It All Started",
     description:
-      "Formal training in computer science and software engineering.",
+      "My academic background in computer science — the foundation that shaped how I think about software, systems, and problem-solving.",
   } satisfies SelectedSectionHeading,
 
   credentials: {
-    eyebrow: "Credentials",
-    title: "Certifications",
+    eyebrow: "Certifications",
+    title: "Courses & Credentials I've Earned",
     description:
-      "Compact list with optional preview (PDF) and verification links.",
+      "Certifications and courses that have sharpened my skills — each one verifiable with a direct link.",
   } satisfies SelectedSectionHeading,
 
   blogs: {
-    eyebrow: "Writing",
-    title: "Engineering notes",
+    eyebrow: "Blog & Writing",
+    title: "Things I've Written About",
     description:
-      "Practical notes on building, shipping, and maintaining software — focused on decisions and outcomes.",
+      "Articles and notes on software engineering — what I've learned, what I've built, and how I think about technical problems.",
   } satisfies SelectedSectionHeading,
 
   resume: {
     eyebrow: "Resume",
     title: "One document. Your full story.",
     description:
-      "A concise snapshot of my experience, stack, and outcomes — ready to download or view. Built for recruiters and teams who care about shipping.",
+      "A complete summary of my experience, skills, and education — ready to download and share.",
   } satisfies SelectedSectionHeading,
 
   contact: {
