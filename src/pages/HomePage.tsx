@@ -73,43 +73,77 @@ export function HomePage() {
       <section className="relative overflow-x-clip pt-14 md:pt-20">
         <Container>
           <div className="flex flex-col-reverse items-start gap-10 md:grid md:grid-cols-[1fr_360px] md:gap-14">
-            <div className="max-w-2xl">
+            <div className="max-w-xl flex flex-col gap-0">
+              {/* Creative intro block */}
               <Reveal>
-                <p className="text-sm font-medium tracking-wide text-primary">
-                  Hi, I'm <span className="font-semibold text-ink">{profile.name.split(" ")[0]}</span>
-                </p>
-              </Reveal>
-              <Reveal delay={0.02}>
-                <div className="mt-3 flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/80 px-3 py-1.5 text-xs font-medium text-muted-1 backdrop-blur-sm">
-                    <MapPin className="h-3.5 w-3.5" aria-hidden />
-                    {profile.location}
-                  </span>
+                <div className="flex flex-col gap-3">
+                  {/* Eyebrow greeting */}
+                  <p className="text-sm font-medium tracking-wide text-muted-2 uppercase">
+                    Hi there, I'm
+                  </p>
+                  {/* Big name */}
+                  <p className="font-extrabold leading-[1.0] tracking-tight text-[clamp(2.2rem,4.5vw,3rem)]">
+                    <span className="text-ink">Dinesh </span>
+                    <span className="hero-gradient-text">Kumar</span>
+                  </p>
+                  {/* Role + location row */}
+                  <div className="flex flex-wrap items-center gap-2 mt-1">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur-sm">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
+                      </span>
+                      Software Engineer
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 rounded-full border border-line/60 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-muted-1 backdrop-blur-sm">
+                      <MapPin className="h-3 w-3 text-primary/60" aria-hidden />
+                      Namakkal, India
+                    </div>
+                  </div>
                 </div>
               </Reveal>
+
+              {/* Big headline */}
               <Reveal delay={0.04}>
-                <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.15] tracking-tight text-ink md:text-5xl lg:text-[2.75rem]">
-                  {(() => {
-                    const highlight = "flawless digital experiences.";
-                    const i = profile.hero.headline.indexOf(highlight);
-                    if (i === -1) return profile.hero.headline;
-                    return (
-                      <>
-                        {profile.hero.headline.slice(0, i)}
-                        <span className="hero-gradient-text font-semibold">{highlight}</span>
-                        {profile.hero.headline.slice(i + highlight.length)}
-                      </>
-                    );
-                  })()}
+                <h1 className="mt-6 font-bold leading-[1.08] tracking-tight text-ink text-[clamp(2.4rem,5vw,3.5rem)]">
+                  Good software
+                  <span className="block hero-gradient-text">survives production.</span>
                 </h1>
               </Reveal>
-              <Reveal delay={0.05}>
-                <p className="mt-6 text-pretty text-base leading-relaxed text-muted-1 md:text-lg max-w-xl">
-                  {profile.hero.subhead}
-                </p>
+
+              {/* Principle callout */}
+              <Reveal delay={0.07}>
+                <div className="mt-6 pl-4 border-l-2 border-primary/50">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary/70 mb-1.5">My principle</p>
+                  <p className="text-muted-1 text-base md:text-lg leading-relaxed">
+                    I build backend systems — not just to work, but to{" "}
+                    <span className="text-ink font-semibold">survive real users, real failures, and real production.</span>
+                  </p>
+                </div>
               </Reveal>
 
-              <Reveal delay={0.1}>
+              {/* Micro-stats row */}
+              <Reveal delay={0.10}>
+                <div className="mt-8 flex items-center gap-6">
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-ink">20K+</span>
+                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Users Served</span>
+                    </div>
+                  <div className="w-px h-10 bg-line" />
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-ink">{profile.hero.yearsExperience}</span>
+                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Experience</span>
+                  </div>
+                  <div className="w-px h-10 bg-line" />
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-ink">3</span>
+                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">API Protocols</span>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* CTA */}
+              <Reveal delay={0.13}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <ButtonLink
                     to={profile.primaryCta.href}
@@ -120,6 +154,12 @@ export function HomePage() {
                     {profile.primaryCta.label}
                     <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
                   </ButtonLink>
+                  <a
+                    href={`mailto:${profile.email}`}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-line px-4 py-2.5 text-sm font-medium text-muted-1 transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    Say Hello
+                  </a>
                 </div>
               </Reveal>
             </div>

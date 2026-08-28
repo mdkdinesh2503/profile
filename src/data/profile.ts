@@ -5,7 +5,7 @@ import { experience, getYearsExperience } from "./experience";
 export const profile: Profile = {
   name: "Dinesh Kumar M",
   role: "Software Engineer | Backend Engineer",
-  location: "Hyderabad, Telangana, India",
+  location: "Namakkal, Tamil Nadu, India",
   phone: "+91 97879 43467",
   email: "mdkdinesh2503@gmail.com",
   avatar: "./profile/mdk.jpg",
@@ -15,7 +15,6 @@ export const profile: Profile = {
   },
   resume: {
     pdfSrc: "./resume/Dinesh_Resume.pdf",
-    // pdfSrc: "./resume/Final_Resume.pdf",
     pdfTitle: "Dinesh Resume",
   },
   hero: {
