@@ -95,7 +95,7 @@ export function getYearsExperience(
 
   if (fraction >= 0.5) {
     return `${full}.5+`;
-  } else if (fraction > 0.001) {
+  } else if (fraction > 0.001 || includeInternship) {
     return `${full}+`;
   }
 

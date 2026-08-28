@@ -70,9 +70,9 @@ export function HomePage() {
           <link rel="preload" as="image" href={heroImageHref} />
         </Helmet>
       )}
-      <section className="relative overflow-x-clip pt-14 md:pt-20">
-        <Container>
-          <div className="flex flex-col-reverse items-start gap-10 md:grid md:grid-cols-[1fr_360px] md:gap-14">
+      <section className="relative overflow-x-clip min-h-[90dvh] flex flex-col justify-center">
+        <Container className="w-full">
+          <div className="flex flex-col-reverse items-center md:items-start gap-12 md:grid md:grid-cols-[1fr_420px] md:items-center md:gap-14">
             <div className="max-w-xl flex flex-col gap-0">
               {/* Creative intro block */}
               <Reveal>
@@ -86,22 +86,24 @@ export function HomePage() {
                     <span className="text-ink">Dinesh </span>
                     <span className="hero-gradient-text">Kumar</span>
                   </p>
-                  {/* Role + location row */}
-                  <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary backdrop-blur-sm">
-                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
-                      </span>
-                      Software Engineer
-                    </div>
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-line/60 bg-surface/60 px-3.5 py-1.5 text-xs font-medium text-muted-1 backdrop-blur-sm">
-                      <MapPin className="h-3 w-3 text-primary/60" aria-hidden />
-                      Namakkal, India
-                    </div>
-                  </div>
                 </div>
               </Reveal>
+
+              {/* Decorative separator */}
+              <div className="mt-4 flex items-center gap-3">
+                <div
+                  className="h-[2px] w-12 rounded-full"
+                  style={{ background: "linear-gradient(90deg, #7dd3fc, #38bdf8, #818cf8)" }}
+                />
+                <div
+                  className="h-1.5 w-1.5 rounded-full shrink-0"
+                  style={{ background: "#38bdf8", boxShadow: "0 0 6px rgba(56,189,248,0.8)" }}
+                />
+                <div
+                  className="h-px flex-1 rounded-full"
+                  style={{ background: "linear-gradient(90deg, rgba(129,140,248,0.4), transparent)" }}
+                />
+              </div>
 
               {/* Big headline */}
               <Reveal delay={0.04}>
@@ -126,18 +128,18 @@ export function HomePage() {
               <Reveal delay={0.10}>
                 <div className="mt-8 flex items-center gap-6">
                   <div className="flex flex-col">
-                    <span className="text-2xl font-bold text-ink">20K+</span>
-                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Users Served</span>
-                    </div>
-                  <div className="w-px h-10 bg-line" />
-                  <div className="flex flex-col">
                     <span className="text-2xl font-bold text-ink">{profile.hero.yearsExperience}</span>
                     <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Experience</span>
                   </div>
                   <div className="w-px h-10 bg-line" />
                   <div className="flex flex-col">
-                    <span className="text-2xl font-bold text-ink">3</span>
-                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">API Protocols</span>
+                    <span className="text-2xl font-bold text-ink">5+</span>
+                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Projects</span>
+                  </div>
+                  <div className="w-px h-10 bg-line" />
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-ink">10+</span>
+                    <span className="text-xs text-muted-2 mt-0.5 uppercase tracking-wider">Tech Stack</span>
                   </div>
                 </div>
               </Reveal>
@@ -187,38 +189,66 @@ export function HomePage() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="relative mt-16 md:mt-24">
+      <section className="relative min-h-[50dvh] flex flex-col justify-center">
         <Container>
           <Reveal>
-            <div className="group relative rounded-3xl bg-surface/40 border border-line p-8 md:p-14 overflow-hidden shadow-sm transition-shadow hover:shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
-              <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-primary/[0.05] blur-3xl" aria-hidden />
-              <div className="absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-indigo-500/[0.05] blur-3xl transition-all duration-500 group-hover:bg-indigo-500/[0.08]" aria-hidden />
+            <motion.div
+              className="group relative rounded-[2.5rem] bg-surface/40 border border-line p-8 md:p-14 overflow-hidden shadow-glass transition-all duration-500 hover:shadow-[0_0_40px_var(--color-glow)]"
+              whileHover="hovered"
+              initial="idle"
+            >
+              {/* Spinning subtle gradient border on hover */}
+              <motion.div
+                aria-hidden
+                className="absolute -inset-[1px] rounded-[2.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{
+                  background: "conic-gradient(from 0deg, transparent, #7dd3fc, #818cf8, transparent)",
+                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                  padding: "1px",
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, ease: "linear", repeat: Infinity }}
+              />
+
+              {/* Animated glow orbs */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-transparent opacity-50 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
+
+              <motion.div
+                className="absolute -left-20 -top-20 h-72 w-72 rounded-full bg-primary/[0.08] blur-[80px]"
+                variants={{ idle: { scale: 1, opacity: 0.5 }, hovered: { scale: 1.4, opacity: 1 } }}
+                transition={{ duration: 1 }}
+                aria-hidden
+              />
+              <motion.div
+                className="absolute -right-20 -bottom-20 h-72 w-72 rounded-full bg-indigo-500/[0.08] blur-[80px]"
+                variants={{ idle: { scale: 1, opacity: 0.5 }, hovered: { scale: 1.4, opacity: 1 } }}
+                transition={{ duration: 1 }}
+                aria-hidden
+              />
 
               <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto">
-                <blockquote className="text-2xl md:text-3xl lg:text-4xl font-medium text-ink leading-[1.3] mb-8 tracking-tight">
-                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-5xl inline-block align-top mr-2">"</span>
-                  Code is read much more often than it is written. I build for the humans maintaining the system, not just the machines running it.
-                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-5xl inline-block align-bottom ml-2">"</span>
-                </blockquote>
 
                 <div className="flex items-center gap-4 text-sm font-semibold uppercase tracking-widest text-primary mb-6">
-                  <span className="h-px w-10 bg-primary/30" />
-                  <span>A Thoughtful Approach</span>
-                  <span className="h-px w-10 bg-primary/30" />
+                  <span className="h-px w-12 bg-gradient-to-r from-transparent to-primary/50" />
+                  <span className="hero-gradient-text font-bold tracking-[0.2em]">Engineering with Purpose</span>
+                  <span className="h-px w-12 bg-gradient-to-l from-transparent to-primary/50" />
                 </div>
 
-                <p className="text-muted-1 max-w-2xl text-base md:text-lg leading-relaxed">
-                  I believe in a holistic approach to software engineering. Beyond writing efficient algorithms, I prioritize clean architecture, empathetic collaboration, and delivering robust systems that gracefully scale with the business.
-                </p>
+                <blockquote className="text-2xl md:text-4xl lg:text-5xl font-medium text-ink leading-[1.25] mb-10 tracking-tight">
+                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-6xl inline-block align-top mr-2">"</span>
+                  A truly great system is one you <span className="hero-gradient-text drop-shadow-sm">never have to think about</span>. It just works—no matter the load, no matter the scale.
+                  <span className="text-primary/40 text-4xl leading-none font-serif md:text-6xl inline-block align-bottom ml-2">"</span>
+                </blockquote>
               </div>
-            </div>
+            </motion.div>
           </Reveal>
         </Container>
       </section>
 
       {/* How I Can Help */}
-      <section className="relative mt-14 md:mt-20">
+      <section className="relative min-h-[110dvh] flex flex-col justify-center pb-10">
         <div className="pointer-events-none absolute -left-32 bottom-1/4 h-64 w-64 rounded-full bg-primary/[0.06] blur-3xl" aria-hidden />
         <div className="pointer-events-none absolute right-0 top-1/4 h-80 w-80 rounded-full bg-primary/[0.04] blur-3xl" aria-hidden />
         <Container>

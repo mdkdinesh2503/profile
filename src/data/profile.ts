@@ -4,11 +4,11 @@ import { experience, getYearsExperience } from "./experience";
 
 export const profile: Profile = {
   name: "Dinesh Kumar M",
-  role: "Software Engineer | Backend Engineer",
+  role: "Software Engineer",
   location: "Namakkal, Tamil Nadu, India",
   phone: "+91 97879 43467",
   email: "mdkdinesh2503@gmail.com",
-  avatar: "./profile/mdk.jpg",
+  avatar: "./profile/mdk.png",
   primaryCta: {
     label: "View Selected Work",
     href: "/projects",

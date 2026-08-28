@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { cx } from "@/shared/ui/cx";
+import { profile } from "@/data/profile";
 
 type HeroPortraitProps = {
   src?: string;
@@ -8,6 +9,8 @@ type HeroPortraitProps = {
   className?: string;
   initials?: string;
   yearsExperience?: string;
+  /** When true the portrait fills the full height of its grid cell */
+  stretch?: boolean;
 };
 
 export function HeroPortrait({
@@ -15,7 +18,7 @@ export function HeroPortrait({
   alt,
   className,
   initials = "DK",
-  yearsExperience,
+  stretch = false,
 }: HeroPortraitProps) {
   const [failed, setFailed] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -48,26 +51,21 @@ export function HeroPortrait({
           "relative overflow-hidden rounded-[28px] border border-line bg-surface/80 shadow-lift-1",
           "backdrop-blur-xl ring-1 ring-white/[0.06]",
         )}
-        style={{ backdropFilter: "blur(20px)" }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
       >
-        {/* Inner highlights */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_400px_at_25%_10%,rgba(255,255,255,0.25),transparent_50%)] opacity-20"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(500px_350px_at_75%_70%,rgba(56,189,248,0.16),transparent_50%)]"
-        />
 
         <div className="relative p-3">
-          <div className="relative aspect-[4/5] w-[260px] overflow-hidden rounded-[22px] bg-ink/[0.05] shadow-glass-inset md:w-[320px]">
+          <div
+            className={cx(
+              "relative overflow-hidden rounded-[22px] bg-ink/[0.05] shadow-glass-inset",
+              stretch
+                ? "h-full w-[360px] min-h-[420px]"
+                : "aspect-[4/5] w-[300px] md:w-[400px]",
+            )}
+          >
             {/* Placeholder (initials) shown until image loads or on error */}
             {(!loaded || !hasImage || failed) && initialsBlock}
             {hasImage && !failed && (
-              <img
+              <motion.img
                 src={src}
                 alt={alt}
                 className={cx(
@@ -78,23 +76,20 @@ export function HeroPortrait({
                 fetchPriority="high"
                 onLoad={() => setLoaded(true)}
                 onError={() => setFailed(true)}
+                whileHover={{ scale: 1.06 }}
+                transition={{ type: "spring", stiffness: 260, damping: 22 }}
               />
             )}
 
-            {/* Years experience badge */}
-            {yearsExperience != null && (
-              <div
-                aria-label={`${yearsExperience} years experience`}
-                className="absolute left-3 top-3 rounded-xl border border-primary/40 bg-ink/75 px-3 py-2 shadow-[0_0_20px_var(--color-glow)] backdrop-blur-md"
-              >
-                <span className="block text-xl font-bold leading-none text-primary">
-                  {yearsExperience}
-                </span>
-                <span className="mt-1 block text-[10px] font-semibold uppercase tracking-wider text-white">
-                  Years Exp.
-                </span>
-              </div>
-            )}
+            {/* Profile Title */}
+            <div
+              aria-label={profile.role}
+              className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-lg px-3 py-1.5 backdrop-blur-md"
+            >
+              <span className="block text-xs font-bold uppercase tracking-widest hero-gradient-text">
+                {profile.role}
+              </span>
+            </div>
 
             {/* Available for work pill */}
             <div
