@@ -2,6 +2,7 @@ import type { Profile } from "@/types";
 import { certifications } from "./certifications";
 import { experience, getYearsExperience } from "./experience";
 
+
 export const profile: Profile = {
   name: "Dinesh Kumar M",
   role: "Software Engineer",
@@ -29,7 +30,17 @@ export const profile: Profile = {
   links: {
     github: "https://github.com/mdkdinesh2503",
     linkedin: "https://www.linkedin.com/in/mdkdinesh2503",
-    instagram: "https://www.instagram.com/mdk_.me/",
   },
   certifications,
+  education: [
+    {
+      institution: "K.S.R. College of Engineering",
+      degree: "Bachelor of Engineering (B.E.) - Computer Science and Engineering",
+      location: "Namakkal, Tamil Nadu, India",
+      startDate: "Aug 2019",
+      endDate: "May 2023",
+      grade: "8.56/10",
+      coursework: "Data Structures & Algorithms, OOP, DBMS, Operating Systems, Computer Networks, Software Engineering.",
+    },
+  ],
 };

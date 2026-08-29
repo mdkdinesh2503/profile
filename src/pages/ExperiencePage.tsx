@@ -7,6 +7,7 @@ import { experience, getDisplayDateRange, getDisplayDuration } from "@/data/expe
 import { headings } from "@/data/headings";
 import { Button, buttonStyles, cx } from "@/shared/ui";
 import { profile } from "@/data/profile";
+import { getTechIcon, getHighlightIcon } from "@/data/skills";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar,
@@ -18,107 +19,13 @@ import {
   ExternalLink,
   Download,
   Sparkles,
-  Server,
-  Layers,
-  Zap,
   Code2,
-  Database,
-  Cpu,
   CheckCircle2,
   ShieldCheck,
   Building2,
-  BookOpen,
   Briefcase,
   Terminal,
-  Flame,
 } from "lucide-react";
-import {
-  SiRust,
-  SiSpring,
-  SiNestjs,
-  SiPostgresql,
-  SiRedis,
-  SiDocker,
-  SiJenkins,
-  SiArgo,
-  SiGrafana,
-  SiAngular,
-  SiNodedotjs,
-  SiTypescript,
-  SiJavascript,
-} from "react-icons/si";
-
-// ─── Mini Tech Icon Helper (Unified brand primary color) ────────────────────
-function getTechIcon(name: string) {
-  const lower = name.toLowerCase();
-  if (lower.includes("rust") || lower.includes("axum") || lower.includes("tokio") || lower.includes("tonic")) {
-    return <SiRust className="text-primary" size={13} />;
-  }
-  if (lower.includes("spring") || lower.includes("java")) {
-    return <SiSpring className="text-primary" size={13} />;
-  }
-  if (lower.includes("nest")) {
-    return <SiNestjs className="text-primary" size={13} />;
-  }
-  if (lower.includes("postgres") || lower.includes("sql")) {
-    return <SiPostgresql className="text-primary" size={13} />;
-  }
-  if (lower.includes("redis") || lower.includes("valkey")) {
-    return <SiRedis className="text-primary" size={13} />;
-  }
-  if (lower.includes("docker")) {
-    return <SiDocker className="text-primary" size={13} />;
-  }
-  if (lower.includes("jenkins")) {
-    return <SiJenkins className="text-primary" size={13} />;
-  }
-  if (lower.includes("argo")) {
-    return <SiArgo className="text-primary" size={13} />;
-  }
-  if (lower.includes("grafana")) {
-    return <SiGrafana className="text-primary" size={13} />;
-  }
-  if (lower.includes("angular")) {
-    return <SiAngular className="text-primary" size={13} />;
-  }
-  if (lower.includes("node")) {
-    return <SiNodedotjs className="text-primary" size={13} />;
-  }
-  if (lower.includes("typescript")) {
-    return <SiTypescript className="text-primary" size={13} />;
-  }
-  if (lower.includes("javascript")) {
-    return <SiJavascript className="text-primary" size={13} />;
-  }
-  if (lower.includes("graphql")) {
-    return <Zap className="text-primary" size={13} />;
-  }
-  if (lower.includes("grpc") || lower.includes("proto")) {
-    return <Layers className="text-primary" size={13} />;
-  }
-  if (lower.includes("aws") || lower.includes("dynamo")) {
-    return <Database className="text-primary" size={13} />;
-  }
-  return <Code2 className="text-primary" size={13} />;
-}
-
-// ─── Highlight Section Icons ────────────────────────────────────────────────
-function getHighlightIcon(title: string) {
-  const lower = title.toLowerCase();
-  if (lower.includes("ownership") || lower.includes("feature")) {
-    return <Flame className="h-4 w-4 text-primary shrink-0" />;
-  }
-  if (lower.includes("distributed") || lower.includes("microservice") || lower.includes("backend")) {
-    return <Cpu className="h-4 w-4 text-primary shrink-0" />;
-  }
-  if (lower.includes("production") || lower.includes("lifecycle") || lower.includes("engineering")) {
-    return <ShieldCheck className="h-4 w-4 text-primary shrink-0" />;
-  }
-  if (lower.includes("advanced") || lower.includes("training")) {
-    return <BookOpen className="h-4 w-4 text-primary shrink-0" />;
-  }
-  return <Sparkles className="h-4 w-4 text-primary shrink-0" />;
-}
 
 export function ExperiencePage() {
   const [selectedCertIdx, setSelectedCertIdx] = useState(0);
@@ -168,346 +75,357 @@ export function ExperiencePage() {
   }, [certModalOpen]);
 
   return (
-    <section className="pt-12 md:pt-16 pb-20">
+    <>
       <PageMeta
         title={headings.experience.eyebrow}
         description={headings.experience.description}
         path="/experience"
       />
-      <Container>
-        {/* Header with creative glowing banner */}
-        <Reveal>
-          <SectionHeading
-            eyebrow={headings.experience.eyebrow}
-            title={headings.experience.title}
-            description={headings.experience.description}
-          />
-        </Reveal>
 
-        {/* Quick Metrics Bar */}
-        <Reveal delay={0.05}>
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:gap-4">
-            <div className="group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-4 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_24px_rgba(56,189,248,0.15)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Briefcase size={20} />
+      {/* ── Experience Overview ──────────────────────────────── */}
+      <section className="pt-12 md:pt-16 pb-10">
+        <Container>
+          {/* Header with creative glowing banner */}
+          <Reveal>
+            <SectionHeading
+              eyebrow={headings.experience.eyebrow}
+              title={headings.experience.title}
+              description={headings.experience.description}
+            />
+          </Reveal>
+
+          {/* Quick Metrics Bar */}
+          <Reveal delay={0.05}>
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:gap-4">
+              <div className="glass-card-outer glass-card-panel p-4 group rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                    <Briefcase size={20} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-ink">2+ yrs</div>
+                    <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Industry Exp</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-ink">2+ yrs</div>
-                  <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Industry Exp</div>
+              </div>
+
+              <div className="glass-card-outer glass-card-panel p-4 group rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                    <Building2 size={20} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-ink">2</div>
+                    <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Companies & Domains</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card-outer glass-card-panel p-4 group rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                    <ShieldCheck size={20} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-ink">25+</div>
+                    <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Prod Releases</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card-outer glass-card-panel p-4 group rounded-2xl">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
+                    <Award size={20} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-ink">{profile.certifications.length}</div>
+                    <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Verified Credentials</div>
+                  </div>
                 </div>
               </div>
             </div>
+          </Reveal>
+        </Container>
+      </section>
 
-            <div className="group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-4 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_24px_rgba(56,189,248,0.15)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Building2 size={20} />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-ink">2</div>
-                  <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Companies & Domains</div>
-                </div>
-              </div>
+      {/* ── Professional Timeline ────────────────────────────── */}
+      <section className="relative flex flex-col justify-center">
+        <Container>
+          {/* Category Filter Pills */}
+          <Reveal delay={0.08}>
+            <div className="flex flex-wrap items-center gap-2 border-b border-line pb-4">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-2 mr-2">Filter View:</span>
+              {categories.map((cat) => {
+                const isActive = activeCategoryFilter === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategoryFilter(cat)}
+                    className={cx(
+                      "inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold transition-all duration-200 cursor-pointer",
+                      isActive
+                        ? "bg-primary text-accent-foreground tracking-wider ring-1 ring-primary/50"
+                        : "bg-surface/60 text-muted-1 border border-line hover:border-primary hover:text-ink hover:bg-surface"
+                    )}
+                  >
+                    {cat === "all" ? "All Tracks" : cat}
+                  </button>
+                );
+              })}
             </div>
+          </Reveal>
 
-            <div className="group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-4 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_24px_rgba(56,189,248,0.15)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <ShieldCheck size={20} />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-ink">25+</div>
-                  <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Prod Releases</div>
-                </div>
-              </div>
-            </div>
+          {/* Experience Timeline Stream */}
+          <div className="mt-8 space-y-10">
+            {filteredExperience.map((item, idx) => {
+              const displayDuration = getDisplayDuration(item);
+              const displayDateRange = getDisplayDateRange(item);
 
-            <div className="group relative overflow-hidden rounded-2xl border border-line bg-surface/50 p-4 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_24px_rgba(56,189,248,0.15)]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition-transform">
-                  <Award size={20} />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-ink">{profile.certifications.length}</div>
-                  <div className="text-xs text-muted-2 uppercase tracking-wider font-medium">Verified Credentials</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Category Filter Pills */}
-        <Reveal delay={0.08}>
-          <div className="mt-8 flex flex-wrap items-center gap-2 border-b border-line pb-4">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-2 mr-2">Filter View:</span>
-            {categories.map((cat) => {
-              const isActive = activeCategoryFilter === cat;
               return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategoryFilter(cat)}
-                  className={cx(
-                    "inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold transition-all duration-200 cursor-pointer",
-                    isActive
-                      ? "bg-primary text-white shadow-[0_0_20px_rgba(56,189,248,0.4)] ring-1 ring-primary/50"
-                      : "bg-surface/60 text-muted-1 border border-line hover:border-primary/30 hover:text-ink hover:bg-surface"
-                  )}
-                >
-                  {cat === "all" ? "All Tracks" : cat}
-                </button>
+                <Reveal key={`${item.company}-${item.title}-${idx}`} delay={0.05 * idx}>
+                  <article
+                    className={cx(
+                      "glass-card-panel group relative hover:hover-shadow rounded-2xl"
+                    )}
+                  >
+                    {/* Glowing Top Accent Strip */}
+                    <div className="h-1.5 w-full bg-gradient-to-r from-primary via-[#6babff] to-primary" />
+
+                    <div className="p-6 md:p-8">
+                      {/* Header: Company, Role, Badge & Date info */}
+                      <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+                        <div className="flex items-start gap-4">
+                          {/* Company Logo / Avatar */}
+                          <div className="glass-icon relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                            {item.logo ? (
+                              <img
+                                src={item.logo}
+                                alt={item.company}
+                                className="h-full w-full object-contain rounded-lg"
+                              />
+                            ) : (
+                              <Building2 className="h-6 w-6 text-primary" />
+                            )}
+                          </div>
+
+                          {/* Title & Metadata */}
+                          <div>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <h3 className="text-xl md:text-2xl font-bold tracking-tight text-ink">
+                                {item.title}
+                              </h3>
+                              <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-surface text-primary border border-primary">
+                                {item.category || "Experience"}
+                              </span>
+                            </div>
+
+                            <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-muted-1">
+                              <span className="font-semibold text-primary">{item.company}</span>
+                              <span className="text-muted-2 hidden sm:inline">·</span>
+                              {item.location && (
+                                <span className="flex items-center gap-1 text-xs text-muted-2">
+                                  <MapPin size={13} className="shrink-0 text-primary/70" />
+                                  {item.location}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Right Timeline Badge */}
+                        <div className="flex flex-wrap md:flex-col md:items-end gap-2 shrink-0">
+                          <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-ink">
+                            <Calendar size={13} className="text-primary shrink-0" />
+                            <span>{displayDateRange}</span>
+                          </div>
+                          <div className="flex items-center border border-line rounded-xl gap-1.5 px-3 py-1 text-xs font-bold text-primary">
+                            <Clock size={13} className="shrink-0" />
+                            <span>{displayDuration}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Summary Paragraph */}
+                      {item.summary && (
+                        <p className="mt-1 rounded-2xl p-4 text-sm md:text-base leading-relaxed text-muted-1">
+                          {item.summary}
+                        </p>
+                      )}
+
+                      {/* Domain & Scope Badges */}
+                      {item.domains && item.domains.length > 0 && (
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {item.domains.map((dom) => (
+                            <span
+                              key={dom}
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-[#9fc0df]/10 px-3 py-1 text-xs font-medium text-muted-1"
+                            >
+                              <Sparkles size={12} className="text-primary" />
+                              {dom}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Sub-Roles timeline (if present, e.g. for Aspire training phases) */}
+                      {item.roles && item.roles.length > 0 && (
+                        <div className="mt-6 rounded-2xl border border-line bg-surface-2/40 p-4">
+                          <div className="text-xs font-bold uppercase tracking-widest text-muted-2 mb-3">
+                            Timeline & Role Progression
+                          </div>
+                          <div className="space-y-3">
+                            {item.roles.map((role, rIdx) => (
+                              <div
+                                key={`${role.title}-${rIdx}`}
+                                className="flex items-start gap-3 border-l-2 border-muted-1 pl-3 py-0.5"
+                              >
+                                <div className="flex-1">
+                                  <div className="text-sm font-normal text-ink tracking-wider">{role.title}</div>
+                                  <div className="text-xs text-muted-2">
+                                    {role.employmentType} · {role.timeframe}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Structured Highlight Modules */}
+                      {item.highlights && item.highlights.length > 0 && (
+                        <div className="mt-6 space-y-4">
+                          <div className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                            <Terminal size={14} />
+                            Core Responsibilities & Deep Dives
+                          </div>
+
+                          <div className="grid gap-3">
+                            {item.highlights.map((hl, hlIdx) => {
+                              const hlKey = `${item.company}-${hlIdx}`;
+                              const isExpanded = expandedHighlights[hlKey] ?? true;
+
+                              return (
+                                <div
+                                  key={hl.title}
+                                  className="overflow-hidden rounded-2xl border border-line transition-all duration-200 hover:border-primary/30"
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleHighlight(hlKey)}
+                                    className="flex w-full items-center justify-between p-3.5 sm:p-4 text-left cursor-pointer bg-white/[0.02] hover:bg-white/[0.05] transition-colors"
+                                  >
+                                    <div className="flex items-center gap-2.5">
+                                      {getHighlightIcon(hl.title)}
+                                      <span className="text-sm font-medium tracking-wider text-ink">
+                                        {hl.title}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs font-medium text-muted-2">
+                                      <span className="hidden sm:inline">{hl.points.length} points</span>
+                                      <ChevronDown
+                                        size={16}
+                                        className={cx(
+                                          "transition-transform duration-200 text-primary",
+                                          isExpanded ? "rotate-180" : ""
+                                        )}
+                                      />
+                                    </div>
+                                  </button>
+
+                                  <AnimatePresence initial={false}>
+                                    {isExpanded && (
+                                      <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                      >
+                                        <div className="border-t border-line p-4 pt-3 space-y-2.5 bg-black/10">
+                                          {hl.points.map((pt, pIdx) => (
+                                            <div key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm leading-relaxed text-muted-1">
+                                              <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                                                <ChevronRight size={12} />
+                                              </span>
+                                              <span>{pt}</span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Key Outcomes / Deliverables (if no highlights or as executive summary) */}
+                      {(!item.highlights || item.highlights.length === 0) && item.outcomes.length > 0 && (
+                        <div className="mt-5 space-y-2.5 border-t border-line pt-4">
+                          <div className="text-xs font-bold uppercase tracking-widest text-primary mb-2">
+                            Key Deliverables
+                          </div>
+                          {item.outcomes.map((o, oIdx) => (
+                            <div key={oIdx} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-1">
+                              <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                                <CheckCircle2 size={13} />
+                              </span>
+                              <span>{o}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Tech Stack Pills (Integrated directly in experience card - matching HomePage SkillTag styling) */}
+                      {item.techStack && item.techStack.length > 0 && (
+                        <div className="mt-6 border-t border-line pt-5  opacity-70">
+                          <div className="flex items-center gap-2 mb-3.5 text-xs font-bold uppercase tracking-widest text-muted-2">
+                            <Code2 size={13} className="text-primary" />
+                            <span>Technologies & Tools Used</span>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {item.techStack.map((tech) => (
+                              <div
+                                key={tech}
+                                className="group/tech relative rounded-xl overflow-hidden cursor-default transition-all duration-200"
+                                style={{
+                                  background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
+                                  boxShadow: "inset 0 0 0 1px rgba(56,189,248,0.22)",
+                                }}
+                              >
+                                {/* Top micro-glow bar */}
+                                <div
+                                  className="absolute inset-x-0 top-0 h-[1.5px] opacity-40 transition-opacity duration-300"
+                                  style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }}
+                                />
+                                <div className="relative flex items-center gap-2 px-3 py-1.5 w-full">
+                                  <span
+                                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-transform duration-200"
+                                  >
+                                    {getTechIcon(tech)}
+                                  </span>
+                                  <span className="text-[12px] font-semibold text-muted-1 leading-none">{tech}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </Reveal>
               );
             })}
           </div>
-        </Reveal>
 
-        {/* Experience Timeline Stream */}
-        <div className="mt-8 space-y-10">
-          {filteredExperience.map((item, idx) => {
-            const displayDuration = getDisplayDuration(item);
-            const displayDateRange = getDisplayDateRange(item);
+        </Container>
+      </section>
 
-            return (
-              <Reveal key={`${item.company}-${item.title}-${idx}`} delay={0.05 * idx}>
-                <article
-                  className={cx(
-                    "group relative overflow-hidden rounded-3xl border border-line bg-surface backdrop-blur-xl transition-all duration-500 hover:border-primary/50 shadow-glass"
-                  )}
-                >
-                  {/* Glowing Top Accent Strip */}
-                  <div className="h-1.5 w-full bg-gradient-to-r from-primary via-[#6babff] to-primary" />
-
-                  <div className="p-6 md:p-8">
-                    {/* Header: Company, Role, Badge & Date info */}
-                    <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                      <div className="flex items-start gap-4">
-                        {/* Company Logo / Avatar */}
-                        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-line bg-surface p-2 shadow-inner group-hover:scale-105 transition-transform duration-300">
-                          {item.logo ? (
-                            <img
-                              src={item.logo}
-                              alt={item.company}
-                              className="h-full w-full object-contain rounded-lg"
-                            />
-                          ) : (
-                            <Building2 className="h-6 w-6 text-primary" />
-                          )}
-                        </div>
-
-                        {/* Title & Metadata */}
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="text-xl md:text-2xl font-bold tracking-tight text-ink">
-                              {item.title}
-                            </h3>
-                            <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-surface text-primary border border-primary">
-                              {item.category || "Experience"}
-                            </span>
-                          </div>
-
-                          <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-muted-1">
-                            <span className="font-semibold text-primary">{item.company}</span>
-                            <span className="text-muted-2 hidden sm:inline">·</span>
-                            {item.location && (
-                              <span className="flex items-center gap-1 text-xs text-muted-2">
-                                <MapPin size={13} className="shrink-0 text-primary/70" />
-                                {item.location}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Right Timeline Badge */}
-                      <div className="flex flex-wrap md:flex-col md:items-end gap-2 shrink-0">
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-ink">
-                          <Calendar size={13} className="text-primary shrink-0" />
-                          <span>{displayDateRange}</span>
-                        </div>
-                        <div className="flex items-center border border-line rounded-xl gap-1.5 px-3 py-1 text-xs font-bold text-primary">
-                          <Clock size={13} className="shrink-0" />
-                          <span>{displayDuration}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Summary Paragraph */}
-                    {item.summary && (
-                      <p className="mt-1 rounded-2xl p-4 text-sm md:text-base leading-relaxed text-muted-1">
-                        {item.summary}
-                      </p>
-                    )}
-
-                    {/* Domain & Scope Badges */}
-                    {item.domains && item.domains.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {item.domains.map((dom) => (
-                          <span
-                            key={dom}
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-primary bg-[#9fc0df]/10 px-3 py-1 text-xs font-medium text-muted-1"
-                          >
-                            <Sparkles size={12} className="text-primary" />
-                            {dom}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Sub-Roles timeline (if present, e.g. for Aspire training phases) */}
-                    {item.roles && item.roles.length > 0 && (
-                      <div className="mt-6 rounded-2xl border border-line bg-surface-2/40 p-4">
-                        <div className="text-xs font-bold uppercase tracking-widest text-muted-2 mb-3">
-                          Timeline & Role Progression
-                        </div>
-                        <div className="space-y-3">
-                          {item.roles.map((role, rIdx) => (
-                            <div
-                              key={`${role.title}-${rIdx}`}
-                              className="flex items-start gap-3 border-l-2 border-muted-1 pl-3 py-0.5"
-                            >
-                              <div className="flex-1">
-                                <div className="text-sm font-normal text-ink tracking-wider">{role.title}</div>
-                                <div className="text-xs text-muted-2">
-                                  {role.employmentType} · {role.timeframe}
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Structured Highlight Modules */}
-                    {item.highlights && item.highlights.length > 0 && (
-                      <div className="mt-6 space-y-4">
-                        <div className="text-xs font-bold uppercase tracking-widest text-primary flex items-center gap-2">
-                          <Terminal size={14} />
-                          Core Responsibilities & Deep Dives
-                        </div>
-
-                        <div className="grid gap-3">
-                          {item.highlights.map((hl, hlIdx) => {
-                            const hlKey = `${item.company}-${hlIdx}`;
-                            const isExpanded = expandedHighlights[hlKey] ?? true;
-
-                            return (
-                              <div
-                                key={hl.title}
-                                className="overflow-hidden rounded-2xl border border-line transition-all duration-200 hover:border-primary/30"
-                              >
-                                <button
-                                  type="button"
-                                  onClick={() => toggleHighlight(hlKey)}
-                                  className="flex w-full items-center justify-between p-3.5 sm:p-4 text-left cursor-pointer bg-white/[0.02] hover:bg-white/[0.05] transition-colors"
-                                >
-                                  <div className="flex items-center gap-2.5">
-                                    {getHighlightIcon(hl.title)}
-                                    <span className="text-sm font-medium tracking-wider text-ink">
-                                      {hl.title}
-                                    </span>
-                                  </div>
-                                  <div className="flex items-center gap-2 text-xs font-medium text-muted-2">
-                                    <span className="hidden sm:inline">{hl.points.length} points</span>
-                                    <ChevronDown
-                                      size={16}
-                                      className={cx(
-                                        "transition-transform duration-200 text-primary",
-                                        isExpanded ? "rotate-180" : ""
-                                      )}
-                                    />
-                                  </div>
-                                </button>
-
-                                <AnimatePresence initial={false}>
-                                  {isExpanded && (
-                                    <motion.div
-                                      initial={{ height: 0, opacity: 0 }}
-                                      animate={{ height: "auto", opacity: 1 }}
-                                      exit={{ height: 0, opacity: 0 }}
-                                      transition={{ duration: 0.2 }}
-                                    >
-                                      <div className="border-t border-line p-4 pt-3 space-y-2.5 bg-black/10">
-                                        {hl.points.map((pt, pIdx) => (
-                                          <div key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm leading-relaxed text-muted-1">
-                                            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                              <ChevronRight size={12} />
-                                            </span>
-                                            <span>{pt}</span>
-                                          </div>
-                                        ))}
-                                      </div>
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Key Outcomes / Deliverables (if no highlights or as executive summary) */}
-                    {(!item.highlights || item.highlights.length === 0) && item.outcomes.length > 0 && (
-                      <div className="mt-5 space-y-2.5 border-t border-line pt-4">
-                        <div className="text-xs font-bold uppercase tracking-widest text-primary mb-2">
-                          Key Deliverables
-                        </div>
-                        {item.outcomes.map((o, oIdx) => (
-                          <div key={oIdx} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted-1">
-                            <span className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
-                              <CheckCircle2 size={13} />
-                            </span>
-                            <span>{o}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Tech Stack Pills (Integrated directly in experience card - matching HomePage SkillTag styling) */}
-                    {item.techStack && item.techStack.length > 0 && (
-                      <div className="mt-6 border-t border-line pt-5">
-                        <div className="flex items-center gap-2 mb-3.5 text-xs font-bold uppercase tracking-widest text-muted-2">
-                          <Code2 size={13} className="text-primary" />
-                          <span>Technologies & Tools Used</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {item.techStack.map((tech) => (
-                            <div
-                              key={tech}
-                              className="group/tech relative rounded-xl overflow-hidden cursor-default transition-all duration-200"
-                              style={{
-                                background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
-                                boxShadow: "inset 0 0 0 1px rgba(56,189,248,0.22)",
-                              }}
-                            >
-                              {/* Top micro-glow bar */}
-                              <div
-                                className="absolute inset-x-0 top-0 h-[1.5px] opacity-40 group-hover/tech:opacity-100 transition-opacity duration-300"
-                                style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }}
-                              />
-                              <div className="relative flex items-center gap-2 px-3 py-1.5 w-full">
-                                <span
-                                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md transition-transform duration-200 group-hover/tech:scale-110"
-                                  style={{ background: "rgba(56,189,248,0.12)" }}
-                                >
-                                  {getTechIcon(tech)}
-                                </span>
-                                <span className="text-[12px] font-semibold text-muted-1 leading-none">{tech}</span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        {/* ─── CREDENTIALS / CERTIFICATIONS SECTION ──────────────────────── */}
-        <div id="certifications" className="mt-20 pt-10 border-t border-line">
+      {/* ── Credentials & Certifications ─────────────────────── */}
+      <section id="certifications" className="relative flex flex-col justify-center pt-10 pb-20">
+        <Container>
           <Reveal>
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <SectionHeading
@@ -550,8 +468,7 @@ export function ExperiencePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 0.35, delay: idx * 0.05 }}
-                    whileHover={{ y: -4 }}
-                    className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface/50 backdrop-blur-xl p-4 sm:p-5 shadow-glass transition-all duration-300 hover:border-primary/50 hover:shadow-[0_12px_36px_rgba(56,189,248,0.15)]"
+                    className="glass-card-outer glass-card-panel group relative flex flex-col justify-between p-4 sm:p-5"
                   >
                     {/* Top edge glowing accent line */}
                     <div
@@ -581,10 +498,10 @@ export function ExperiencePage() {
                           setSelectedCertIdx(idx);
                           setCertModalOpen(true);
                         }}
-                        className="group/thumb relative flex items-center gap-3.5 cursor-pointer overflow-hidden rounded-xl border border-line bg-surface p-3 shadow-inner transition-all duration-200 hover:border-primary"
+                        className="group/thumb glass-card-panel relative flex items-center gap-3.5 cursor-pointer p-3 transition-all duration-200 hover:border-primary"
                       >
                         <div
-                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-primary shadow-sm transition-transform duration-200 group-hover/thumb:scale-105"
+                          className="glass-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-primary transition-transform duration-200 group-hover/thumb:scale-105"
                         >
                           <Award size={20} className="text-primary" />
                         </div>
@@ -757,8 +674,8 @@ export function ExperiencePage() {
               </motion.div>
             ) : null}
           </AnimatePresence>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   );
 }

@@ -8,8 +8,7 @@ import { profile } from "@/data/profile";
 import { Reveal } from "@/shared/motion/Reveal";
 import { getProjectsByCategory } from "@/lib/projects";
 import { headings } from "@/data/headings";
-import { education } from "@/data/education";
-import { skills } from "@/data/experience";
+import { skills } from "@/data/skills";
 import { SKILL_ICON_MAP, PILLAR_ICONS, PILLAR_GRADIENT, PILLAR_GLOW } from "@/data/skills";
 import { HeroPortrait, ButtonLink } from "@/shared/ui";
 import {
@@ -490,7 +489,7 @@ export function HomePage() {
           </div>
 
           <div className="flex flex-col gap-8 w-full max-w-5xl mx-auto">
-            {education.map((item, idx) => (
+            {profile.education.map((item, idx) => (
               <Reveal key={item.institution} delay={0.04 * idx} className="w-full">
                 <div className="group relative w-full overflow-hidden rounded-[2rem] border border-line hover:-translate-y-2 hover:hover-shadow">
 

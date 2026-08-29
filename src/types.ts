@@ -123,7 +123,6 @@ export type HowICanHelp = {
 export type ProfileLinks = {
   github: string;
   linkedin: string;
-  instagram?: string;
 };
 
 export type Hero = {
@@ -155,5 +154,6 @@ export type Profile = {
   hero: Hero;
   links: ProfileLinks;
   certifications: Certification[];
+  education: EducationItem[];
   resume: Resume;
-};
+};

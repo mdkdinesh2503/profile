@@ -1,7 +1,7 @@
 export { profile } from "./profile";
-export { experience, skills } from "./experience";
-export { education } from "./education";
+export { experience } from "./experience";
 export { certifications } from "./certifications";
-export { SKILL_ICON_MAP, PILLAR_ICONS, PILLAR_GRADIENT, PILLAR_GLOW } from "./skills";
+export { SKILL_ICON_MAP, PILLAR_ICONS, PILLAR_GRADIENT, PILLAR_GLOW, skills, getTechIcon, getHighlightIcon } from "./skills";
 export type { SkillIconMeta } from "./skills";
-export type { Certification, Profile } from "@/types";
+export type { Certification, Profile } from "@/types";
+

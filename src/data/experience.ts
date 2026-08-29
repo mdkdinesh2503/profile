@@ -1,4 +1,4 @@
-import type { ExperienceItem, SkillGroup } from "@/types";
+import type { ExperienceItem } from "@/types";
 
 // ─── Config ─────────────────────────────────────────────────────────────────
 
@@ -124,25 +124,28 @@ export const experience: ExperienceItem[] = [
     summary:
       "Worked on a production gaming platform serving 20K+ registered users, contributing to its evolution from a Java/Spring Boot monolith toward high-performance Rust-based microservices.",
     techStack: [
+      "Java",
+      "Spring Boot",
       "Rust",
       "Tokio",
       "Axum",
       "Tonic",
       "async-graphql",
       "Protocol Buffers",
-      "Java",
-      "Spring Boot",
+      "Node.js",
       "NestJS",
       "PostgreSQL",
-      "Redis / Valkey",
       "DynamoDB",
-      "gRPC",
-      "GraphQL",
+      "Redis / Valkey",
+      "Next.js",
+      "Angular",
       "REST APIs",
+      "GraphQL",
+      "gRPC",
       "Docker",
       "Jenkins",
-      "ArgoCD",
       "Grafana",
+      "ArgoCD",
       "AWS",
     ],
     highlights: [
@@ -200,6 +203,7 @@ export const experience: ExperienceItem[] = [
       "Java",
       "Angular",
       "MySQL",
+      "JSON-Server",
       "REST APIs",
       "Git",
       "Unit Testing",
@@ -278,83 +282,3 @@ export const experience: ExperienceItem[] = [
   },
 ];
 
-export const skills: SkillGroup[] = [
-  {
-    group: "Languages",
-    items: ["Java", "Rust", "TypeScript", "JavaScript", "SQL"],
-  },
-  {
-    group: "Backend",
-    items: [
-      "Spring Framework",
-      "Spring Boot",
-      "Spring MVC",
-      "Spring Data JPA",
-      "Axum",
-      "Tokio",
-      "Tonic",
-      "NestJS",
-      "Node.js",
-    ],
-  },
-  {
-    group: "Frontend",
-    items: ["Next.js", "Angular", "React"],
-  },
-  {
-    group: "APIs & Integration",
-    items: [
-      "REST APIs",
-      "GraphQL",
-      "gRPC",
-      "Protocol Buffers",
-      "Third-Party API Integration",
-    ],
-  },
-  {
-    group: "Databases & Caching",
-    items: ["PostgreSQL", "MySQL", "DynamoDB", "Redis", "ElastiCache/Valkey"],
-  },
-  // {
-  //   group: "Architecture & Backend Engineering",
-  //   items: [
-  //     "Microservices",
-  //     "Distributed Systems",
-  //     "Monolithic Architecture",
-  //     "API Gateway",
-  //     "API Design",
-  //     "Data Modeling",
-  //     "Asynchronous Workflows",
-  //     "Authentication & Session Workflows",
-  //     "RBAC",
-  //     "Transactional Workflows",
-  //   ],
-  // },
-  {
-    group: "Cloud, Messaging & DevOps",
-    items: [
-      "AWS",
-      "AWS SQS",
-      "Docker",
-      "ECR",
-      "EKS Deployment",
-      "CloudWatch",
-      "Jenkins",
-      "ArgoCD",
-      "Grafana",
-    ],
-  },
-  {
-    group: "Developer Tools",
-    items: [
-      "Git",
-      "Maven",
-      "Cargo",
-      "Postman",
-      "Altair GraphQL",
-      "RedisInsight",
-      "pgAdmin",
-      "NoSQL Workbench",
-    ],
-  },
-];
