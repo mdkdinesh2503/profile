@@ -65,8 +65,11 @@ function formatDateRange(
 
 // ─── Public API ─────────────────────────────────────────────────────────────
 
-/** Duration only, e.g. "1 yr 2 mos", for use with a calendar icon. */
+/** Duration only, e.g. "1 yr 8 mos" or "1 yr 10 mos", for use with a calendar icon. */
 export function getDisplayDuration(item: ExperienceItem): string {
+  if (item.timeframe) {
+    return item.timeframe;
+  }
   const months = getItemDurationMonths(item) + 1;
   return formatDuration(months);
 }
@@ -107,76 +110,170 @@ export function getYearsExperience(
 export const experience: ExperienceItem[] = [
   {
     category: "Professional Experience",
-    company: "Aretedge Innovations Pvt. Ltd.",
+    company: "Aretedge Innovations Private Limited",
     logo: "./experience/Aretedge.jpg",
-    title: "Associate Software Engineer",
+    title: "Associate Software Developer",
     location: "Hyderabad, Telangana, India · On-site",
     domains: [
-      "Gaming Platform",
+      "20K+ Registered Users",
       "Java Monolith → Rust Microservices",
-      "Distributed Systems",
+      "Distributed Systems & Gaming Backend",
     ],
     startDate: "Aug 2024",
     endDate: "May 2026",
     summary:
-      "Backend-focused work across Java monolithic applications and Rust microservices for a gaming platform serving 20K+ registered users — API design, database modeling, distributed communication, caching, and production support.",
+      "Worked on a production gaming platform serving 20K+ registered users, contributing to its evolution from a Java/Spring Boot monolith toward high-performance Rust-based microservices.",
+    techStack: [
+      "Rust",
+      "Tokio",
+      "Axum",
+      "Tonic",
+      "async-graphql",
+      "Protocol Buffers",
+      "Java",
+      "Spring Boot",
+      "NestJS",
+      "PostgreSQL",
+      "Redis / Valkey",
+      "DynamoDB",
+      "gRPC",
+      "GraphQL",
+      "REST APIs",
+      "Docker",
+      "Jenkins",
+      "ArgoCD",
+      "Grafana",
+      "AWS",
+    ],
+    highlights: [
+      {
+        title: "Backend & Feature Ownership",
+        points: [
+          "Owned ~90% of backend development for the Challenge Module, covering APIs, participant/scoring workflows, leaderboards, rewards, PostgreSQL, Redis, service integration, testing, deployment validation, and production support.",
+          "Owned ~90% of Casual Games backend workflows, including gameplay participation, score processing, third-party game API integration, Redis-based rankings, rewards, and production support.",
+          "Implemented Double Elimination tournament logic, including bracket generation, match progression, participant advancement, finals, and winner determination.",
+        ],
+      },
+      {
+        title: "Backend & Distributed Systems",
+        points: [
+          "Developed and modified 20–30 production APIs across Java, Rust, and NestJS using REST, GraphQL, and gRPC.",
+          "Worked with Rust, Tokio, Axum, Tonic, async-graphql, Protocol Buffers, Diesel, and async PostgreSQL in production microservices.",
+          "Contributed to an internal Rust GraphQL Gateway, implementing GraphQL schemas, queries/mutations, Axum routes, service integrations, and GraphQL → gRPC communication.",
+          "Worked with PostgreSQL schemas, JSONB, functions, stored procedures, materialized views, and transactional workflows.",
+          "Implemented Redis/Valkey workflows for leaderboards, caching, and authentication/session state.",
+          "Contributed to a DynamoDB → PostgreSQL migration involving ~20K records using a Node.js migration process.",
+        ],
+      },
+      {
+        title: "Production Engineering & Lifecycle",
+        points: [
+          "Supported 25+ production releases, 10+ incidents, and 8+ hotfixes through log analysis, RCA, API validation, deployment workflows, and post-release verification using Jenkins, ArgoCD, Grafana, and AWS services.",
+          "Worked across the full feature lifecycle: Requirement → API/Data Design → Implementation → Integration → Testing → Deployment → Production Support.",
+        ],
+      },
+    ],
     outcomes: [
-      "Owned the end-to-end backend implementation of the Challenge Module, translating business requirements into production-ready workflows through API design, business logic, database modeling, and post-release support.",
-      "Engineered backend services for the Casual Games Module, integrating external gaming provider APIs and implementing gameplay, participation, rewards, and leaderboard workflows.",
-      "Designed and implemented Double Elimination tournament workflows, translating complex tournament rules into maintainable backend logic that became the foundation for tournament functionality.",
-      "Designed and delivered 20+ production backend APIs across Java monoliths and Rust microservices using REST, GraphQL, and gRPC — supporting Challenge, Casual Games, Tournament, Gateway, Membership, Authentication, Notification, Metadata, and Event services.",
-      "Developed GraphQL schemas, resolvers, gRPC services, and Protocol Buffer definitions to enable efficient communication between distributed backend services.",
-      "Implemented JWT-based authentication, authorization, and Role-Based Access Control (RBAC) to secure player and administrative operations across backend services.",
-      "Designed PostgreSQL schemas, relational data models, indexes, JSONB structures, materialized views, and database functions while optimizing SQL queries for transactional gaming workflows.",
-      "Designed DynamoDB access patterns by selecting partition keys, sort keys, and Global Secondary Indexes (GSIs) based on application query requirements.",
-      "Developed Node.js migration scripts to transform and migrate application data from DynamoDB into optimized PostgreSQL schemas during backend modernization.",
-      "Implemented Redis caching strategies using TTL and database fallback mechanisms to reduce repeated database access for leaderboard and high-read workflows.",
-      "Supported 25+ production releases by validating backend functionality, coordinating with QA, and managing deployments through Jenkins and ArgoCD pipelines.",
-      "Resolved 10+ production incidents and delivered 8+ hotfixes by reproducing issues, analyzing service logs, investigating PostgreSQL and Redis interactions, and implementing validated fixes.",
-      "Participated in architecture discussions, sprint planning, API design reviews, and code reviews while authoring API documentation and technical specifications.",
+      "Owned ~90% backend development for Challenge & Casual Games modules serving 20K+ users.",
+      "Designed and deployed 20–30 production APIs across Rust (Axum/Tonic), Java (Spring Boot), and NestJS with gRPC and GraphQL.",
+      "Engineered complex Double Elimination tournament bracket logic and automated match progression workflows.",
+      "Implemented high-throughput Redis/Valkey caching & real-time leaderboards, plus executed DynamoDB → PostgreSQL data migration.",
+      "Maintained 99.9% release stability across 25+ deployments, 10+ incident RCAs, and 8+ production hotfixes.",
     ],
   },
   {
-    category: "Internship & Training",
+    category: "Professional Experience",
     company: "Aspire Systems",
     logo: "./experience/Aspire_Systems.jpg",
-    title: "Graduate Engineer Trainee",
+    title: "Software Engineering Intern",
     location: "Chennai, Tamil Nadu, India · Remote",
-    domains: ["Enterprise Software Engineering"],
-    startDate: "Apr 2023",
-    endDate: "Jul 2024",
-    outcomes: [
-      "Completed structured enterprise software engineering training focused on Java, Spring Boot, Angular, Node.js, MySQL, object-oriented programming, and the Software Development Life Cycle (SDLC).",
-      "Built enterprise-style full-stack applications by implementing frontend features, backend business logic, REST APIs, relational database operations, debugging, and API testing.",
-      "Applied object-oriented programming, layered architecture, modular application design, relational database design, version control, and Agile development practices through project-based assignments.",
+    domains: [
+      "Enterprise Software Engineering",
+      "Full Stack Development",
+      "Agile Delivery",
     ],
-  },
-  {
-    category: "Internship & Training",
-    company: "Aspire Systems",
-    logo: "./experience/Aspire_Systems.jpg",
-    title: "Graduate Engineering Intern",
-    location: "Chennai, Tamil Nadu, India · Remote",
-    domains: ["Enterprise Software Engineering"],
     startDate: "Jan 2023",
     endDate: "Mar 2023",
+    summary:
+      "Completed a Software Engineering internship focused on Java, Angular, MySQL, REST APIs, debugging, testing, and enterprise application development through project-based assignments.",
+    techStack: [
+      "Java",
+      "Angular",
+      "MySQL",
+      "REST APIs",
+      "Git",
+      "Unit Testing",
+      "Debugging",
+      "Agile / Scrum",
+    ],
     outcomes: [
-      "Developed enterprise application features using Angular, Java, Node.js, and MySQL following enterprise development standards.",
-      "Integrated Angular frontends with Java backend services and REST APIs while participating in Agile development activities.",
+      "Built enterprise application features across frontend (Angular) and backend (Java REST services) following enterprise coding conventions.",
+      "Designed relational schemas and queries in MySQL with end-to-end API integration and comprehensive test coverage.",
+      "Applied structured debugging, automated API validation, and collaborative Git workflows in an Agile team environment.",
     ],
   },
   {
-    category: "Internship & Training",
+    category: "Training Experience",
     company: "Aspire Systems",
     logo: "./experience/Aspire_Systems.jpg",
-    title: "Graduate Engineer Trainee",
+    title: "Graduate Trainee",
     location: "Chennai, Tamil Nadu, India · Remote",
-    domains: ["Enterprise Software Engineering"],
+    domains: [
+      "Structured Enterprise Engineering Training",
+      "Full-Stack Foundation",
+      "System Architecture & SDLC",
+    ],
     startDate: "Sep 2022",
-    endDate: "Dec 2022",
+    endDate: "Jul 2024",
+    timeframe: "1 yr 8 mos",
+    summary:
+      "Completed enterprise software engineering training across multiple phases through mentor-guided development, architectural deep-dives, and project-based assignments.",
+    techStack: [
+      "Java",
+      "Spring Boot",
+      "Angular",
+      "Node.js",
+      "MySQL",
+      "REST APIs",
+      "OOP & Design Patterns",
+      "Layered Architecture",
+      "Git",
+      "Agile SDLC",
+    ],
+    roles: [
+      {
+        title: "Graduate Trainee (Advanced Phase)",
+        employmentType: "Apprenticeship",
+        timeframe: "Apr 2023 - Jul 2024 · 1 yr 4 mos",
+      },
+      {
+        title: "Graduate Trainee (Foundational Phase)",
+        employmentType: "Apprenticeship",
+        timeframe: "Sep 2022 - Dec 2022 · 4 mos",
+      },
+    ],
+    highlights: [
+      {
+        title: "Advanced Training (Apr 2023 - Jul 2024 · 1 yr 4 mos)",
+        points: [
+          "Completed enterprise software engineering training through mentor-guided development and project-based assignments using Java, Spring Boot, Angular, Node.js, MySQL, and REST APIs.",
+          "Built application features across frontend, backend, and relational database layers.",
+          "Applied OOP, layered architecture, API integration, Git, debugging, API testing, and Agile development practices.",
+          "Participated in requirement discussions, implementation, code reviews, debugging, and iterative application improvements.",
+        ],
+      },
+      {
+        title: "Foundational Training (Sep 2022 - Dec 2022 · 4 mos)",
+        points: [
+          "Built foundational software engineering skills through structured training in Java, application development, databases, Git, and software development practices.",
+          "Applied core OOP principles, clean code patterns, and relational database normalization to academic & simulated enterprise scenarios.",
+        ],
+      },
+    ],
     outcomes: [
-      "Completed foundational enterprise software engineering training in Java, Spring Boot, Angular, Node.js, MySQL, and software architecture through classroom learning and project-based development.",
-      "Strengthened practical knowledge of REST APIs, database design, debugging, testing, version control, and collaborative software development.",
+      "Mastered Java, Spring Boot, Angular, Node.js, and relational database design through intensive mentor-guided training.",
+      "Constructed multi-tiered enterprise applications following clean architecture, REST standards, and SOLID principles.",
+      "Participated in active requirement grooming, architectural reviews, automated test writing, and iterative code refactoring.",
     ],
   },
 ];

@@ -4,6 +4,12 @@ export type ExperienceRole = {
   timeframe: string;
 };
 
+export type ExperienceHighlightGroup = {
+  title: string;
+  icon?: string;
+  points: string[];
+};
+
 export type ExperienceItem = {
   category?: string;
   company: string;
@@ -17,6 +23,8 @@ export type ExperienceItem = {
   summary?: string;
   roles?: ExperienceRole[];
   outcomes: string[];
+  techStack?: string[];
+  highlights?: ExperienceHighlightGroup[];
 };
 
 export type SkillGroup = {
@@ -94,6 +102,8 @@ export type Certification = {
   thumbnail: string;
   pdf: string;
   verifyLink?: string;
+  skills?: string[];
+  credentialId?: string;
 };
 
 export type PrimaryCta = {

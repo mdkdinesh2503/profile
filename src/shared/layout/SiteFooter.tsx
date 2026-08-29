@@ -98,11 +98,11 @@ export function SiteFooter() {
         {/* Footer Bottom Meta */}
         <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-line/40 pt-4 backdrop-blur-sm rounded-xl p-4 bg-surface/30 shadow-sm">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-indigo-500/20 border border-primary/20 text-primary font-black shadow-[0_0_15px_rgba(56,189,248,0.15)]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-indigo-500/20 border border-primary text-primary font-black shadow-[0_0_15px_rgba(56,189,248,0.15)]">
               {profile.name.charAt(0)}
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-bold tracking-wide text-ink leading-tight">
+              <span className="text-xs font-bold tracking-wide leading-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-500">
                 {profile.name}
               </span>
               <span className="text-[10px] font-medium text-muted-2">

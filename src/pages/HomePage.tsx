@@ -437,7 +437,7 @@ export function HomePage() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="relative min-h-[50dvh] flex flex-col justify-center">
+      <section className="relative min-h-[50dvh] flex flex-col justify-center mb-20">
         <Container>
           <Reveal>
             <motion.div
@@ -482,7 +482,7 @@ export function HomePage() {
       </section>
 
       {/* Skills Section — Expanding Glass Pillars */}
-      <section className="relative flex flex-col justify-center py-10 md:py-20">
+      <section className="relative flex flex-col justify-center pt-20">
         <Container>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-10 md:mb-14">
             <div className="flex flex-wrap items-center gap-3">
