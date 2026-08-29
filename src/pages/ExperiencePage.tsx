@@ -266,35 +266,23 @@ export function ExperiencePage() {
           {filteredExperience.map((item, idx) => {
             const displayDuration = getDisplayDuration(item);
             const displayDateRange = getDisplayDateRange(item);
-            const isProfessional = item.category === "Professional Experience";
-            const isTraining = item.category === "Training Experience";
 
             return (
               <Reveal key={`${item.company}-${item.title}-${idx}`} delay={0.05 * idx}>
                 <article
                   className={cx(
-                    "group relative overflow-hidden rounded-3xl border backdrop-blur-xl transition-all duration-500",
-                    isProfessional
-                      ? "border-line bg-gradient-to-b from-surface/90 via-surface/75 to-surface/90 shadow-[0_8px_32px_rgba(0,0,0,0.36)] hover:border-primary/60 hover:shadow-[0_12px_44px_rgba(56,189,248,0.18)]"
-                      : "border-line bg-surface/60 shadow-glass hover:border-indigo-500/40 hover:shadow-[0_12px_44px_rgba(99,102,241,0.15)]"
+                    "group relative overflow-hidden rounded-3xl border border-line bg-surface backdrop-blur-xl transition-all duration-500 hover:border-primary/50 shadow-glass"
                   )}
                 >
                   {/* Glowing Top Accent Strip */}
-                  <div
-                    className={cx(
-                      "h-1.5 w-full bg-gradient-to-r",
-                      isProfessional
-                        ? "from-sky-400 via-primary to-indigo-500"
-                        : "from-indigo-400 via-purple-400 to-pink-400"
-                    )}
-                  />
+                  <div className="h-1.5 w-full bg-gradient-to-r from-primary via-[#6babff] to-primary" />
 
                   <div className="p-6 md:p-8">
                     {/* Header: Company, Role, Badge & Date info */}
                     <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
                       <div className="flex items-start gap-4">
                         {/* Company Logo / Avatar */}
-                        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/5 p-2 shadow-inner group-hover:scale-105 transition-transform duration-300">
+                        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-line bg-surface p-2 shadow-inner group-hover:scale-105 transition-transform duration-300">
                           {item.logo ? (
                             <img
                               src={item.logo}
@@ -312,15 +300,8 @@ export function ExperiencePage() {
                             <h3 className="text-xl md:text-2xl font-bold tracking-tight text-ink">
                               {item.title}
                             </h3>
-                            <span
-                              className={cx(
-                                "rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider",
-                                isProfessional
-                                  ? "bg-[#9fc0df]/10 text-primary border border-primary"
-                                  : "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30"
-                              )}
-                            >
-                              {item.category}
+                            <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-surface text-primary border border-primary">
+                              {item.category || "Experience"}
                             </span>
                           </div>
 
@@ -534,7 +515,7 @@ export function ExperiencePage() {
                 title={headings.credentials.title}
                 description={headings.credentials.description}
               />
-              
+
               {/* Compact Verified Badge */}
               <div className="inline-flex items-center gap-2 border border-line px-3.5 py-1.5 rounded-full backdrop-blur-md self-start sm:self-auto shrink-0">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -581,14 +562,14 @@ export function ExperiencePage() {
                       {/* Top Header: Issuer Tag & Issue Date */}
                       <div className="flex items-center justify-between gap-2 mb-3.5">
                         <div
-                          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold backdrop-blur-md border border-primary/20 bg-primary/10 text-primary"
+                          className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold backdrop-blur-md border border-line bg-surface text-primary"
                         >
                           <Award size={12} className="shrink-0" />
                           <span>{c.issuer}</span>
                         </div>
 
                         {c.year && (
-                          <span className="text-[11px] font-medium text-muted-2">
+                          <span className="text-[11px] font-medium text-muted-1">
                             {c.year}
                           </span>
                         )}
@@ -600,10 +581,10 @@ export function ExperiencePage() {
                           setSelectedCertIdx(idx);
                           setCertModalOpen(true);
                         }}
-                        className="group/thumb relative flex items-center gap-3.5 cursor-pointer overflow-hidden rounded-xl border border-line bg-gradient-to-r from-[#0e111a] to-[#151923] p-3 shadow-inner transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.04]"
+                        className="group/thumb relative flex items-center gap-3.5 cursor-pointer overflow-hidden rounded-xl border border-line bg-surface p-3 shadow-inner transition-all duration-200 hover:border-primary"
                       >
                         <div
-                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-primary/20 bg-primary/10 backdrop-blur-md shadow-sm transition-transform duration-200 group-hover/thumb:scale-105"
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-primary shadow-sm transition-transform duration-200 group-hover/thumb:scale-105"
                         >
                           <Award size={20} className="text-primary" />
                         </div>
@@ -614,7 +595,7 @@ export function ExperiencePage() {
                           </h4>
                           <div className="flex items-center gap-1.5 mt-0.5">
                             <ShieldCheck size={11} className="text-emerald-400 shrink-0" />
-                            <span className="text-[11px] text-muted-2 truncate font-mono">
+                            <span className="text-[11px] text-muted-1 truncate font-mono">
                               {(c as any).credentialId || "Verified Credential"}
                             </span>
                           </div>

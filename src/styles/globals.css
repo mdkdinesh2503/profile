@@ -2,26 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ─ All CSS custom properties for the design system
+═══════════════════════════════════════════════════════════════ */
 :root {
+  /* Brand colors */
   --color-primary: #3d8eff;
   --color-primary-hover: #6babff;
   --color-primary-rgb: 61, 142, 255;
-  --color-white: #ffffff;
   --color-secondary: #2563eb;
-  --color-secondary-hover: #3d8eff;
-  --color-selection: rgba(61, 142, 255, 0.32);
+
+  /* Text / surface */
+  --color-white: #ffffff;
   --color-ink: #f5f8fc;
   --color-ink-light: #9aa8bc;
-  --color-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
-  --color-glow: rgba(56, 189, 248, 0.45);
   --color-bg: #02040a;
+
+  /* Effects */
+  --color-selection: rgba(61, 142, 255, 0.32);
+  --color-glow: rgba(56, 189, 248, 0.45);
+  --color-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+
+  /* Hover */
+  --color-hover-shadow: 0 0 40px var(--color-glow);
+
+  /* Gradients */
   --gradient-bg:
     radial-gradient(1200px 700px at 80% -10%, rgba(56, 189, 248, 0.14), transparent 55%),
     radial-gradient(900px 520px at 0% 20%, rgba(99, 102, 241, 0.1), transparent 50%),
     linear-gradient(165deg, #050910 0%, #02040a 48%, #010208 100%);
+
+  /* Gradient 1: cyan → sky → indigo  (for hero titles / page headings) */
   --gradient-primary: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 42%, #818cf8 100%);
+
+  /* Gradient 2: cyan → primary blue  (for brand name / accent labels) */
+  --gradient-secondary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+   ─ Global resets and body defaults
+═══════════════════════════════════════════════════════════════ */
 html {
   color-scheme: dark;
   text-rendering: optimizeLegibility;
@@ -36,7 +58,14 @@ body {
   color: var(--color-ink);
 }
 
-/* Custom scrollbar – track and thumb use theme colors */
+::selection {
+  background: var(--color-selection);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ─ Custom scrollbar styled to theme
+═══════════════════════════════════════════════════════════════ */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) color-mix(in srgb, var(--color-ink) 12%, transparent);
@@ -64,25 +93,11 @@ body {
   background-clip: padding-box;
 }
 
-::selection {
-  background: var(--color-selection);
-}
-
-/* Marquee: scroll content left for infinite loop */
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee-left {
-  animation: marquee-left 40s linear infinite;
-}
-
-/* Hero: gradient text (works with theme) */
+/* ═══════════════════════════════════════════════════════════════
+   GRADIENT TEXT UTILITIES
+   ─ hero-gradient-text  → hero titles, page headings
+   ─ gradient-brand-text → name, logo text, accent labels
+═══════════════════════════════════════════════════════════════ */
 .hero-gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
@@ -91,7 +106,40 @@ body {
   filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.28));
 }
 
-/* Hero: subtle grid background */
+.brand-gradient-text {
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(56, 189, 248, 0.25));
+  /* Added w-fit equivalent so the gradient wraps tightly around the text instead of the full block width */
+  display: inline-block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HOVER UTILITIES
+   ─ Shared hover shadow and effect helpers
+═══════════════════════════════════════════════════════════════ */
+
+.hover-shadow {
+  @apply transition-all duration-500 overflow-hidden;
+  box-shadow: var(--color-hover-shadow);
+}
+
+.hover\:hover-shadow {
+  @apply transition-all duration-500 overflow-hidden;
+}
+
+.hover\:hover-shadow:hover {
+  box-shadow: var(--color-hover-shadow);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ─ Shared backgrounds and structural helpers
+═══════════════════════════════════════════════════════════════ */
+
+/* Subtle dot-grid overlay for hero/section backgrounds */
 .hero-grid-bg {
   background-image:
     linear-gradient(color-mix(in srgb, var(--color-primary) 10%, transparent) 1px, transparent 1px),
@@ -99,7 +147,92 @@ body {
   background-size: 64px 64px;
 }
 
-/* Mobile menu: same gradient as page background, subtle grid, primary accent */
+/* Radial ambient glow behind real-time projects section */
+.realtime-section-bg {
+  position: relative;
+}
+
+.realtime-section-bg::before {
+  content: "";
+  position: absolute;
+  inset: -20% 0;
+  left: -10%;
+  right: -10%;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Radial ambient glow behind academic/learning section */
+.academic-section-bg {
+  position: relative;
+}
+
+.academic-section-bg::before {
+  content: "";
+  position: absolute;
+  inset: -20% 0;
+  left: -10%;
+  right: -10%;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(var(--color-primary-rgb), 0.09) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASS / SURFACE COMPONENTS
+   ─ Reusable glass-morphism panels and icon containers
+═══════════════════════════════════════════════════════════════ */
+
+/* Inner frosted panel (sits inside surface cards) */
+.glass-inner {
+  background: color-mix(in srgb, var(--color-bg) 92%, var(--color-primary) 4%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 6%, transparent);
+}
+
+/* Icon container with primary glow */
+.glass-icon {
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+  box-shadow:
+    0 0 24px rgba(var(--color-primary-rgb), 0.28),
+    inset 0 1px 0 color-mix(in srgb, var(--color-white) 10%, transparent);
+}
+
+/* Outer glass card — transparent bg, used for project/feature cards */
+.glass-card-outer {
+  background: transparent !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card-outer:hover {
+  box-shadow: 0 12px 32px -8px rgba(var(--color-primary-rgb), 0.28), 0 4px 18px -4px rgba(0, 0, 0, 0.45);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Blog list card variant: no translate/scale on hover */
+.glass-card-outer.blog-latest-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.glass-card-outer.blog-latest-card:hover {
+  transform: none;
+}
+
+/* Inner panel for glass cards */
+.glass-card-panel {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 18%, rgba(255, 255, 255, 0.08));
+  box-shadow: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+   ─ Mobile menu glass overlay
+═══════════════════════════════════════════════════════════════ */
 .mobile-menu-glass {
   position: relative;
   overflow: hidden;
@@ -112,6 +245,7 @@ body {
     0 0 0 1px rgba(255, 255, 255, 0.06),
     0 0 48px -12px rgba(var(--color-primary-rgb), 0.32);
 }
+
 .mobile-menu-glass::before {
   content: "";
   position: absolute;
@@ -122,6 +256,7 @@ body {
   background-size: 20px 20px;
   pointer-events: none;
 }
+
 .mobile-menu-glass::after {
   content: "";
   position: absolute;
@@ -133,7 +268,12 @@ body {
   opacity: 0.9;
 }
 
-/* Blog featured card: soft glow behind the card */
+/* ═══════════════════════════════════════════════════════════════
+   BLOG
+   ─ Featured glow card, blog hero ring, and prose styles
+═══════════════════════════════════════════════════════════════ */
+
+/* Featured card: soft glow border */
 .blog-featured-glow {
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--color-primary) 25%, transparent),
@@ -141,12 +281,13 @@ body {
     0 12px 24px -8px rgba(0, 0, 0, 0.4);
 }
 
-/* Blog hero: gradient border + inner glow */
+/* Blog hero: gradient border ring */
 .blog-hero-ring {
   position: relative;
   background: linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(var(--color-primary-rgb), 0.07) 50%, rgba(129, 140, 248, 0.12) 100%);
   border-radius: 1.5rem;
 }
+
 .blog-hero-ring::before {
   content: "";
   position: absolute;
@@ -161,28 +302,30 @@ body {
   pointer-events: none;
 }
 
-/* Blog detail: editorial prose */
+/* Editorial prose */
 .blog-detail-prose {
   --tw-prose-body: var(--color-ink);
 }
+
 .blog-detail-prose .lead {
   font-size: 1.125rem;
   line-height: 1.75;
   color: var(--color-ink-light);
 }
+
 .blog-detail-prose blockquote {
   border-left: 4px solid var(--color-primary);
-  padding-left: 1.25rem;
+  padding: 1rem 1rem 1rem 1.25rem;
   margin-left: 0;
   font-style: italic;
   background: color-mix(in srgb, var(--color-primary) 12%, transparent);
-  padding: 1rem 1rem 1rem 1.25rem;
   border-radius: 0 0.75rem 0.75rem 0;
-  border-left-width: 4px;
 }
+
 .blog-detail-prose pre {
   border-left: 3px solid var(--color-primary);
 }
+
 .blog-detail-prose hr {
   height: 2px;
   background: linear-gradient(90deg, var(--color-primary), transparent);
@@ -190,62 +333,26 @@ body {
   margin: 2.5rem 0;
   opacity: 0.4;
 }
+
 .blog-detail-prose p:first-of-type {
   font-size: 1.125rem;
   line-height: 1.8;
   color: var(--color-ink);
 }
 
-@keyframes dot-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.45; }
-}
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+   ─ Gradient border, shine sweep, and glow pulse
+═══════════════════════════════════════════════════════════════ */
 
-/* Soft pulse for scroll-to-top button glow */
-@keyframes scroll-top-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.88; }
-}
-.scroll-top-glow-pulse {
-  animation: scroll-top-glow 2.5s ease-in-out infinite;
-}
-
-/* Two-layer dot with blue glow (decorative) */
-.dot-two-layer {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  flex-shrink: 0;
-}
-.dot-two-layer-blink {
-  animation: dot-blink 2s ease-in-out infinite;
-}
-.dot-two-layer > span {
-  position: absolute;
-  border-radius: 9999px;
-  box-shadow: 0 0 10px var(--color-glow), 0 0 20px var(--color-glow);
-}
-.dot-two-layer .dot-outer {
-  width: 0.8rem;
-  height: 0.8rem;
-  background: rgba(var(--color-primary-rgb), 0.35);
-}
-.dot-two-layer .dot-core {
-  width: 0.4rem;
-  height: 0.4rem;
-  background: var(--color-primary);
-}
-
-/* Button: gradient border (outline style) */
+/* Gradient border outline button */
 .btn-outline-gradient {
   background: var(--color-bg);
   border: 2px solid transparent;
   background-clip: padding-box;
   position: relative;
 }
+
 .btn-outline-gradient::before {
   content: "";
   position: absolute;
@@ -260,107 +367,75 @@ body {
   pointer-events: none;
 }
 
-/* Button: shine sweep on hover */
-@keyframes btn-shine {
-  0% {
-    transform: translateX(-100%) skewX(-12deg);
-  }
-  100% {
-    transform: translateX(200%) skewX(-12deg);
-  }
-}
+/* Shine sweep on hover */
 .btn-shine-wrap {
   position: relative;
   overflow: hidden;
 }
+
 .btn-shine-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.25) 45%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0.25) 55%,
-    transparent 100%
-  );
+  background: linear-gradient(105deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.25) 45%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0.25) 55%,
+      transparent 100%);
   transform: translateX(-100%) skewX(-12deg);
   transition: transform 0.6s ease;
   pointer-events: none;
 }
+
 .btn-shine-wrap:hover::after {
   animation: btn-shine 0.7s ease forwards;
 }
 
-/* Button: soft glow pulse (optional) */
-@keyframes btn-glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 var(--color-primary);
-  }
-  50% {
-    box-shadow: 0 0 20px 2px var(--color-glow);
-  }
-}
+/* Glow pulse on hover */
 .btn-glow-hover:hover {
   animation: btn-glow-pulse 1.5s ease-in-out infinite;
 }
 
-/* Glass inner panel – theme-aligned, sits on surface cards */
-.glass-inner {
-  background: color-mix(in srgb, var(--color-bg) 92%, var(--color-primary) 4%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-white) 6%, transparent);
+/* ═══════════════════════════════════════════════════════════════
+   DECORATIVE COMPONENTS
+   ─ Two-layer dot and live pulse indicators
+═══════════════════════════════════════════════════════════════ */
+
+/* Two-layer dot (nav/status indicator with glow) */
+.dot-two-layer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
 }
 
-.glass-icon {
-  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
-  box-shadow:
-    0 0 24px rgba(var(--color-primary-rgb), 0.28),
-    inset 0 1px 0 color-mix(in srgb, var(--color-white) 10%, transparent);
+.dot-two-layer-blink {
+  animation: dot-blink 2s ease-in-out infinite;
 }
 
-.surface-light {
-  background: rgba(255, 255, 255, 0.04) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+.dot-two-layer>span {
+  position: absolute;
+  border-radius: 9999px;
+  box-shadow: 0 0 10px var(--color-glow), 0 0 20px var(--color-glow);
 }
 
-/* Glass card outer container – transparent bg, use for home page cards (How I Can Help + Real-time projects) */
-.glass-card-outer {
-  background: transparent !important;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-.glass-card-outer:hover {
-  box-shadow: 0 12px 32px -8px rgba(var(--color-primary-rgb), 0.28), 0 4px 18px -4px rgba(0, 0, 0, 0.45);
-  transform: translateY(-4px) scale(1.02);
+.dot-two-layer .dot-outer {
+  width: 0.8rem;
+  height: 0.8rem;
+  background: rgba(var(--color-primary-rgb), 0.35);
 }
 
-/* Blog Latest list card: no movement on hover (no translate/scale) */
-.glass-card-outer.blog-latest-card {
-  transition: box-shadow 0.3s ease;
-}
-.glass-card-outer.blog-latest-card:hover {
-  transform: none;
+.dot-two-layer .dot-core {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--color-primary);
 }
 
-/* Glass card panel – same as How I Can Help inner panel, use for home page cards (How I Can Help + Real-time projects) */
-.glass-card-panel {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border: 1px solid color-mix(in srgb, var(--color-primary) 18%, rgba(255, 255, 255, 0.08));
-  box-shadow: none;
-}
-
-/* Real-time projects section: live indicator pulse */
-@keyframes realtime-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.45); }
-  50% { opacity: 0.9; transform: scale(1.05); box-shadow: 0 0 0 6px rgba(var(--color-primary-rgb), 0); }
-}
+/* Real-time live indicator dot */
 .realtime-live-dot {
   width: 0.5rem;
   height: 0.5rem;
@@ -370,34 +445,95 @@ body {
   box-shadow: 0 0 12px var(--color-glow);
 }
 
-/* Real-time section background accent */
-.realtime-section-bg {
-  position: relative;
-}
-.realtime-section-bg::before {
-  content: "";
-  position: absolute;
-  inset: -20% 0;
-  left: -10%;
-  right: -10%;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
-  pointer-events: none;
+/* Scroll-to-top button glow pulse */
+.scroll-top-glow-pulse {
+  animation: scroll-top-glow 2.5s ease-in-out infinite;
 }
 
-/* Academic / Learning projects section background */
-.academic-section-bg {
-  position: relative;
-}
-.academic-section-bg::before {
-  content: "";
-  position: absolute;
-  inset: -20% 0;
-  left: -10%;
-  right: -10%;
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(var(--color-primary-rgb), 0.09) 0%, transparent 55%);
-  pointer-events: none;
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ─ Keyframes for all animated utilities
+═══════════════════════════════════════════════════════════════ */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
 }
 
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite;
+}
+
+@keyframes dot-blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes scroll-top-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.88;
+  }
+}
+
+@keyframes realtime-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.45);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 6px rgba(var(--color-primary-rgb), 0);
+  }
+}
+
+@keyframes btn-shine {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+@keyframes btn-glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--color-primary);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 2px var(--color-glow);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ─ Respect user motion preferences
+═══════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
@@ -405,9 +541,11 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
   .btn-shine-wrap::after {
     display: none;
   }
+
   .realtime-live-dot {
     animation: none;
   }
