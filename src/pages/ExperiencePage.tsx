@@ -436,7 +436,7 @@ export function ExperiencePage() {
 
               {/* Compact Verified Badge */}
               <div className="inline-flex items-center gap-2 border border-line px-3.5 py-1.5 rounded-full backdrop-blur-md self-start sm:self-auto shrink-0">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                 <span className="text-xs font-semibold text-muted-1">{profile.certifications.length} Verified Credentials</span>
               </div>
             </div>
@@ -468,7 +468,7 @@ export function ExperiencePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 0.35, delay: idx * 0.05 }}
-                    className="glass-card-outer glass-card-panel group relative flex flex-col justify-between p-4 sm:p-5"
+                    className="glass-card-outer glass-card-panel group relative flex flex-col justify-between p-4 sm:p-5 rounded-xl"
                   >
                     {/* Top edge glowing accent line */}
                     <div
@@ -498,7 +498,7 @@ export function ExperiencePage() {
                           setSelectedCertIdx(idx);
                           setCertModalOpen(true);
                         }}
-                        className="group/thumb glass-card-panel relative flex items-center gap-3.5 cursor-pointer p-3 transition-all duration-200 hover:border-primary"
+                        className="group/thumb glass-card-panel relative flex items-center gap-3.5 cursor-pointer p-3 transition-all duration-200 hover:border-primary rounded-xl"
                       >
                         <div
                           className="glass-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-primary transition-transform duration-200 group-hover/thumb:scale-105"
@@ -537,7 +537,7 @@ export function ExperiencePage() {
                           "flex-1 inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200",
                           isSelected
                             ? "bg-primary text-white shadow-md"
-                            : "bg-white/[0.05] text-ink hover:bg-white/[0.1] hover:text-white border border-line"
+                            : "bg-white/[0.05] text-ink hover:text-primary hover:border-primary border border-line"
                         )}
                       >
                         <ExternalLink size={13} />
