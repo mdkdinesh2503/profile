@@ -110,7 +110,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
   return (
     <Reveal delay={0.05}>
       <Link to={`/blogs/${b.slug}`} className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-3xl">
-        <div className="relative overflow-hidden rounded-3xl" style={{ minHeight: "360px" }}>
+        <div className="relative overflow-hidden rounded-3xl" style={{ minHeight: "clamp(260px, 45vw, 460px)" }}>
 
           {/* ── Full-bleed image layer ── */}
           <div className="absolute inset-0">
@@ -160,23 +160,23 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
           </div>
 
           {/* ── Floating "FEATURED" badge (top-left) ── */}
-          <div className="absolute top-5 left-5 z-20 flex items-center gap-2 rounded-full px-3 py-1.5 backdrop-blur-md"
+          <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-20 flex items-center gap-1.5 sm:gap-2 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md"
             style={{ background: "rgba(61,142,255,0.15)", border: "1px solid rgba(61,142,255,0.4)" }}
           >
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-primary" />
             </span>
-            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-primary">Featured</span>
+            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-[0.18em] text-primary">Featured</span>
           </div>
 
           {/* ── Read time badge (top-right) ── */}
           {b.readTime && (
-            <div className="absolute top-5 right-5 z-20 flex items-center gap-1.5 rounded-full px-3 py-1.5 backdrop-blur-md"
+            <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 flex items-center gap-1 sm:gap-1.5 rounded-full px-2 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md"
               style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
-              <Clock className="h-3 w-3 text-primary" />
-              <span className="text-[10px] font-semibold text-white/80">{b.readTime} min read</span>
+              <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-primary" />
+              <span className="text-[9px] sm:text-[10px] font-semibold text-white/80">{b.readTime} min</span>
             </div>
           )}
 
@@ -201,16 +201,16 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
 
             {/* title */}
             <h2
-              className="text-xl sm:text-2xl md:text-3xl font-black leading-tight tracking-tight text-white mb-2 max-w-2xl"
+              className="text-base sm:text-xl md:text-2xl lg:text-3xl font-black leading-tight tracking-tight text-white mb-2 max-w-2xl"
               style={{ textShadow: "0 2px 20px rgba(0,0,0,0.8)" }}
             >
               {b.title}
             </h2>
 
             {/* summary + CTA row */}
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
               {b.summary && (
-                <p className="text-xs sm:text-sm leading-relaxed text-white/55 max-w-lg line-clamp-2">
+                <p className="text-[11px] sm:text-xs md:text-sm leading-relaxed text-white/55 max-w-lg line-clamp-2">
                   {b.summary}
                 </p>
               )}
@@ -218,7 +218,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
               {/* glowing CTA button */}
               <div className="shrink-0">
                 <span
-                  className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-bold text-white transition-all duration-300 group-hover:gap-3"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 rounded-xl sm:rounded-2xl px-3.5 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold text-white transition-all duration-300 group-hover:gap-3"
                   style={{
                     background: "linear-gradient(135deg, #3d8eff 0%, #818cf8 100%)",
                     boxShadow: "0 0 0 0 rgba(61,142,255,0.5)",
@@ -226,7 +226,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
                   }}
                 >
                   Read Article
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </div>
             </div>
@@ -267,7 +267,7 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
         <Link
           to={`/blogs/${b.slug}`}
           className="group relative flex h-full flex-col overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          style={{ minHeight: "320px" }}
+          style={{ minHeight: "clamp(220px, 38vw, 340px)" }}
         >
           {/* ── Full-bleed image ── */}
           <div className="absolute inset-0">
@@ -303,9 +303,9 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
           </div>
 
           {/* ── Index number (top-left) ── */}
-          <div className="absolute top-4 left-4 z-10">
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
             <span
-              className="font-black text-[2.5rem] leading-none select-none transition-all duration-500 group-hover:opacity-20"
+              className="font-black text-[1.8rem] sm:text-[2.5rem] leading-none select-none transition-all duration-500 group-hover:opacity-20"
               style={{
                 backgroundImage: "linear-gradient(135deg, rgba(61,142,255,0.5), rgba(129,140,248,0.3))",
                 WebkitBackgroundClip: "text",
