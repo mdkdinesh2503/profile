@@ -98,18 +98,18 @@ function ViewerToolbar({
 
   return (
     <div
-      className="flex items-center gap-1 px-4 py-2.5 sm:px-5 border-b"
+      className="flex items-center gap-1 px-3 py-2 sm:px-5 border-b"
       style={{ borderColor: "rgba(255,255,255,0.06)" }}
     >
       {/* Traffic lights */}
-      <div className="flex gap-1.5 mr-3" aria-hidden>
+      <div className="hidden sm:flex gap-1.5 mr-3" aria-hidden>
         <span className="h-3 w-3 rounded-full bg-red-400/80 hover:bg-red-400 cursor-default transition-colors" />
         <span className="h-3 w-3 rounded-full bg-amber-400/80 hover:bg-amber-400 cursor-default transition-colors" />
         <span className="h-3 w-3 rounded-full bg-emerald-400/80 hover:bg-emerald-400 cursor-default transition-colors" />
       </div>
 
       {/* File name */}
-      <div className="flex min-w-0 flex-1 items-center gap-2 px-3 py-1.5">
+      <div className="flex min-w-0 flex-1 items-center gap-2 px-2 py-1 sm:px-3 sm:py-1.5">
         <FileText className="h-3.5 w-3.5 shrink-0 text-primary/70" />
         <span className="truncate text-xs font-medium text-muted-1">
           {profile.resume.pdfTitle}.pdf
@@ -172,25 +172,42 @@ export function ResumePage() {
   const [zoom, setZoom] = useState(100);
   const [iframeKey, setIframeKey] = useState(0);
   const [downloadToast, setDownloadToast] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const handleDownload = () => {
     setDownloadToast(true);
     setTimeout(() => setDownloadToast(false), 3000);
   };
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {/* noop */ }
+  const handleShare = async () => {
+    const pdfName = profile.resume.pdfSrc;
+    const baseUrl = pdfName.slice(8);
+    const origin = window.location.href;
+    const pdfUrl = `${origin}${baseUrl}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${profile.name} – Resume`,
+          text: `Check out ${profile.name}'s resume (${profile.role})`,
+          url: pdfUrl,
+        });
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {
+        // User cancelled share sheet – no feedback needed
+      }
+    } else {
+      // Fallback: copy link to clipboard on unsupported browsers
+      try {
+        await navigator.clipboard.writeText(pdfUrl);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {/* noop */}
+    }
   };
 
   const handleReload = () => setIframeKey((k) => k + 1);
-
-  const handleZoomIn = () => setZoom((z) => Math.min(150, z + 10));
-  const handleZoomOut = () => setZoom((z) => Math.max(50, z - 10));
 
   // Fullscreen logic using the Fullscreen API
   const containerRef = useRef<HTMLDivElement>(null);
@@ -260,14 +277,14 @@ export function ResumePage() {
 
           {/* ── Availability badge ── */}
           <Reveal delay={0.12}>
-            <div className="mt-5 inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 badge-pulse"
+            <div className="mt-5 inline-flex items-center gap-2 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2.5 badge-pulse"
               style={{
                 background: "rgba(61,142,255,0.06)",
                 border: "1px solid rgba(61,142,255,0.2)",
               }}
             >
-              <span className="realtime-live-dot h-2 w-2 shrink-0" />
-              <span className="text-sm text-muted-1">
+              <span className="realtime-live-dot h-1.5 w-1.5 shrink-0" />
+              <span className="text-xs lg:text-sm text-muted-1">
                 <span className="font-semibold text-white">{profile.name}</span>
                 {" · "}
                 <span className="text-primary">{profile.role}</span>
@@ -281,7 +298,7 @@ export function ResumePage() {
 
           {/* ── CTA buttons ── */}
           <Reveal delay={0.1}>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               {/* Primary: Download */}
               <a
                 href={profile.resume.pdfSrc}
@@ -290,8 +307,8 @@ export function ResumePage() {
                 className={cx(
                   buttonStyles.base,
                   buttonStyles.sizes.md,
-                  "relative overflow-hidden group",
-                  "text-white font-semibold shadow-lg btn-shine-wrap"
+                  "relative overflow-hidden group justify-center",
+                  "text-white font-semibold shadow-lg btn-shine-wrap w-full sm:w-auto"
                 )}
                 style={{
                   background: "linear-gradient(135deg, #3d8eff, #6366f1)",
@@ -317,7 +334,7 @@ export function ResumePage() {
                 className={cx(
                   buttonStyles.base,
                   buttonStyles.sizes.md,
-                  "border border-white/10 bg-white/5 text-muted-1 hover:text-primary hover:border-primary transition-all duration-200"
+                  "border border-white/10 bg-white/5 text-muted-1 hover:text-primary hover:border-primary transition-all duration-200 justify-center w-full sm:w-auto"
                 )}
               >
                 <ExternalLink className="h-4 w-4 shrink-0" />
@@ -327,18 +344,18 @@ export function ResumePage() {
               {/* Share */}
               <button
                 type="button"
-                onClick={handleCopy}
+                onClick={handleShare}
                 className={cx(
                   buttonStyles.base,
                   buttonStyles.sizes.md,
-                  "border transition-all duration-200",
-                  copied
+                  "border transition-all duration-200 justify-center w-full sm:w-auto",
+                  shared
                     ? "bg-primary text-white border-primary shadow-lg shadow-primary/25"
                     : "border-white/10 bg-white/5 text-muted-1 hover:bg-white/8 hover:text-white"
                 )}
               >
-                {copied ? (
-                  <><Check className="h-4 w-4" /> Copied!</>
+                {shared ? (
+                  <><Check className="h-4 w-4" /> Shared!</>
                 ) : (
                   <><Share2 className="h-4 w-4" /> Share</>
                 )}
@@ -351,7 +368,7 @@ export function ResumePage() {
       {/* ════════════════════════════════════════════════════════════
           PDF VIEWER SECTION
       ════════════════════════════════════════════════════════════ */}
-      <section className="pb-16">
+      <section className="pb-8">
         <Container>
           <Reveal delay={0.14}>
             {/* Outer glow wrapper */}
@@ -450,70 +467,6 @@ export function ResumePage() {
                     />
                   </motion.div>
                 </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* ── Bottom CTA strip ── */}
-          <Reveal delay={0.18}>
-            <div
-              className="mt-8 flex flex-wrap items-center justify-between gap-6 rounded-3xl p-6 md:p-8"
-              style={{
-                background:
-                  "linear-gradient(135deg, rgba(61,142,255,0.07) 0%, rgba(129,140,248,0.05) 100%)",
-                border: "1px solid rgba(61,142,255,0.15)",
-              }}
-            >
-              {/* Left */}
-              <div className="flex items-center gap-4">
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl"
-                  style={{
-                    background: "rgba(61,142,255,0.12)",
-                    border: "1px solid rgba(61,142,255,0.22)",
-                    boxShadow: "0 0 24px rgba(61,142,255,0.18)",
-                  }}
-                >
-                  <Sparkles className="h-6 w-6 text-primary animate-pulse" />
-                </div>
-                <div>
-                  <p className="font-bold text-white">Like what you see?</p>
-                  <p className="mt-0.5 text-sm text-muted-1">
-                    Download my resume or reach out to connect.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right */}
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={profile.resume.pdfSrc}
-                  download
-                  onClick={handleDownload}
-                  className={cx(
-                    buttonStyles.base,
-                    buttonStyles.sizes.md,
-                    "text-white font-semibold btn-shine-wrap"
-                  )}
-                  style={{
-                    background: "linear-gradient(135deg, #3d8eff, #818cf8)",
-                    boxShadow: "0 4px 20px rgba(61,142,255,0.25)",
-                  }}
-                >
-                  <Download className="h-4 w-4" />
-                  Download PDF
-                </a>
-                <a
-                  href={"/contact"}
-                  className={cx(
-                    buttonStyles.base,
-                    buttonStyles.sizes.md,
-                    "border border-white/10 bg-white/5 text-muted-1 hover:text-primary hover:border-primary transition-all"
-                  )}
-                >
-                  <Send className="h-4 w-4" />
-                  Get in Touch
-                </a>
               </div>
             </div>
           </Reveal>

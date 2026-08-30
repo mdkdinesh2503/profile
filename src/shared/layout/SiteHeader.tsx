@@ -60,7 +60,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-all duration-300"
+      className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
       style={{
         background: scrolled
           ? "rgba(2, 6, 14, 0.78)"

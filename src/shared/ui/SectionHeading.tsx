@@ -50,7 +50,7 @@ export function SectionHeading({
       )}
 
       <Reveal delay={0.04}>
-        <Component className="text-4xl font-extrabold tracking-tight sm:text-5xl shimmer-text-heading">
+        <Component className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight shimmer-text-heading">
           {title}
         </Component>
       </Reveal>
@@ -74,7 +74,7 @@ export function SectionHeading({
 
       {description && (
         <Reveal delay={0.08}>
-          <p className="mt-3 text-base leading-relaxed text-muted-1 max-w-xl">
+          <p className="mt-3 text-xs sm:text-sm md:text-base leading-relaxed text-muted-1 max-w-xl">
             {description}
           </p>
         </Reveal>

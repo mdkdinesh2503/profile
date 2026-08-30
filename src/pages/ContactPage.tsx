@@ -71,7 +71,7 @@ function QuickCard({
     <Reveal delay={delay}>
       <div
         className={cx(
-          "group relative overflow-hidden rounded-2xl p-4 transition-all duration-300",
+          "group relative overflow-hidden rounded-2xl p-3.5 sm:p-4 transition-all duration-300",
           className
         )}
         style={{
@@ -119,7 +119,7 @@ function Field({
       <input
         {...props}
         aria-label={label}
-        className="w-full rounded-xl border bg-transparent pl-10 pr-4 py-3 text-sm text-white placeholder:text-muted-2 outline-none transition-all duration-200 focus:ring-1"
+        className="w-full max-w-full rounded-xl border bg-transparent pl-10 pr-4 py-3 text-sm text-white placeholder:text-muted-2 outline-none transition-all duration-200 focus:ring-1 overflow-hidden"
         style={{
           borderColor: "rgba(255,255,255,0.1)",
         }}
@@ -155,7 +155,7 @@ function TextareaField({
       <textarea
         {...props}
         aria-label={label}
-        className="w-full rounded-xl border bg-transparent pl-10 pr-4 py-3 text-sm text-white placeholder:text-muted-2 outline-none transition-all duration-200 resize-none"
+        className="w-full max-w-full rounded-xl border bg-transparent pl-10 pr-4 py-3 text-sm text-white placeholder:text-muted-2 outline-none transition-all duration-200 resize-none overflow-x-hidden overflow-y-auto"
         style={{ borderColor: "rgba(255,255,255,0.1)" }}
         onFocus={(e) => {
           e.currentTarget.style.borderColor = "rgba(61,142,255,0.5)";
@@ -352,7 +352,7 @@ export function ContactPage() {
       {/* ════════════════════════════════════════════════════
           HERO HEADER
       ════════════════════════════════════════════════════ */}
-      <section className="relative pt-12 pb-6 md:pt-16">
+      <section className="relative pt-8 pb-6 md:pt-16 overflow-x-hidden">
         <Container>
           <div className="max-w-2xl">
             <SectionHeading
@@ -363,11 +363,11 @@ export function ContactPage() {
             >
               {/* Availability indicator */}
               <div
-                className="inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5"
+                className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 lg:px-4 lg:py-2"
                 style={{ background: "rgba(61,142,255,0.06)", border: "1px solid rgba(61,142,255,0.18)", animation: "live-ring 2.5s ease-in-out infinite" }}
               >
-                <span className="realtime-live-dot h-2 w-2 shrink-0" />
-                <span className="text-sm text-muted-1">
+                <span className="realtime-live-dot h-1.5 w-1.5 shrink-0" />
+                <span className="text-xs lg:text-sm text-muted-1">
                   Open to roles, collaborations, and good conversations
                 </span>
               </div>
@@ -512,14 +512,14 @@ export function ContactPage() {
       {/* ════════════════════════════════════════════════════
           MAIN FORM + PREVIEW
       ════════════════════════════════════════════════════ */}
-      <section className="relative py-6 pb-20">
+      <section className="relative py-6 pb-10 md:pb-20 overflow-x-hidden">
         <Container>
-          <div className="relative grid gap-6 lg:grid-cols-12 items-stretch">
+          <div className="relative grid gap-6 lg:grid-cols-12 items-stretch min-w-0 overflow-hidden">
 
             {/* ════════════════════════════════════════════
                 LEFT — MESSAGE STUDIO (7 cols)
             ════════════════════════════════════════════ */}
-            <div className="lg:col-span-7 flex flex-col">
+            <div className="lg:col-span-7 flex flex-col min-w-0">
               <Reveal delay={0.12}>
                 <form
                   onSubmit={handleDirectSubmit}
@@ -533,7 +533,7 @@ export function ContactPage() {
                     aria-hidden
                   />
 
-                  <div className="flex flex-col h-full p-6 sm:p-7">
+                  <div className="flex flex-col h-full p-6 sm:p-7 min-w-0">
                     {/* Studio Header */}
                     <div
                       className="flex items-center justify-between pb-5 border-b"
@@ -577,7 +577,7 @@ export function ContactPage() {
                     {/* ── Step 1: Topic ── */}
                     <div className="mt-6">
                       <StepLabel num={1}>What would you like to talk about?</StepLabel>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         {inquiryTopics.map((topic) => {
                           const Icon = topic.icon;
                           const isActive = selectedTopic === topic.id;
@@ -587,7 +587,7 @@ export function ContactPage() {
                               type="button"
                               onClick={() => setSelectedTopic(topic.id)}
                               className={cx(
-                                "relative flex flex-col items-center justify-center text-center rounded-2xl p-3.5 pt-4 transition-all duration-200 group min-h-[110px] overflow-hidden",
+                                "relative flex flex-col items-center justify-center text-center rounded-2xl p-2.5 pt-3 sm:p-3.5 sm:pt-4 transition-all duration-200 group min-h-[90px] sm:min-h-[110px] overflow-hidden",
                                 isActive ? "topic-card-active" : ""
                               )}
                               style={isActive ? {} : {
@@ -661,7 +661,7 @@ export function ContactPage() {
 
                     {/* ── Footer ── */}
                     <div
-                      className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-5"
+                      className="mt-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 border-t pt-5"
                       style={{ borderColor: "rgba(255,255,255,0.07)" }}
                     >
                       <div className="flex items-center gap-2 text-xs text-muted-2">
@@ -669,27 +669,29 @@ export function ContactPage() {
                         <span>Goes directly to Dinesh's inbox.</span>
                       </div>
 
-                      <button
-                        type="submit"
-                        disabled={true}
-                        // disabled={submitting}
-                        className={cx(
-                          buttonStyles.base,
-                          buttonStyles.sizes.md,
-                          "w-full sm:w-auto justify-center gap-2 font-semibold text-white transition-all duration-200",
-                          submitting && "opacity-60 cursor-not-allowed"
-                        )}
-                        style={{
-                          background: "linear-gradient(135deg, #3d8eff, #818cf8)",
-                          boxShadow: "0 4px 24px rgba(61,142,255,0.3)",
-                        }}
-                      >
-                        {submitting ? (
-                          <><Sparkles size={15} className="animate-spin" /><span>Sending...</span></>
-                        ) : (
-                          <><Send size={15} /><span>Send Message</span></>
-                        )}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="submit"
+                          disabled={true}
+                          // disabled={submitting}
+                          className={cx(
+                            buttonStyles.base,
+                            buttonStyles.sizes.md,
+                            "flex-1 sm:flex-none justify-center gap-2 font-semibold text-white transition-all duration-200",
+                            submitting && "opacity-60 cursor-not-allowed"
+                          )}
+                          style={{
+                            background: "linear-gradient(135deg, #3d8eff, #818cf8)",
+                            boxShadow: "0 4px 24px rgba(61,142,255,0.3)",
+                          }}
+                        >
+                          {submitting ? (
+                            <><Sparkles size={15} className="animate-spin" /><span>Sending...</span></>
+                          ) : (
+                            <><Send size={15} /><span>Send Message</span></>
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>
@@ -699,7 +701,7 @@ export function ContactPage() {
             {/* ════════════════════════════════════════════
                 RIGHT — LIVE EMAIL PREVIEW (5 cols)
             ════════════════════════════════════════════ */}
-            <div className="lg:col-span-5 flex flex-col lg:sticky lg:top-24">
+            <div className="lg:col-span-5 flex flex-col min-w-0 lg:sticky lg:top-24">
               <Reveal delay={0.22}>
                 <div
                   className="relative flex flex-col h-full rounded-3xl overflow-hidden"
@@ -802,12 +804,12 @@ export function ContactPage() {
                       style={{ borderColor: "rgba(255,255,255,0.07)" }}
                     >
                       <div className="mb-1 text-[10px] font-bold uppercase tracking-widest text-muted-2">Subject:</div>
-                      <div className="text-sm font-bold text-white leading-snug">{subject}</div>
+                      <div className="text-sm font-bold text-white leading-snug break-words">{subject}</div>
                     </div>
 
                     {/* Body */}
                     <div
-                      className="flex-1 py-5 text-[12.5px] leading-relaxed text-white/80 whitespace-pre-wrap font-sans min-h-[220px] max-h-[340px] overflow-y-auto select-all pr-2"
+                      className="flex-1 py-5 text-[12.5px] leading-relaxed text-white/80 whitespace-pre-wrap break-words font-sans min-h-[220px] max-h-[340px] overflow-x-hidden overflow-y-auto select-all pr-2"
                       style={{ scrollbarWidth: "thin" }}
                     >
                       {body}
@@ -838,20 +840,20 @@ export function ContactPage() {
               {/* Location / response info card */}
               <Reveal delay={0.28}>
                 <div
-                  className="mt-4 flex flex-wrap items-center gap-4 rounded-2xl p-4"
+                  className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl p-3 sm:p-4"
                   style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   <div className="flex items-center gap-2 text-xs text-muted-2">
                     <MapPin size={13} className="text-primary/60 shrink-0" />
                     <span>{profile.location}</span>
                   </div>
-                  <div className="h-3 w-px bg-white/10" aria-hidden />
+                  <div className="hidden sm:block h-3 w-px bg-white/10" aria-hidden />
                   <div className="flex items-center gap-2 text-xs text-muted-2">
                     <Activity size={13} className="text-emerald-400 shrink-0" />
                     <span>Usually responds within 24 hrs</span>
                   </div>
-                  <div className="h-3 w-px bg-white/10 hidden sm:block" aria-hidden />
-                  <div className="flex items-center gap-2 text-xs text-muted-2 hidden sm:flex">
+                  <div className="h-3 w-px bg-white/10 hidden md:block" aria-hidden />
+                  <div className="flex items-center gap-2 text-xs text-muted-2 hidden md:flex">
                     <AtSign size={13} className="text-primary/60 shrink-0" />
                     <span className="truncate">{profile.email}</span>
                   </div>
@@ -871,7 +873,7 @@ export function ContactPage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 420, damping: 30 }}
-            className="fixed bottom-6 left-6 z-50 max-w-sm overflow-hidden rounded-2xl"
+            className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:bottom-6 z-50 sm:max-w-sm overflow-hidden rounded-2xl"
             style={{
               background: "rgba(2,8,20,0.94)",
               border: "1px solid rgba(16,185,129,0.3)",

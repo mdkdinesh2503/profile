@@ -204,7 +204,7 @@ export function ExperiencePage() {
 
           {/* Quick Metrics Bar with 3D Tilt */}
           <Reveal delay={0.05}>
-            <div className="mt-8 grid grid-cols-2 gap-3.5 sm:grid-cols-4 lg:gap-4">
+            <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-3.5 lg:gap-4">
               {[
                 {
                   icon: Briefcase,
@@ -227,13 +227,13 @@ export function ExperiencePage() {
                 {
                   icon: Award,
                   val: `${profile.certifications.length}`,
-                  label: "Verified Credentials",
+                  label: "Verified Certificate",
                   glow: "rgba(168,85,247,0.15)",
                 },
               ].map((m, idx) => (
                 <TiltCard key={m.label} intensity={8}>
                   <div
-                    className="group relative overflow-hidden rounded-2xl p-4.5 sm:p-5 transition-all duration-300 h-full flex flex-col justify-between"
+                    className="group relative overflow-hidden rounded-2xl p-3.5 sm:p-5 transition-all duration-300 h-full flex flex-col justify-between"
                     style={{
                       background: "rgba(255,255,255,0.03)",
                       border: "1px solid rgba(255,255,255,0.08)",
@@ -245,19 +245,20 @@ export function ExperiencePage() {
                       className="absolute -right-6 -top-6 h-20 w-20 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       style={{ background: `radial-gradient(circle, ${m.glow} 0%, transparent 70%)` }}
                     />
-                    <div className="flex items-center gap-3.5">
+                    <div className="flex items-center gap-2.5 sm:gap-3.5">
                       <div
-                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
+                        className="flex h-8 w-8 sm:h-11 sm:w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110"
                         style={{
                           background: "rgba(61,142,255,0.1)",
                           border: "1px solid rgba(61,142,255,0.2)",
                         }}
                       >
-                        <m.icon size={20} className="text-primary" />
+                        <m.icon size={16} className="text-primary sm:hidden" />
+                        <m.icon size={20} className="text-primary hidden sm:block" />
                       </div>
                       <div>
-                        <div className="text-2xl font-extrabold text-white tracking-tight">{m.val}</div>
-                        <div className="text-[11px] text-muted-2 uppercase tracking-wider font-semibold">
+                        <div className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">{m.val}</div>
+                        <div className="text-[10px] sm:text-[11px] text-muted-2 uppercase tracking-wider font-semibold leading-tight">
                           {m.label}
                         </div>
                       </div>
@@ -275,11 +276,11 @@ export function ExperiencePage() {
         <Container>
           {/* Category Filter Pills & Indicator */}
           <Reveal delay={0.08}>
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-5">
+            <div className="flex flex-col gap-3 border-b border-line pb-5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-muted-2 mr-2 flex items-center gap-1.5">
+                <span className="hidden sm:flex text-xs font-bold uppercase tracking-widest text-muted-2 mr-1 items-center gap-1.5">
                   <Terminal size={14} className="text-primary" />
-                  Filter Track:
+                  Filter:
                 </span>
                 {categories.map((cat) => {
                   const isActive = activeCategoryFilter === cat;
@@ -288,13 +289,13 @@ export function ExperiencePage() {
                       key={cat}
                       onClick={() => setActiveCategoryFilter(cat)}
                       className={cx(
-                        "inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold transition-all duration-200 cursor-pointer",
+                        "inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer",
                         isActive
                           ? "bg-primary text-white ring-1 ring-primary"
                           : "bg-white/[0.04] text-muted-1 border border-white/10 hover:border-primary hover:text-primary"
                       )}
                     >
-                      {cat === "all" ? "All Career Tracks" : cat}
+                      {cat === "all" ? "All" : cat}
                     </button>
                   );
                 })}
@@ -354,13 +355,13 @@ export function ExperiencePage() {
                           }}
                         />
 
-                        <div className="p-6 md:p-8 lg:p-9">
+                        <div className="p-4 sm:p-6 md:p-8 lg:p-9">
                           {/* Header: Company Logo, Title, Role, & Duration Info */}
-                          <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
-                            <div className="flex items-start gap-4 sm:gap-5">
+                          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                            <div className="flex items-start gap-3 sm:gap-4">
                               {/* Company Logo / Avatar Container */}
                               <div
-                                className="relative flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-105 p-2"
+                                className="relative flex h-11 w-11 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl transition-transform duration-300 group-hover:scale-105 p-1.5 sm:p-2"
                                 style={{
                                   background: "rgba(255,255,255,0.05)",
                                   border: "1px solid rgba(255,255,255,0.1)",
@@ -371,30 +372,29 @@ export function ExperiencePage() {
                                   <img
                                     src={item.logo}
                                     alt={item.company}
-                                    className="h-full w-full object-contain rounded-xl"
+                                    className="h-full w-full object-contain rounded-lg sm:rounded-xl"
                                   />
                                 ) : (
-                                  <Building2 className="h-7 w-7 text-primary" />
+                                  <Building2 className="h-5 w-5 sm:h-7 sm:w-7 text-primary" />
                                 )}
                               </div>
 
                               {/* Title & Metadata */}
                               <div>
-                                <div className="flex flex-wrap items-center gap-2.5">
-                                  <h2 className="text-xl md:text-2xl font-bold tracking-tight text-white group-hover:text-primary transition-colors">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-tight text-white group-hover:text-primary transition-colors">
                                     {item.title}
                                   </h2>
-                                  <span className="rounded-full px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary border border-primary">
+                                  <span className="rounded-full px-2 py-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-primary border border-primary">
                                     {item.category || "Experience"}
                                   </span>
                                 </div>
 
-                                <div className="mt-1.5 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-sm font-medium text-muted-1">
+                                <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm font-medium text-muted-1">
                                   <span className="font-bold text-white tracking-wide">{item.company}</span>
-                                  <span className="text-muted-2 hidden sm:inline">·</span>
                                   {item.location && (
-                                    <span className="flex items-center gap-1 text-xs text-muted-2">
-                                      <MapPin size={13} className="shrink-0 text-primary" />
+                                    <span className="flex items-center gap-1 text-[11px] sm:text-xs text-muted-2">
+                                      <MapPin size={11} className="shrink-0 text-primary" />
                                       {item.location}
                                     </span>
                                   )}
@@ -403,25 +403,25 @@ export function ExperiencePage() {
                             </div>
 
                             {/* Right Timeline Date Pills */}
-                            <div className="flex flex-wrap md:flex-col md:items-end gap-2 shrink-0">
+                            <div className="flex flex-row flex-wrap md:flex-col md:items-end gap-2 shrink-0">
                               <div
-                                className="flex items-center gap-2 rounded-xl px-3.5 py-1.5 text-xs font-semibold text-white/90"
+                                className="flex items-center gap-1.5 rounded-xl px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-semibold text-white/90"
                                 style={{
                                   background: "rgba(255,255,255,0.04)",
                                   border: "1px solid rgba(255,255,255,0.08)",
                                 }}
                               >
-                                <Calendar size={13} className="text-primary shrink-0" />
+                                <Calendar size={11} className="text-primary shrink-0" />
                                 <span>{displayDateRange}</span>
                               </div>
                               <div
-                                className="flex items-center gap-1.5 rounded-xl px-3.5 py-1 text-xs font-bold text-primary"
+                                className="flex items-center gap-1.5 rounded-xl px-2 py-1 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-bold text-primary"
                                 style={{
                                   background: "rgba(61,142,255,0.08)",
                                   border: "1px solid rgba(61,142,255,0.22)",
                                 }}
                               >
-                                <Clock size={13} className="shrink-0" />
+                                <Clock size={11} className="shrink-0" />
                                 <span>{displayDuration}</span>
                               </div>
                             </div>
@@ -430,7 +430,7 @@ export function ExperiencePage() {
                           {/* Summary Paragraph */}
                           {item.summary && (
                             <p
-                              className="mt-5 rounded-2xl p-4 sm:p-5 text-sm md:text-base leading-relaxed text-muted-1"
+                              className="mt-4 rounded-2xl p-3.5 sm:p-5 text-sm leading-relaxed text-muted-1"
                               style={{
                                 background: "rgba(0,0,0,0.2)",
                                 border: "1px solid rgba(255,255,255,0.04)",
@@ -517,7 +517,7 @@ export function ExperiencePage() {
                                       <button
                                         type="button"
                                         onClick={() => toggleHighlight(hlKey)}
-                                        className="flex w-full items-center justify-between p-3.5 sm:p-4 text-left cursor-pointer hover:bg-white/[0.04] transition-colors"
+                                        className="flex w-full items-center justify-between p-3 sm:p-4 text-left cursor-pointer hover:bg-white/[0.04] transition-colors"
                                       >
                                         <div className="flex items-center gap-3">
                                           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
@@ -652,9 +652,9 @@ export function ExperiencePage() {
       </section>
 
       {/* ── Credentials & Certifications ─────────────────────── */}
-      <section id="certifications" className="relative flex flex-col justify-center pt-14 pb-20">
+      <section id="certifications" className="relative flex flex-col justify-center pt-14 pb-5 sm:pb-10">
         <Container>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-white/10 pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pb-6">
             <SectionHeading
               eyebrow={headings.credentials.eyebrow}
               title={headings.credentials.title}
@@ -679,7 +679,7 @@ export function ExperiencePage() {
           </div>
 
           {/* Certificate Grid with 3D Tilt */}
-          <div className="mt-8 grid gap-4.5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[...profile.certifications]
               .sort((a, b) => {
                 if (!a.year) return 1;
@@ -690,10 +690,10 @@ export function ExperiencePage() {
                 const isSelected = certModalOpen && idx === selectedCertIdx;
 
                 return (
-                  <Reveal key={`${c.name}-${idx}`} delay={idx * 0.05}>
-                    <TiltCard intensity={7} className="h-full">
+                  <Reveal key={`${c.name}-${idx}`} delay={idx * 0.05} className="min-w-0">
+                    <TiltCard intensity={7} className="h-full w-full min-w-0">
                       <article
-                        className="group relative flex flex-col justify-between p-5 rounded-2xl h-full transition-all duration-300"
+                        className="group relative flex flex-col justify-between p-5 rounded-2xl h-full w-full overflow-hidden transition-all duration-300"
                         style={{
                           background: "rgba(255,255,255,0.03)",
                           border: "1px solid rgba(255,255,255,0.08)",
@@ -712,15 +712,14 @@ export function ExperiencePage() {
                         <div>
                           {/* Issuer Tag & Date */}
                           <div className="flex items-center justify-between gap-2 mb-4">
-                            <div
-                              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold text-primary"
+                            <div className="flex min-w-0 max-w-[60%] items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-bold text-primary overflow-hidden"
                               style={{
                                 background: "rgba(61,142,255,0.1)",
                                 border: "1px solid rgba(61,142,255,0.25)",
                               }}
                             >
                               <Award size={12} className="shrink-0" />
-                              <span>{c.issuer}</span>
+                              <span className="truncate">{c.issuer}</span>
                             </div>
 
                             {c.year && (
@@ -801,7 +800,7 @@ export function ExperiencePage() {
                               className={cx(
                                 buttonStyles.base,
                                 buttonStyles.sizes.sm,
-                                "flex-1 rounded-xl px-3 py-2 text-xs font-bold text-white btn-shine-wrap"
+                                "!flex flex-1 min-w-0 rounded-xl px-3 py-2 text-xs font-bold text-white btn-shine-wrap"
                               )}
                               style={{
                                 background: "linear-gradient(135deg, #3d8eff, #818cf8)",
@@ -840,7 +839,7 @@ export function ExperiencePage() {
                 <motion.div
                   role="dialog"
                   aria-modal="true"
-                  className="relative flex flex-col w-full max-w-5xl h-[88vh] overflow-hidden rounded-3xl z-10"
+                  className="relative flex flex-col w-full max-w-5xl h-[85dvh] max-h-[900px] overflow-hidden rounded-2xl sm:rounded-3xl z-10"
                   style={{
                     background: "rgba(6,10,20,0.95)",
                     border: "1px solid rgba(255,255,255,0.12)",
@@ -854,7 +853,7 @@ export function ExperiencePage() {
                 >
                   {/* Modal Header with Browser Chrome */}
                   <div
-                    className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b"
+                    className="flex items-center justify-between px-3 sm:px-6 py-3 sm:py-3.5 border-b"
                     style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
                   >
                     <div className="flex items-center gap-3.5 min-w-0">

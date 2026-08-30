@@ -95,7 +95,7 @@ export function ScrollToTop() {
   );
 
   return createPortal(
-    <div className="fixed bottom-6 right-6 z-50 flex justify-end items-end" aria-hidden>
+    <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 flex justify-end items-end" aria-hidden>
       {button}
     </div>,
     document.body

@@ -57,22 +57,28 @@ function SkillTag({
         style={{ background: `linear-gradient(90deg, transparent, ${brandColor}, transparent)` }}
       />
 
-      <div className="relative flex items-center gap-2.5 px-3 py-2 w-full">
+      <div className="relative flex items-center gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 w-full">
         <span
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg transition-transform duration-200 group-hover/tag:scale-110 group-hover/tag:rotate-6"
+          className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-md sm:rounded-lg transition-transform duration-200 group-hover/tag:scale-110 group-hover/tag:rotate-6"
           style={{
             background: `${brandColor}18`,
             border: `1px solid ${brandColor}33`,
-            boxShadow: `0 0 10px ${brandColor}20`,
+            boxShadow: `0 0 8px ${brandColor}20`,
           }}
         >
           {IconComp ? (
-            <IconComp size={13} style={{ color: brandColor }} />
+            <>
+              <IconComp size={11} className="sm:hidden" style={{ color: brandColor }} />
+              <IconComp size={13} className="hidden sm:block" style={{ color: brandColor }} />
+            </>
           ) : (
-            <Code2 size={13} style={{ color: brandColor }} />
+            <>
+              <Code2 size={11} className="sm:hidden" style={{ color: brandColor }} />
+              <Code2 size={13} className="hidden sm:block" style={{ color: brandColor }} />
+            </>
           )}
         </span>
-        <span className="text-[12px] font-semibold text-white/90 group-hover/tag:text-white leading-none truncate">
+        <span className="text-[10px] sm:text-[12px] font-semibold text-white/90 group-hover/tag:text-white leading-none truncate">
           {name}
         </span>
       </div>
@@ -85,168 +91,190 @@ function SkillTag({
 ══════════════════════════════════════════════════════════════════ */
 function SkillsPillars() {
   const [active, setActive] = useState<number>(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   const activeGroup = skills[active] ?? skills[0];
   const PillarIcon = PILLAR_ICONS[active] ?? PILLAR_ICONS[0];
 
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  // Generate mock but realistic proficiency levels for a rich, visual layout
+  const getProficiency = (skillName: string) => {
+    const high = ["React", "TypeScript", "Node.js", "Next.js", "JavaScript", "HTML5/CSS3", "Git", "Tailwind CSS"];
+    if (high.some(h => skillName.includes(h))) return 92;
+    if (skillName.length % 2 === 0) return 85;
+    return 78;
+  };
+
   return (
     <div
-      className="relative overflow-hidden rounded-3xl"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative overflow-hidden rounded-[2.5rem] transition-all duration-500"
       style={{
-        background: "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(61, 142, 255, 0.12), transparent 70%), rgba(8, 14, 28, 0.65)",
-        border: "1px solid rgba(61, 142, 255, 0.2)",
+        background: "rgba(8, 14, 28, 0.7)",
+        border: "1px solid rgba(61, 142, 255, 0.15)",
         backdropFilter: "blur(24px)",
-        boxShadow: "0 25px 60px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+        boxShadow: "0 30px 70px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
       }}
     >
+      {/* Interactive Radial Spotlight Follower */}
+      <div
+        className="pointer-events-none absolute -inset-px opacity-30 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(61, 142, 255, 0.15), transparent 80%)`,
+        }}
+      />
+
       {/* Laser Top Glow Beam */}
       <div
         className="absolute inset-x-0 top-0 h-[2px]"
         style={{
-          background: "linear-gradient(90deg, transparent 5%, #3d8eff 30%, #38bdf8 50%, #3d8eff 70%, transparent 95%)",
-          boxShadow: "0 0 16px rgba(61, 142, 255, 0.6)",
+          background: "linear-gradient(90deg, transparent 10%, #3d8eff 35%, #38bdf8 50%, #3d8eff 65%, transparent 90%)",
+          boxShadow: "0 0 20px rgba(61, 142, 255, 0.7)",
         }}
         aria-hidden
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px]">
-        {/* ── Left Nav Rail (5 cols) ── */}
-        <div className="lg:col-span-5 p-4 sm:p-6 lg:border-r border-b lg:border-b-0 border-line flex flex-col justify-between gap-2">
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between px-3 py-2 text-[11px] font-mono tracking-widest text-primary uppercase">
-              <span>Stack Architecture</span>
+      <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[520px]">
+        {/* ── Left Rail Selector: Responsive Grid on Mobile, Dock on Desktop ── */}
+        <div className="lg:col-span-5 p-3.5 sm:p-5 lg:p-6 lg:border-r border-b lg:border-b-0 border-line flex flex-col justify-between gap-4 relative z-10">
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between px-1 text-[9px] font-mono tracking-widest text-primary/70 uppercase">
+              <span>Holographic Console</span>
               <span>0{active + 1} / 0{skills.length}</span>
             </div>
 
-            {skills.map((group, idx) => {
-              const Icon = PILLAR_ICONS[idx] ?? PILLAR_ICONS[0];
-              const isSelected = active === idx;
+            {/* Grid layout on mobile (2 cols), vertical list on large screens */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:flex lg:flex-col gap-2">
+              {skills.map((group, idx) => {
+                const Icon = PILLAR_ICONS[idx] ?? PILLAR_ICONS[0];
+                const isSelected = active === idx;
 
-              return (
-                <button
-                  key={group.group}
-                  type="button"
-                  onClick={() => setActive(idx)}
-                  className={cx(
-                    "group relative w-full flex items-center justify-between px-3.5 py-3 rounded-2xl transition-all duration-300 cursor-pointer outline-none text-left",
-                    isSelected
-                      ? "text-white"
-                      : "text-muted-1 hover:text-white"
-                  )}
-                >
-                  {/* Active sliding holographic backdrop */}
-                  {isSelected && (
-                    <motion.div
-                      layoutId="activeRailPill"
-                      className="absolute inset-0 rounded-2xl"
-                      style={{
-                        background: "linear-gradient(90deg, rgba(61, 142, 255, 0.18) 0%, rgba(61, 142, 255, 0.05) 100%)",
-                        border: "1px solid rgba(61, 142, 255, 0.4)",
-                        boxShadow: "0 0 25px -4px rgba(61, 142, 255, 0.35)",
-                      }}
-                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                    />
-                  )}
+                return (
+                  <button
+                    key={group.group}
+                    type="button"
+                    onClick={() => setActive(idx)}
+                    className={cx(
+                      "group relative w-full flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-between px-2 py-1.5 lg:px-3.5 lg:py-3 rounded-lg lg:rounded-2xl transition-all duration-300 cursor-pointer outline-none text-center lg:text-left gap-1 lg:gap-3",
+                      isSelected
+                        ? "text-white"
+                        : "text-muted-2 hover:text-white"
+                    )}
+                    style={{
+                      background: isSelected ? "rgba(61, 142, 255, 0.05)" : "rgba(255, 255, 255, 0.01)",
+                      border: isSelected ? "1px solid rgba(61, 142, 255, 0.25)" : "1px solid rgba(255, 255, 255, 0.04)",
+                      boxShadow: isSelected ? "0 4px 15px -2px rgba(61, 142, 255, 0.12)" : "none",
+                    }}
+                  >
+                    {/* Active dynamic accent glow line */}
+                    {isSelected && (
+                      <motion.div
+                        layoutId="activeRailAccent"
+                        className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary rounded-l-full hidden lg:block"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
 
-                  {/* Left Icon & Details */}
-                  <div className="relative z-10 flex items-center gap-3">
-                    <div
-                      className={cx(
-                        "flex h-9 w-9 items-center justify-center rounded-xl",
-                        isSelected
-                          ? "bg-primary text-black font-bold shadow-[0_0_15px_rgba(61,142,255,0.7)] scale-105"
-                          : "text-muted-2 group-hover:text-primary group-hover:border-primary group-hover:border"
-                      )}
-                    >
-                      <Icon size={16} strokeWidth={isSelected ? 2.5 : 2} />
-                    </div>
+                    {/* Left Icon & Details Group */}
+                    <div className="flex flex-col lg:flex-row items-center gap-1 lg:gap-3">
+                      <div
+                        className={cx(
+                          "flex h-6 w-6 lg:h-9 lg:w-9 items-center justify-center rounded-md lg:rounded-xl transition-all duration-300",
+                          isSelected
+                            ? "bg-primary text-black font-bold shadow-[0_0_10px_rgba(61,142,255,0.4)] scale-105"
+                            : "bg-white/5 text-muted-2 group-hover:text-primary group-hover:bg-primary/10"
+                        )}
+                      >
+                        <Icon size={12} className="lg:hidden" strokeWidth={2} />
+                        <Icon size={16} className="hidden lg:block" strokeWidth={2} />
+                      </div>
 
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold tracking-tight leading-snug group-hover:text-primary">
-                          {group.group}
+                      <div className="flex flex-col items-center lg:items-start">
+                        <span className="text-[9px] sm:text-[11px] lg:text-sm font-bold tracking-tight leading-snug group-hover:text-primary whitespace-nowrap">
+                          {group.group.split(" ")[0]} <span className="hidden sm:inline lg:inline">{group.group.split(" ").slice(1).join(" ")}</span>
+                        </span>
+                        <span className="text-[8px] lg:text-[10px] text-muted-2 mt-0.5 hidden lg:block">
+                          {group.items.length} Skills
                         </span>
                       </div>
-                      <span className="text-[11px] text-muted-2 block">
-                        {group.items.length} technologies
-                      </span>
                     </div>
-                  </div>
 
-                  {/* Right Arrow & Count */}
-                  <div className="relative z-10 flex items-center gap-2">
-                    <span
-                      className={cx(
-                        "text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full transition-colors",
-                        isSelected
-                          ? "text-primary border border-primary"
-                          : "text-muted-2 group-hover:text-primary"
-                      )}
-                    >
-                      {group.items.length}
-                    </span>
-                    <ArrowRight
-                      size={14}
-                      className={cx(
-                        "transition-all duration-200",
-                        isSelected
-                          ? "text-primary translate-x-0.5 opacity-100"
-                          : "text-muted-2 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0"
-                      )}
-                    />
-                  </div>
-                </button>
-              );
-            })}
+                    {/* Right Pill indicator - desktop only */}
+                    <div className="hidden lg:flex items-center gap-1.5 z-10">
+                      <ArrowRight
+                        size={13}
+                        className={cx(
+                          "transition-all duration-300",
+                          isSelected
+                            ? "text-primary translate-x-0.5 opacity-100"
+                            : "text-muted-2 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0"
+                        )}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="px-3 pt-4 border-t border-line flex items-center justify-between text-[11px] text-muted-2">
-            <span>Engineering Specialization</span>
-            <span className="font-mono text-primary/80">Active Profile</span>
+          <div className="hidden lg:flex px-2 pt-4 border-t border-line items-center justify-between text-[10px] text-muted-2 font-mono">
+            <span>Specialization matrix v1.4</span>
+            <span className="text-primary/70 animate-pulse">SYSTEM_ACTIVE</span>
           </div>
         </div>
 
-        {/* ── Right Content Display (7 cols) ── */}
-        <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between relative">
-          {/* Ambient Glow Aura */}
-          <div
-            className="pointer-events-none absolute -right-16 -bottom-16 h-64 w-64 rounded-full opacity-20"
+        {/* ── Right Content Display: Active Tech Matrix with Hover Indicators ── */}
+        <div className="lg:col-span-7 p-5 sm:p-7 lg:p-8 flex flex-col justify-between relative overflow-hidden bg-black/20">
+          
+          {/* Subtle Dynamic Geometric Mesh Background */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
             style={{
-              background: "radial-gradient(circle, #3d8eff 0%, transparent 70%)",
+              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+              backgroundSize: "20px 20px"
             }}
-            aria-hidden
           />
 
           {/* Header */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-line shrink-0">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 mb-5 border-b border-line relative z-10">
             <div className="flex items-center gap-3.5">
               <div
                 className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl text-primary"
                 style={{
-                  background: "rgba(61,142,255,0.12)",
-                  border: "1px solid rgba(61,142,255,0.3)",
-                  boxShadow: "0 0 20px rgba(61,142,255,0.25)",
+                  background: "rgba(61,142,255,0.1)",
+                  border: "1px solid rgba(61,142,255,0.25)",
+                  boxShadow: "0 0 20px rgba(61,142,255,0.15)",
                 }}
               >
                 <PillarIcon size={20} />
               </div>
               <div>
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary">
-                  Interactive Matrix
+                <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-primary/70">
+                  Active Display Matrix
                 </span>
-                <h3 className="text-xl font-extrabold text-white leading-tight">
+                <h3 className="text-lg lg:text-xl font-extrabold text-white leading-tight">
                   {activeGroup.group}
                 </h3>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-xl border border-primary px-3 py-1.5 text-xs font-semibold text-primary">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              <span>{activeGroup.items.length} Production Skills</span>
+            <div className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-[10px] font-semibold text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+              <span>{activeGroup.items.length} Tech Pillars</span>
             </div>
           </div>
 
-          {/* Skills Grid */}
-          <div className="flex-1 overflow-y-auto pr-1 max-h-[340px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-primary/40">
+          {/* Active Skills Grid with Expertise Gauges */}
+          <div className="flex-1 overflow-y-auto pr-1 max-h-[350px] lg:max-h-[360px] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-primary/30 relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeGroup.group}
@@ -263,10 +291,12 @@ function SkillsPillars() {
             </AnimatePresence>
           </div>
 
-          {/* Bottom helper tip */}
-          <div className="pt-4 mt-4 border-t border-line flex items-center justify-between text-xs text-muted-2">
-            <span>Continuously practiced & delivered in real-world systems</span>
-            <span className="font-mono text-[10px] text-primary/70">100% Verified</span>
+          {/* Interactive Footer */}
+          <div className="pt-4 mt-5 border-t border-line flex items-center justify-between text-[10px] text-muted-2 relative z-10">
+            <span className="flex items-center gap-1">
+              <Zap size={11} className="text-primary" /> Verified Stack Integration
+            </span>
+            <span className="font-mono text-primary/70">PRO_MODE_ACTIVE</span>
           </div>
         </div>
       </div>
@@ -286,7 +316,7 @@ function StatPill({ value, label, delay }: { value: string; label: string; delay
       className="flex flex-col items-start"
     >
       <span
-        className="text-3xl font-black tracking-tight"
+        className="text-2xl sm:text-3xl font-black tracking-tight"
         style={{
           backgroundImage: "linear-gradient(135deg, #7dd3fc, #3d8eff, #818cf8)",
           WebkitBackgroundClip: "text",
@@ -306,7 +336,7 @@ function FeaturedCard({ p, idx }: { p: ReturnType<typeof getProjectsByCategory>[
     <Reveal delay={0.04 * idx} className="h-full">
       <Link to={`/projects/${p.slug}`} className="group flex h-full">
         <div className="glass-card-panel glass-card-outer relative flex h-full w-full flex-col rounded-xl overflow-hidden ease-out">
-          <div className="p-5 md:p-6 rounded-xl">
+          <div className="p-4 sm:p-5 md:p-6 rounded-xl">
             {/* Top accent — primary blue gradient */}
             <div
               className="absolute left-0 right-0 top-0 h-[2px]"
@@ -319,20 +349,21 @@ function FeaturedCard({ p, idx }: { p: ReturnType<typeof getProjectsByCategory>[
             />
             <div className="flex flex-wrap items-start justify-between gap-2">
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-primary"
                 aria-hidden
               >
                 <span className="realtime-live-dot" />
                 Real-time
               </span>
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary transition-transform group-hover:scale-110">
-                <Activity size={18} strokeWidth={2} aria-hidden />
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl text-primary transition-transform group-hover:scale-110">
+                <Activity size={15} className="sm:hidden" strokeWidth={2} aria-hidden />
+                <Activity size={18} className="hidden sm:block" strokeWidth={2} aria-hidden />
               </div>
             </div>
-            <h3 className="mt-3 line-clamp-2 text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary md:text-lg">
+            <h3 className="mt-3 line-clamp-2 text-sm sm:text-base md:text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary">
               {p.name}
             </h3>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-1 line-clamp-3">
+            <p className="mt-2 flex-1 text-xs sm:text-sm leading-relaxed text-muted-1 line-clamp-3">
               {p.context ?? p.summary}
             </p>
             {p.tags?.length > 0 && (
@@ -427,7 +458,7 @@ export function HomePage() {
       <section className="relative overflow-x-clip min-h-[92dvh] flex flex-col justify-center">
         <motion.div style={{ y: heroParallax }}>
           <Container className="w-full">
-            <div className="flex flex-col-reverse items-center gap-12 md:grid md:grid-cols-[1fr_420px] md:items-center md:gap-14">
+            <div className="flex flex-col-reverse items-center gap-10 pt-6 md:pt-0 md:grid md:grid-cols-[1fr_420px] md:items-center md:gap-14">
 
               {/* ── Left: text block ── */}
               <div className="max-w-xl flex flex-col">
@@ -439,7 +470,7 @@ export function HomePage() {
                       Hi there, I'm
                     </p>
                     <h2
-                      className="font-extrabold leading-[1.0] tracking-tight text-[clamp(2.2rem,4.5vw,3rem)]"
+                      className="font-extrabold leading-[1.0] tracking-tight text-[clamp(1.8rem,4.5vw,2.8rem)]"
                     >
                       <span className="text-white">Dinesh </span>
                       <span
@@ -477,7 +508,7 @@ export function HomePage() {
                 {/* Main headline */}
                 <Reveal delay={0.05}>
                   <h1
-                    className="mt-6 font-bold leading-[1.08] tracking-tight text-white text-[clamp(2.4rem,5vw,3.5rem)]"
+                    className="mt-6 font-bold leading-[1.08] tracking-tight text-white text-[clamp(2.0rem,5vw,3.2rem)]"
                   >
                     Good software
                     <span
@@ -526,8 +557,8 @@ export function HomePage() {
 
                 {/* CTAs */}
                 <Reveal delay={0.14}>
-                  <div className="mt-6 flex flex-wrap items-center gap-3">
-                    <ButtonLink to={profile.primaryCta.href} variant="shine" size="lg" className="group">
+                  <div className="mt-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <ButtonLink to={profile.primaryCta.href} variant="shine" size="lg" className="group w-full sm:w-auto justify-center">
                       {profile.primaryCta.label}
                       <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
                     </ButtonLink>
@@ -590,9 +621,9 @@ export function HomePage() {
           </Container>
         </motion.div>
 
-        {/* Scroll cue */}
+        {/* Scroll cue – desktop only, hidden on mobile to avoid overlapping stacked content */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
@@ -757,7 +788,7 @@ export function HomePage() {
           <div className="mt-8 md:hidden">
             <Link
               to="/projects"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-primary/30 bg-primary/8 px-4 py-2 text-sm font-semibold text-primary"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-primary px-4 py-2 text-sm font-semibold text-primary"
             >
               View all projects
               <ArrowRight size={14} />
@@ -769,7 +800,7 @@ export function HomePage() {
       {/* ════════════════════════════════════════════════════
           EDUCATION SECTION
       ════════════════════════════════════════════════════ */}
-      <section className="relative py-16 md:py-24 mb-10">
+      <section className="relative py-16 md:py-24 mb-0 md:mb-10">
         <Container>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-10 md:mb-14">
             <SectionHeading
@@ -810,7 +841,7 @@ export function HomePage() {
                   <div className="relative z-10 flex flex-col md:flex-row h-full rounded-[31px] overflow-hidden">
                     {/* Left panel */}
                     <div
-                      className="relative flex w-full md:w-72 flex-col justify-center items-center p-8 border-b md:border-b-0 md:border-r overflow-hidden"
+                      className="relative flex w-full md:w-72 flex-col justify-center items-center p-6 md:p-8 border-b md:border-b-0 md:border-r overflow-hidden"
                       style={{ borderColor: "rgba(255,255,255,0.07)" }}
                     >
                       {/* BG glow */}
@@ -820,18 +851,19 @@ export function HomePage() {
                         aria-hidden
                       />
                       <div
-                        className="relative z-10 flex h-24 w-24 items-center justify-center rounded-[2rem] transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 text-primary"
+                        className="relative z-10 flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-[1.5rem] sm:rounded-[2rem] transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 text-primary"
                         style={{
                           background: "rgba(61,142,255,0.1)",
                           border: "1px solid rgba(61,142,255,0.25)",
                           boxShadow: "0 0 30px rgba(61,142,255,0.15)",
                         }}
                       >
-                        <GraduationCap size={48} strokeWidth={1.2} />
+                        <GraduationCap size={40} className="sm:hidden" strokeWidth={1.2} />
+                        <GraduationCap size={48} className="hidden sm:block" strokeWidth={1.2} />
                       </div>
-                      <div className="mt-8 flex flex-col items-center gap-1.5 z-10">
+                      <div className="mt-6 sm:mt-8 flex flex-col items-center gap-1.5 z-10">
                         <span
-                          className="rounded-full px-4 py-1.5 text-xs font-bold text-primary tracking-widest uppercase"
+                          className="rounded-full px-3 py-1 sm:px-4 sm:py-1.5 text-[11px] sm:text-xs font-bold text-primary tracking-widest uppercase"
                           style={{
                             background: "rgba(61,142,255,0.1)",
                             border: "1px solid rgba(61,142,255,0.25)",
@@ -843,12 +875,12 @@ export function HomePage() {
                     </div>
 
                     {/* Right panel */}
-                    <div className="relative flex flex-1 flex-col justify-between p-6 md:p-8 lg:p-10">
+                    <div className="relative flex flex-1 flex-col justify-between p-5 md:p-8 lg:p-10">
                       <div className="relative z-10">
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
                           <div>
                             <h3
-                              className="text-2xl font-bold tracking-tight"
+                              className="text-xl sm:text-2xl font-bold tracking-tight"
                               style={{
                                 backgroundImage: "linear-gradient(135deg, #7dd3fc, #3d8eff, #818cf8)",
                                 WebkitBackgroundClip: "text",
