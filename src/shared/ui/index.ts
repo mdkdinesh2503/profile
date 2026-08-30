@@ -13,4 +13,5 @@ export { HeroPortrait } from "./HeroPortrait";
 export { Prose } from "./Prose";
 export { Chip } from "./Chip";
 export { GlassCard } from "./GlassCard";
+export { ShareModal, type ShareModalProps } from "./ShareModal";
 export { cx } from "./cx";

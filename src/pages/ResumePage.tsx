@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Container, SectionHeading, buttonStyles, cx } from "@/shared/ui";
+import { Container, SectionHeading, buttonStyles, cx, ShareModal } from "@/shared/ui";
 import { Reveal } from "@/shared/motion/Reveal";
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { profile } from "@/data/profile";
@@ -172,39 +172,11 @@ export function ResumePage() {
   const [zoom, setZoom] = useState(100);
   const [iframeKey, setIframeKey] = useState(0);
   const [downloadToast, setDownloadToast] = useState(false);
-  const [shared, setShared] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const handleDownload = () => {
     setDownloadToast(true);
     setTimeout(() => setDownloadToast(false), 3000);
-  };
-
-  const handleShare = async () => {
-    const pdfName = profile.resume.pdfSrc;
-    const baseUrl = pdfName.slice(8);
-    const origin = window.location.href;
-    const pdfUrl = `${origin}${baseUrl}`;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `${profile.name} – Resume`,
-          text: `Check out ${profile.name}'s resume (${profile.role})`,
-          url: pdfUrl,
-        });
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
-      } catch {
-        // User cancelled share sheet – no feedback needed
-      }
-    } else {
-      // Fallback: copy link to clipboard on unsupported browsers
-      try {
-        await navigator.clipboard.writeText(pdfUrl);
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
-      } catch {/* noop */}
-    }
   };
 
   const handleReload = () => setIframeKey((k) => k + 1);
@@ -344,26 +316,32 @@ export function ResumePage() {
               {/* Share */}
               <button
                 type="button"
-                onClick={handleShare}
+                onClick={() => setShareOpen(true)}
                 className={cx(
                   buttonStyles.base,
                   buttonStyles.sizes.md,
-                  "border transition-all duration-200 justify-center w-full sm:w-auto",
-                  shared
-                    ? "bg-primary text-white border-primary shadow-lg shadow-primary/25"
-                    : "border-white/10 bg-white/5 text-muted-1 hover:bg-white/8 hover:text-white"
+                  "border border-white/10 bg-white/5 text-muted-1 hover:bg-white/8 hover:text-primary hover:border-primary/40 transition-all duration-200 justify-center w-full sm:w-auto"
                 )}
               >
-                {shared ? (
-                  <><Check className="h-4 w-4" /> Shared!</>
-                ) : (
-                  <><Share2 className="h-4 w-4" /> Share</>
-                )}
+                <Share2 className="h-4 w-4" /> Share Resume
               </button>
             </div>
           </Reveal>
         </Container>
       </section>
+
+      {/* ── Share Modal (WhatsApp, LinkedIn, Telegram, X, Email, Copy) ── */}
+      <ShareModal
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
+        title={`${profile.name} – ${profile.role} Resume`}
+        summary={`Check out ${profile.name}'s professional resume (${profile.role} with ${years}+ years experience in backend architecture and distributed systems).`}
+        url={
+          typeof window !== "undefined"
+            ? new URL(profile.resume.pdfSrc, window.location.origin).href
+            : profile.resume.pdfSrc
+        }
+      />
 
       {/* ════════════════════════════════════════════════════════════
           PDF VIEWER SECTION
