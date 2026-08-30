@@ -209,7 +209,7 @@ body {
 }
 
 .glass-card-outer:hover {
-  box-shadow: 0 12px 32px -8px rgba(var(--color-primary-rgb), 0.28), 0 4px 18px -4px rgba(0, 0, 0, 0.45);
+  box-shadow: var(--color-hover-shadow);
   transform: translateY(-4px) scale(1.02);
 }
 

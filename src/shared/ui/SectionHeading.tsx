@@ -1,12 +1,15 @@
-import type { PropsWithChildren } from "react";
+import type { PropsWithChildren, ElementType } from "react";
 import { cx } from "@/shared/ui/cx";
 import { Reveal } from "@/shared/motion/Reveal";
+import { Zap } from "lucide-react";
 
 type SectionHeadingProps = PropsWithChildren<{
   eyebrow?: string;
   title: string;
   description?: string;
   className?: string;
+  icon?: ElementType;
+  as?: "h1" | "h2" | "h3";
 }>;
 
 export function SectionHeading({
@@ -14,28 +17,42 @@ export function SectionHeading({
   title,
   description,
   className,
+  icon: Icon = Zap,
+  as: Component = "h2",
   children,
 }: SectionHeadingProps) {
   return (
     <div className={cx("max-w-2xl flex flex-col cursor-default relative z-10", className)}>
+      <style>{`
+        @keyframes shimmer-title-global {
+          0% { background-position: 0% center; }
+          100% { background-position: 200% center; }
+        }
+        .shimmer-text-heading {
+          background-image: linear-gradient(135deg, #ffffff 0%, #e2e8f0 30%, #7dd3fc 65%, #818cf8 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          background-size: 200% auto;
+          animation: shimmer-title-global 6s linear infinite;
+        }
+      `}</style>
+
       {eyebrow && (
-        <Reveal>
-          <div className="inline-flex items-center gap-2.5 rounded-full bg-primary/5 px-1 py-1.5 mb-4 shadow-[0_0_15px_rgba(56,189,248,0.1)] backdrop-blur-md transition-all duration-300 hover:bg-primary/10 hover:border-primary/30">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_rgba(56,189,248,1)]" />
-            </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] bg-gradient-to-r from-primary via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+        <Reveal delay={0}>
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full py-1.5 backdrop-blur-md self-start">
+            <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-primary">
               {eyebrow}
             </span>
           </div>
         </Reveal>
       )}
-      
+
       <Reveal delay={0.04}>
-        <h2 className="text-balance text-3xl font-extrabold tracking-tight text-ink md:text-4xl lg:text-5xl">
+        <Component className="text-4xl font-extrabold tracking-tight sm:text-5xl shimmer-text-heading">
           {title}
-        </h2>
+        </Component>
       </Reveal>
 
       <Reveal delay={0.08}>
@@ -56,15 +73,15 @@ export function SectionHeading({
       </Reveal>
 
       {description && (
-        <Reveal delay={0.12}>
-          <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-1 md:text-base max-w-[85%]">
+        <Reveal delay={0.08}>
+          <p className="mt-3 text-base leading-relaxed text-muted-1 max-w-xl">
             {description}
           </p>
         </Reveal>
       )}
 
       {children && (
-        <Reveal delay={0.16}>
+        <Reveal delay={0.12}>
           <div className="mt-6">{children}</div>
         </Reveal>
       )}

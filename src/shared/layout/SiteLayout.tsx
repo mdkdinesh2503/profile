@@ -1,50 +1,68 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SiteHeader } from "@/shared/layout/SiteHeader";
 import { SiteFooter } from "@/shared/layout/SiteFooter";
 import { ScrollToTop } from "@/shared/layout/ScrollToTop";
 
-/** Hero-style background (grid + orbs + gradient line) – shown on all pages. */
+/** Global ambient background mesh + floating glowing light fields */
 function GlobalPageBackground() {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden>
-      <div className="absolute inset-0 hero-grid-bg opacity-[0.28]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.55)_100%)]" />
-      <div className="absolute inset-0">
-        <div className="absolute -right-32 -top-24 h-[520px] w-[520px] rounded-full bg-sky-400/[0.14] blur-3xl" />
-        <div className="absolute right-1/4 -top-10 h-80 w-80 rounded-full bg-primary/[0.1] blur-3xl" />
-        <div className="absolute -left-24 top-[42%] h-[380px] w-[380px] rounded-full bg-indigo-500/[0.1] blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-64 w-[70%] -translate-x-1/2 rounded-full bg-sky-400/[0.06] blur-3xl" />
-      </div>
+    <div className="pointer-events-none fixed inset-0 -z-20 overflow-hidden" aria-hidden>
+      {/* Top right cyan light field */}
+      <div
+        className="absolute -top-32 -right-32 h-[550px] w-[550px] rounded-full opacity-[0.08]"
+        style={{
+          background: "radial-gradient(circle, #3d8eff 0%, transparent 70%)",
+        }}
+      />
+      {/* Mid left indigo light field */}
+      <div
+        className="absolute top-[35%] -left-32 h-[500px] w-[500px] rounded-full opacity-[0.06]"
+        style={{
+          background: "radial-gradient(circle, #818cf8 0%, transparent 70%)",
+        }}
+      />
+      {/* Bottom center light field */}
+      <div
+        className="absolute -bottom-40 left-1/2 -translate-x-1/2 h-[450px] w-[800px] rounded-full opacity-[0.05]"
+        style={{
+          background: "radial-gradient(ellipse, #38bdf8 0%, transparent 70%)",
+        }}
+      />
+      {/* Radial vignette fade around edges */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(ellipse at center, transparent 30%, rgba(2, 6, 14, 0.6) 100%)",
+        }}
+      />
     </div>
   );
 }
 
-const footerTransition = {
-  delay: 0.32,
-  duration: 0.28,
-  ease: [0.22, 1, 0.36, 1] as const,
-};
-
 export function SiteLayout() {
   const location = useLocation();
+  const is404 = location.pathname === "/404";
 
   return (
-    <div className="relative flex min-h-dvh flex-col">
+    <div className="relative flex min-h-dvh flex-col bg-[#02060e] text-slate-100 selection:bg-primary/30 selection:text-white">
       <GlobalPageBackground />
-      <SiteHeader />
-      <main className="flex-1 pb-16">
-        <Outlet />
+      {!is404 && <SiteHeader />}
+      <main className="flex-1">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
-      <motion.div
-        key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={footerTransition}
-      >
-        <SiteFooter />
-      </motion.div>
-      <ScrollToTop />
+      {!is404 && <SiteFooter />}
+      {!is404 && <ScrollToTop />}
     </div>
   );
 }

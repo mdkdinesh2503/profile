@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Github, Linkedin, ArrowUpRight, Mail } from "lucide-react";
+import { Github, Linkedin, ArrowUpRight, Mail, Sparkles, Heart, Terminal, Code2, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { Container } from "@/shared/ui/Container";
 import { profile } from "@/data/profile";
@@ -10,67 +10,97 @@ const socialLinks = [
     href: profile.links.github,
     label: "GitHub",
     icon: Github,
-    hoverClass: "hover:border-primary hover:text-white",
+    hoverBg: "hover:bg-white hover:border-white/20 hover:text-black",
   },
   {
     href: profile.links.linkedin,
     label: "LinkedIn",
     icon: Linkedin,
-    hoverClass: "hover:border-primary hover:text-primary",
+    hoverBg: "hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/40 hover:text-[#38bdf8]",
   },
 ].filter((link) => link.href);
+
+const navLinks = [
+  { to: "/projects", label: "Selected Work" },
+  { to: "/experience", label: "Experience" },
+  // { to: "/blogs", label: "Blog & Notes" },
+  // { to: "/resume", label: "Resume" },
+  // { to: "/contact", label: "Contact" },
+];
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-8 border-t border-line bg-surface pb-4 pt-8 md:pt-10 overflow-hidden">
-      {/* Decorative top gradient beam */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent" />
+    <footer className="relative mt-12 border-t overflow-hidden" style={{ borderColor: "rgba(255, 255, 255, 0.08)", background: "rgba(2, 6, 14, 0.75)" }}>
+      {/* Decorative top multi-stop gradient beam */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1.5px]"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(61,142,255,0.4) 25%, #3d8eff 50%, rgba(129,140,248,0.5) 75%, transparent 100%)",
+          boxShadow: "0 0 15px rgba(61,142,255,0.5)",
+        }}
+      />
 
-      {/* Ambient background text */}
-      <div className="absolute bottom-0 left-0 text-center pointer-events-none select-none opacity-5 z-0 overflow-hidden leading-none translate-y-[15%]">
-        <span className="text-[12vw] font-black uppercase tracking-tighter whitespace-nowrap text-ink">
+      {/* Ambient Large Background Watermark Text */}
+      <div className="absolute bottom-[-10%] left-[-1%] right-0 text-center pointer-events-none select-none opacity-[0.035] z-0 overflow-hidden leading-none">
+        <span className="text-[12vw] font-black uppercase tracking-tighter whitespace-nowrap text-white">
           {profile.name}
         </span>
       </div>
 
-      <Container className="relative z-10 flex flex-col items-center">
+      <Container className="relative z-10 pt-10 pb-8">
+        {/* ── Call to Action Banner ── */}
+        <div
+          className="relative overflow-hidden rounded-3xl text-center mb-1"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="max-w-2xl mx-auto"
+          >
 
-        {/* Call to action section */}
-        <div className="text-center mb-5">
-          <motion.h2
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-xl md:text-3xl font-black tracking-tight text-ink mb-2"
-          >
-            Let's build something <span className="hero-gradient-text">extraordinary.</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-muted-1 text-xs md:text-sm max-w-xl mx-auto font-medium"
-          >
-            {profile.role}. Specializing in robust architectures and seamless integrations.
-          </motion.p>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-3">
+              Let's build something{" "}
+              <span
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #7dd3fc 0%, #3d8eff 50%, #818cf8 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                extraordinary.
+              </span>
+            </h2>
+
+            <p className="text-muted-1 text-sm sm:text-base leading-relaxed mb-6 max-w-lg mx-auto">
+              Ready to discuss new opportunities, technical architecture, or scale robust full-stack systems together.
+            </p>
+          </motion.div>
         </div>
 
         {/* Action Buttons & Socials */}
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-6 w-full justify-center">
+
           <Link
             to="/contact"
-            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-2 text-xs font-bold text-surface transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] active:scale-95"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-xs font-bold text-white transition-all duration-200 btn-shine-wrap group"
+            style={{
+              background: "linear-gradient(135deg, #3d8eff, #818cf8)",
+              boxShadow: "0 2px 14px rgba(61,142,255,0.3)",
+            }}
           >
-            <Mail size={14} />
-            <span>Get in touch</span>
+            <Sparkles size={13} className="text-white animate-pulse" />
+            <span>Connect</span>
+            <ArrowUpRight size={13} className="opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
           </Link>
 
           <div className="flex items-center gap-2">
-            {socialLinks.map(({ href, label, icon: Icon, hoverClass }) => (
+            {socialLinks.map(({ href, label, icon: Icon, hoverBg }) => (
               <motion.a
                 key={label}
                 href={href}
@@ -78,50 +108,60 @@ export function SiteFooter() {
                 rel="noopener noreferrer"
                 aria-label={label}
                 className={cx(
-                  "relative group flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface text-ink transition-all duration-300",
-                  hoverClass
+                  "flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-white/[0.04] text-muted-1 transition-all duration-200",
+                  hoverBg
                 )}
-                whileHover={{ scale: 1.1, y: -2 }}
+                whileHover={{ scale: 1.08, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Icon size={16} className="transition-transform duration-300 group-hover:scale-110" />
+                <Icon size={16} />
               </motion.a>
             ))}
           </div>
         </div>
 
-        {/* Footer Bottom Meta */}
-        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-line pt-4 rounded-xl p-4 bg-surface shadow-sm">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-primary text-primary font-black">
-              {profile.name.charAt(0)}
+        {/* ── Main Footer Grid ── */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t pt-4" style={{ borderColor: "rgba(255, 255, 255, 0.07)" }}>
+          {/* Col 1: Logo & Brand */}
+          <div className="flex items-center gap-3">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-primary font-black"
+              style={{
+                background: "linear-gradient(135deg, rgba(61,142,255,0.2), rgba(129,140,248,0.15))",
+                border: "1px solid rgba(61,142,255,0.3)",
+              }}
+            >
+              {profile.hero.initials || profile.name.charAt(0)}
             </div>
-            <div className="flex flex-col">
-              <span className="text-xs font-bold tracking-wide leading-tight gradient-brand-text">
+            <div>
+              <span className="text-base font-extrabold text-white tracking-tight block">
                 {profile.name}
               </span>
-              <span className="text-[10px] font-medium text-muted-1">
-                Software Engineer
+              <span className="text-xs font-semibold text-primary block">
+                {profile.role}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-5 text-xs font-bold text-muted-1 uppercase tracking-widest">
-            <Link to="/projects" className="transition-colors hover:text-primary flex items-center gap-1 group">
-              Projects
-              <ArrowUpRight size={12} className="opacity-0 -ml-2 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-            <Link to="/experience" className="transition-colors hover:text-primary flex items-center gap-1 group">
-              Experience
-              <ArrowUpRight size={12} className="opacity-0 -ml-2 transition-all duration-300 group-hover:opacity-100 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
+          {/* Col 2: Navigation Links */}
+          <div className="grid grid-cols-2 gap-5 text-xs font-medium block">
+            {navLinks.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="text-muted-1 hover:text-primary transition-colors flex items-center gap-1 group py-1"
+              >
+                <span>{item.label}</span>
+                <ArrowUpRight size={11} className="opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:ml-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            ))}
           </div>
 
-          <div className="text-[10px] font-bold text-muted-1 tracking-wider">
-            © {year} ALL RIGHTS RESERVED
+          <div className="inline-flex items-center gap-1.5 text-[11px] text-muted-2">
+            <span>Built with precision & high standards</span>
+            <Heart size={12} className="text-red-400 fill-red-400" />
           </div>
         </div>
-
       </Container>
     </footer>
   );
