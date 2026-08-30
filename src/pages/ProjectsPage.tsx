@@ -32,7 +32,7 @@ function RealtimeCard({ p, idx }: { p: ProjectPostMeta; idx: number }) {
     <Reveal delay={0.04 * idx} className="h-full">
       <Link to={`/projects/${p.slug}`} className="group flex h-full">
         <div className="glass-card-outer relative flex h-full w-full flex-col rounded-xl overflow-hidden ease-out ml-5">
-          <div className="glass-card-panel p-5 md:p-6 rounded-xl">
+          <div className="glass-card-panel p-4 sm:p-5 md:p-6 rounded-xl">
             {/* Top accent — primary blue gradient */}
             <div
               className="absolute left-0 right-0 top-0 h-[2px]"
@@ -45,20 +45,21 @@ function RealtimeCard({ p, idx }: { p: ProjectPostMeta; idx: number }) {
             />
             <div className="flex flex-wrap items-start justify-between gap-2">
               <span
-                className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-primary"
+                className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-primary"
                 aria-hidden
               >
                 <span className="realtime-live-dot" />
                 Real-time
               </span>
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary transition-transform group-hover:scale-110">
-                <Activity size={18} strokeWidth={2} aria-hidden />
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl text-primary transition-transform group-hover:scale-110">
+                <Activity size={15} className="sm:hidden" strokeWidth={2} aria-hidden />
+                <Activity size={18} className="hidden sm:block" strokeWidth={2} aria-hidden />
               </div>
             </div>
-            <h2 className="mt-3 line-clamp-2 text-base font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary md:text-lg">
+            <h2 className="mt-3 line-clamp-2 text-sm sm:text-base md:text-lg font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-primary">
               {p.name}
             </h2>
-            <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-1 line-clamp-3">
+            <p className="mt-2 flex-1 text-xs sm:text-sm leading-relaxed text-muted-1 line-clamp-3">
               {p.context ?? p.summary}
             </p>
             {p.tags?.length > 0 && (
@@ -66,7 +67,7 @@ function RealtimeCard({ p, idx }: { p: ProjectPostMeta; idx: number }) {
                 {p.tags.slice(0, 4).map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary"
+                    className="rounded-md border border-primary bg-primary/5 px-2 py-0.5 text-[10px] sm:text-[11px] font-medium text-primary"
                   >
                     {tag}
                   </span>
@@ -133,31 +134,31 @@ function AcademicCard({ p, idx }: { p: ProjectPostMeta; idx: number }) {
             aria-hidden
           />
 
-          <div className="flex flex-1 flex-col p-5 md:p-6">
+          <div className="flex flex-1 flex-col p-4 sm:p-5 md:p-6">
             {/* Header */}
             <div className="flex items-start justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-primary">
                 <GraduationCap className="h-3 w-3" />
                 Learning
               </span>
               <div
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6"
+                className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6"
                 style={{
                   background: "rgba(61,142,255,0.1)",
                   border: "1px solid rgba(61,142,255,0.2)",
                 }}
               >
-                <Layers className="h-4 w-4 text-primary" />
+                <Layers className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
               </div>
             </div>
 
             {/* Title */}
-            <h2 className="mt-4 line-clamp-2 text-lg font-bold leading-snug tracking-tight text-white transition-colors duration-200 group-hover:text-primary">
+            <h2 className="mt-4 line-clamp-2 text-sm sm:text-base md:text-lg font-bold leading-snug tracking-tight text-white transition-colors duration-200 group-hover:text-primary">
               {p.name}
             </h2>
 
             {/* Description */}
-            <p className="mt-2 flex-1 line-clamp-3 text-sm leading-relaxed text-muted-1">
+            <p className="mt-2 flex-1 line-clamp-3 text-xs sm:text-sm leading-relaxed text-muted-1">
               {p.context ?? p.summary}
             </p>
 
@@ -249,27 +250,27 @@ function SectionLabel({
   const textCls = variant === "cyan" ? "text-primary" : "text-indigo-300";
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-4">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-wrap items-center justify-between gap-3 sm:gap-4">
+      <div className="flex items-center gap-3 sm:gap-4">
         {/* Icon bubble */}
         <div
-          className="flex h-11 w-11 items-center justify-center rounded-xl"
+          className="flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-lg sm:rounded-xl"
           style={{ background: accentBg, border: `1px solid ${accentBorder}`, boxShadow: `0 0 20px ${accentBg}` }}
         >
-          <Icon className={`h-5 w-5 ${textCls}`} />
+          <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${textCls}`} />
         </div>
         <div>
           <p
-            className={`text-[11px] font-bold uppercase tracking-widest ${textCls}`}
+            className={`text-[9px] sm:text-[11px] font-bold uppercase tracking-widest ${textCls}`}
           >
             {eyebrow}
           </p>
-          <h2 className="mt-0.5 text-lg font-bold text-white">{title}</h2>
+          <h2 className="mt-0.5 text-sm sm:text-lg font-bold text-white">{title}</h2>
         </div>
       </div>
       {/* Count badge */}
       <div
-        className={`rounded-full px-3 py-1 text-xs font-bold ${textCls}`}
+        className={`rounded-full px-2 py-0.5 sm:px-3 sm:py-1 text-[10px] sm:text-xs font-bold ${textCls}`}
         style={{ background: accentBg, border: `1px solid ${accentBorder}` }}
       >
         {count} project{count !== 1 ? "s" : ""}
@@ -283,7 +284,7 @@ export function ProjectsPage() {
   const learningProjects = getLearningProjects();
 
   return (
-    <div className="relative pt-12 pb-10 md:pt-16">
+    <div className="relative pt-12 pb-0 sm:pb-10 md:pt-16">
       <PageMeta
         title={headings.selectedWork.eyebrow}
         description={headings.selectedWork.description}
@@ -396,7 +397,7 @@ export function ProjectsPage() {
           </Reveal>
 
           <Reveal delay={0.02}>
-            <p className="mt-2 ml-[3.75rem] max-w-xl text-sm text-muted-1">
+            <p className="mt-1.5 ml-[3rem] sm:ml-[3.75rem] max-w-xl text-xs sm:text-sm text-muted-1">
               {headings.selectedWorkRealTime.description}
             </p>
           </Reveal>
@@ -442,7 +443,7 @@ export function ProjectsPage() {
           </Reveal>
 
           <Reveal delay={0.02}>
-            <p className="mt-2 ml-[3.75rem] max-w-xl text-sm text-muted-1">
+            <p className="mt-1.5 ml-[3rem] sm:ml-[3.75rem] max-w-xl text-xs sm:text-sm text-muted-1">
               {headings.selectedWorkAcademic.description}
             </p>
           </Reveal>

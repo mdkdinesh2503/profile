@@ -118,7 +118,7 @@ function SkillsPillars() {
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative overflow-hidden rounded-[2.5rem] transition-all duration-500"
+      className="relative overflow-hidden rounded-xs sm:rounded-[2.5rem] transition-all duration-500"
       style={{
         background: "rgba(8, 14, 28, 0.7)",
         border: "1px solid rgba(61, 142, 255, 0.15)",
@@ -800,7 +800,7 @@ export function HomePage() {
       {/* ════════════════════════════════════════════════════
           EDUCATION SECTION
       ════════════════════════════════════════════════════ */}
-      <section className="relative py-16 md:py-24 mb-0 md:mb-10">
+      <section className="relative py-10 md:py-24 mb-0 md:mb-10">
         <Container>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between mb-10 md:mb-14">
             <SectionHeading
