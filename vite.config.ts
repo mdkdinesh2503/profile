@@ -1,56 +1,57 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
-const SITE_URL = process.env.VITE_SITE_URL || "https://mdkdinesh2503.netlify.app";
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  const SITE_URL = env.VITE_SITE_URL || "https://mdkdinesh2503.netlify.app";
+  const verification = env.VITE_GOOGLE_SITE_VERIFICATION || "";
 
-export default defineConfig({
-  plugins: [
-    react(),
-    {
-      name: "html-site-url",
-      transformIndexHtml(html) {
-        return html.replace(/https:\/\/mdkdinesh2503\.netlify\.app/g, SITE_URL);
+  return {
+    plugins: [
+      react(),
+      {
+        name: "html-seo-transform",
+        transformIndexHtml(html) {
+          let transformed = html.replace(/https:\/\/mdkdinesh2503\.netlify\.app/g, SITE_URL);
+          if (!verification.trim()) {
+            transformed = transformed.replace(/\s*<meta name="google-site-verification" content="%VITE_GOOGLE_SITE_VERIFICATION%" \/>/g, "");
+          }
+          return transformed;
+        },
+      },
+    ],
+
+    resolve: {
+      alias: {
+        "@": "/src",
       },
     },
-  ],
 
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
-  },
-
-  build: {
-    target: "es2020",
-    cssCodeSplit: true,
-    chunkSizeWarningLimit: 600,
-    rollupOptions: {
-      output: {
-        // Manually split large vendor libs into separately cacheable chunks.
-        // Users only re-download app code on updates, not framework code.
-        manualChunks(id) {
-          // React core — almost never changes, long-lived cache
-          if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
-            return "vendor-react";
-          }
-          // React Router
-          if (id.includes("node_modules/react-router")) {
-            return "vendor-router";
-          }
-          // Framer Motion — heavy, but also stable across deploys
-          if (id.includes("node_modules/framer-motion")) {
-            return "vendor-motion";
-          }
-          // Lucide icons — tree-shaken but still sizeable
-          if (id.includes("node_modules/lucide-react")) {
-            return "vendor-icons";
-          }
-          // react-helmet-async
-          if (id.includes("node_modules/react-helmet-async")) {
-            return "vendor-helmet";
-          }
+    build: {
+      target: "es2020",
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 600,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules/react/") || id.includes("node_modules/react-dom/")) {
+              return "vendor-react";
+            }
+            if (id.includes("node_modules/react-router")) {
+              return "vendor-router";
+            }
+            if (id.includes("node_modules/framer-motion")) {
+              return "vendor-motion";
+            }
+            if (id.includes("node_modules/lucide-react")) {
+              return "vendor-icons";
+            }
+            if (id.includes("node_modules/react-helmet-async")) {
+              return "vendor-helmet";
+            }
+          },
         },
       },
     },
-  },
+  }
 });
