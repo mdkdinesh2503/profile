@@ -16,9 +16,15 @@ export function useAnalytics() {
 
   useEffect(() => {
     const currentPath = `${location.pathname}${location.search}`;
+    // Skip first mount as gtag('config', measurementId) automatically records the landing pageview
+    if (prevPathRef.current === null) {
+      prevPathRef.current = currentPath;
+      return;
+    }
+
     if (prevPathRef.current !== currentPath) {
       prevPathRef.current = currentPath;
-      // Slight delay to ensure PageMeta has updated the document.title
+      // Slight delay to ensure PageMeta has updated document.title
       const timer = setTimeout(() => {
         trackPageView(currentPath, document.title);
       }, 50);

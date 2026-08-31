@@ -43,11 +43,8 @@ export function initGA(): void {
   };
 
   window.gtag("js", new Date());
-  // Disable automatic page view tracking so client-side SPA routing controls exact pageviews cleanly
-  window.gtag("config", measurementId, {
-    send_page_view: false,
-    anonymize_ip: true,
-  });
+  // Standard Google Tag config
+  window.gtag("config", measurementId);
 
   // Inject Google Tag script
   const script = document.createElement("script");
@@ -68,7 +65,8 @@ export function trackPageView(path: string, title?: string): void {
 
   const measurementId = GA_MEASUREMENT_ID!.trim();
 
-  window.gtag("config", measurementId, {
+  window.gtag("event", "page_view", {
+    send_to: measurementId,
     page_path: path,
     page_title: title || document.title,
     page_location: window.location.href,
