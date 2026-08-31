@@ -1,100 +1,115 @@
 ---
-name: "Tournaments, Challenges & Rule-Driven Workflows"
-summary: "Designed and delivered robust domain workflows with strong state modeling, clear edge-case handling, and scalable persistence/API design."
-role: "Backend Engineer"
-timeline: "2025"
+name: "Esports & Gaming Platform — Distributed Backend & Microservices"
+summary: "High-throughput microservices ecosystem serving 20K+ users with Rust, Tokio, Tonic gRPC, Axum GraphQL Gateway, Java/Spring Boot, PostgreSQL, Redis, and DynamoDB."
+role: "Full-Stack Engineer / Backend Engineer"
+timeline: "2024 – 2026"
 category: "real-time"
-stackNote: "Rust, gRPC, GraphQL, REST, PostgreSQL, DynamoDB, Redis."
-tags: ["backend", "domain-design", "apis", "databases", "Gaming"]
+stackNote: "Rust (Tokio, Axum, Tonic gRPC, async-graphql), Java (Spring Boot, JPA), PostgreSQL, Redis / Valkey, DynamoDB, AWS SQS"
+tags: ["Rust", "Spring-boot", "Microservices", "gRPC", "GraphQL", "Redis", "PostgreSQL", "DynamoDB", "AWS"]
 image: "/default/Blog.svg"
 ---
 
-## Problem
+## ⚡ System Overview & Production Scale
 
-I worked on a core domain where tournaments, challenges, and rule-driven flows power most of the product. The system had to:
-
-- Strict correctness across multiple state transitions.
-- Consistent behavior across gRPC, GraphQL, and REST APIs.
-- Clear handling of eligibility rules, lifecycle changes, and invalid operations.
-- Performance stability under increasing production load.
-
-The system had to support evolving requirements without turning business logic into tightly coupled API code.
+Architected, developed, and maintained core domain services for a production esports and gaming platform serving **20K+ registered users**. Built across two major application generations:
+- **Version 1 (Monolith)**: Java / Spring Boot backend handling REST endpoints, JPA transactions, and PostgreSQL workflows.
+- **Version 2 (Distributed Platform)**: Rust-based asynchronous microservices (~60% Rust, ~30% Java, ~10% NestJS) communicating via **gRPC (Tonic / Protobuf)** behind an internal **Rust GraphQL Gateway (Axum + async-graphql)**.
 
 ---
 
-## My Role
+## 🏗️ Architectural Topology
 
-- Designed and implemented core domain workflows.
-- Modeled lifecycle state machines for tournaments and challenges.
-- Built and exposed APIs across gRPC (internal) and GraphQL/REST (clients).
-- Designed database schemas and optimized read/write paths.
-- Applied caching and validation strategies to improve performance and reliability.
+| Tier | Component & Responsibilities | Technologies |
+| :--- | :--- | :--- |
+| **Client Layer** | Web, mobile, and white-label consumer frontends | Next.js, Apollo Client, Tailwind |
+| **API Gateway** | Topology hiding, schema federation, request routing & context middleware | Rust, Tokio, Axum, `async-graphql` |
+| **Transport Layer** | High-speed, strongly-typed internal RPC service contracts | Tonic, gRPC, Protocol Buffers (`.proto`) |
+| **Microservices** | Independent domain logic engines (Challenges, Games, Tournaments, Auth) | Rust (`diesel-async`), Java (Spring Boot), NestJS |
+| **Data & Cache** | Multi-tier persistence matched to specific read/write access patterns | Aurora PostgreSQL, Redis / Valkey, DynamoDB |
+| **Async Messaging**| Decoupled event notifications & background processing pipelines | AWS SQS, Asynchronous Producers/Consumers |
 
----
-
-## Edge Cases Handled
-
-- Invalid lifecycle transitions (e.g., publishing incomplete entities).
-- Duplicate submissions and idempotent operations.
-- Eligibility conflicts (e.g., participation rules, state-based restrictions).
-- Rollback and correction scenarios.
-- Concurrent updates affecting rankings or status changes.
-- Data inconsistencies between cache and primary storage.
-
-Explicit state modeling made these scenarios predictable and testable.
-
----
-
-## Database Design
-
-### PostgreSQL (Primary Source of Truth)
-
-- Normalized schema for tournaments, participants, matches, and rules.
-- Transactional integrity for critical updates (enrollment, scoring, reward issuance).
-- Append-only patterns and event/audit tables where historical traceability mattered.
-- Indexed read-heavy paths (leaderboards, participant lookups, active challenges).
-
-### DynamoDB (Aggregates / Flexible Data)
-
-- Used for scalable stats, global aggregates, and per‑player challenge snapshots.
-- Designed with partition keys aligned to high-read entities (tournament + region, player + season).
-
-### Redis (Performance Layer)
-
-- Leaderboards using sorted sets (ZSET).
-- Targeted caching of frequently accessed domain objects.
-- Cache invalidation at state boundaries.
-
-Focus: durability in primary DB, speed in cache, flexibility in aggregate store—while keeping mental models simple for developers and operators.
+```
+[ Client Applications: Web / Mobile / White-Label ]
+                       │ (GraphQL / REST)
+                       ▼
+[ Rust API Gateway: Axum + Tokio + async-graphql ]
+                       │ (Internal gRPC / Protobuf)
+       +---------------+---------------+---------------+
+       ▼               ▼               ▼               ▼
+[Challenge Engine] [Casual Games] [Tournament]   [Auth & Metadata]
+ (~90% Ownership)  (~90% Ownership) (~40% Ownership) (~70% Metadata)
+       │               │               │               │
+       +---------------+---------------+---------------+
+       ▼                               ▼               ▼
+[PostgreSQL (ACID)]            [Redis / Valkey]   [AWS DynamoDB]
+• 12-15 Stored Procedures      • ZSET Leaderboard • Audit Trails
+• Relational Source of Truth   • Sub-ms Rankings  • Dynamic Schemas
+```
 
 ---
 
-## API Design
+## 🎯 Core Domain Modules & Personal Ownership
 
-- Centralized domain logic in a service layer.
-- Exposed behavior via:
-  - gRPC for internal services
-  - GraphQL for flexible client queries
-  - REST for compatibility and simpler integrations
-- Ensured no duplication of business rules across transport layers.
-- Structured error mapping for predictable API responses.
-- Role-based access validation at request boundaries.
+### 1. 🏆 Challenge Module (~90% Ownership)
+- **State Machine Lifecycles**: Engineered registration, participant verification, and real-time status transitions.
+- **Scoring & Leaderboards**: Integrated **Redis Sorted Sets (ZSET)** for instant ranking queries, **DynamoDB** for participant aggregates, and **PostgreSQL** for transactional audit histories.
+- **Automated Winner Logic**: Designed deterministic scoring algorithms and reward dispatch workflows.
 
-Principle: **Domain first, transport second.**
+### 2. 🎮 Casual Games Module (~90% Ownership)
+- **Provider Integrations**: Connected external third-party game APIs, handling score webhook callbacks, payload validation, and payment redirection.
+- **High-Velocity Score Logging**: Engineered idempotent score-processing APIs resilient to rapid duplicate submissions.
+- **Multi-Granular Rankings**: Configured **Daily, Weekly, Monthly, and Country leaderboards (10–20 regions)** with automated rebuild and cache-recovery routines.
+
+### 3. ⚔️ Tournament Engine — Double Elimination (~40% Ownership)
+- **Bracket Progression**: Programmed full **Double Elimination** tournament progression, managing dynamic match scheduling across Winners and Losers brackets up to the Grand Finals.
+- **Data Modeling & Messaging**: Designed relational tournament database models in PostgreSQL and coordinated AWS SQS notification events for match state updates.
+
+### 4. 🌐 Internal GraphQL Gateway (~50% Contribution)
+- **Protocol Bridging**: Built high-throughput resolvers in Rust translating external GraphQL queries/mutations into downstream **Tonic gRPC** calls.
+- **Axum Middleware**: Authored custom middleware for request tracing, header propagation, and payload validation.
+
+### 5. 🔑 Metadata & Authentication Services
+- **Hybrid Metadata Store (~70% Ownership)**: Coupled **AWS DynamoDB** for dynamic schema writes with **Redis / Valkey** for high-frequency cached reads.
+- **Auth Enhancements**: Upgraded Rust authentication workflows with **Email OTP login**, **JWT access token issuance**, and **rotating refresh-token validation** backed by Redis session storage.
 
 ---
 
-## What I Learned
+## 💡 Key Technical Innovations & Problem Solving
 
-- Global ranking systems demand transactional integrity and rollback design from day one.
-- Redis is powerful for real-time ranking, but durability must remain in the primary database.
-- Clear state machines dramatically reduce production ambiguity and on‑call stress.
-- Separating domain logic from API transport keeps the codebase evolvable as products and clients change.
-- Designing for reversibility (not just correctness) builds operational confidence.
-- The combination of explicit rules, strong invariants, and good observability makes even complex domains feel manageable.
+```
++-----------------------------------------------------------------------------------------+
+|                                    ENGINEERING HIGHLIGHTS                               |
++-----------------------------------------------------------------------------------------+
+| [1] Multi-Tier Leaderboards   -> Redis Sorted Sets (ZSET) for sub-ms ranking;           |
+|                                  PostgreSQL as the durable source of truth.             |
+| [2] 20K Record DB Migration   -> Transitioned ~20K user/login records from DynamoDB to  |
+|                                  Aurora PostgreSQL to optimize relational filtering.    |
+| [3] End-to-End Type Safety    -> Protobuf contracts eliminate field mismatch bugs      |
+|                                  between Rust, Java, and NestJS microservices.          |
+| [4] High Reliability (ACID)   -> Authored 12-15 PostgreSQL stored procedures for       |
+|                                  transactional integrity during tournament match wins.  |
++-----------------------------------------------------------------------------------------+
+```
+
+### 📦 DynamoDB to Aurora PostgreSQL Migration (~20K Records)
+- **The Challenge**: As query requirements evolved, batch filtering and relational user lookups in DynamoDB incurred heavy scan latencies and operational costs.
+- **The Solution**: Developed a dedicated migration process shifting **~20,000 user/login records** into normalized Aurora PostgreSQL tables, realigning the workload with relational query capabilities while keeping DynamoDB focused on unstructured audit logs.
 
 ---
 
-## Key Takeaway
+## 🛠️ Production Engineering & Live Support
 
-Strong domain modeling, explicit state handling, and clear separation between business logic and API transport are what allowed me to ship a tournament/challenge engine that feels fast to players, predictable to product, and boring (in a good way) to operate.
+| Operational Metric | Scope & Impact |
+| :--- | :--- |
+| **Production Releases** | Participated in **25+ production deployments**, managing pre-release verification and post-deployment validation. |
+| **Incident Remediation** | Investigated and resolved **10+ live production incidents** using **Grafana, CloudWatch, Postman, and Altair GraphQL**. |
+| **Zero-Downtime Hotfixes** | Authored and shipped **8+ hotfixes** addressing critical edge cases in live match workflows. |
+| **Continuous Delivery** | Monitored microservice rollouts, pod health, and restarts across **ArgoCD and Jenkins** environments. |
+
+---
+
+## 📌 Key Architectural Takeaways
+
+- **Match Storage to Access Patterns**: Relational databases ensure rock-solid transactional safety, in-memory caches deliver instantaneous leaderboards, and document stores provide schema flexibility.
+- **State Machine Rigor**: Explicit state machine modeling with transition guards prevents race conditions in concurrent multiplayer systems.
+- **Boundary Decoupling**: API Gateways with internal gRPC abstraction shield frontend clients from internal service topology and protocol evolutions.

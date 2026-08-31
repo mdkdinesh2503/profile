@@ -199,7 +199,7 @@ function ImageLightbox({
   );
 }
 
-/* ── Responsive Code Block ── */
+/* ── Responsive Code & Architecture Block ── */
 function CodeBlock({
   children,
   className,
@@ -218,70 +218,94 @@ function CodeBlock({
   };
 
   const lang = className?.replace("language-", "") ?? "";
+  const isArchitecture = !lang || lang === "text" || lang === "diagram";
 
   return (
     <div
-      className="group relative my-5 sm:my-6 rounded-2xl overflow-hidden"
+      className="group relative my-6 sm:my-8 rounded-2xl overflow-hidden"
       style={{
-        background: "#040814",
-        border: "1px solid rgba(61,142,255,0.22)",
-        boxShadow: "0 12px 36px -8px rgba(0,0,0,0.6), 0 0 20px rgba(61,142,255,0.06)",
+        background: "linear-gradient(180deg, #050b18 0%, #030712 100%)",
+        border: "1px solid rgba(61,142,255,0.35)",
+        boxShadow: "0 16px 40px -10px rgba(0,0,0,0.7), 0 0 25px rgba(61,142,255,0.12)",
       }}
     >
+      {/* Top accent glow line */}
+      <div
+        className="h-[2px] w-full"
+        style={{
+          background: "linear-gradient(90deg, transparent, #38bdf8 30%, #3d8eff 70%, transparent)",
+        }}
+      />
+
       {/* Terminal header */}
-      <div className="flex items-center justify-between px-3.5 sm:px-4 py-2 sm:py-2.5 border-b border-white/8 bg-white/5">
-        <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
-        </div>
+      <div className="flex items-center justify-between px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-white/10 bg-white/[0.03]">
         <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+          </div>
+          <span className="hidden sm:inline-block text-[11px] font-mono text-white/30 ml-2">system://architecture-view</span>
+        </div>
+
+        <div className="flex items-center gap-2.5">
           {lang ? (
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary">
+            <span className="inline-flex items-center gap-1 rounded-md bg-primary/15 border border-primary/30 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-primary shadow-sm">
+              <Terminal className="h-3 w-3" />
               {lang}
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-[10px] font-mono font-medium text-white/40">
-              <Terminal className="h-3 w-3 text-primary/70" /> Architecture / Snippet
+            <span className="inline-flex items-center gap-1 rounded-md border border-primary px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-primary shadow-sm">
+              <Cpu className="h-3 w-3" />
+              System Architecture
             </span>
           )}
           <button
             type="button"
             onClick={copy}
-            className="flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-medium transition-all duration-150 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 bg-white/10 text-white/80 hover:bg-primary/20 hover:text-primary"
+            className="flex items-center gap-1 rounded-md px-2.5 py-1 text-[10px] font-medium transition-all duration-150 bg-white/10 text-white/80 hover:bg-primary/25 hover:text-primary active:scale-95"
           >
-            {copied ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+            {copied ? <Check className="h-3 w-3 text-green-400" /> : <Copy className="h-3 w-3" />}
             {copied ? "Copied" : "Copy"}
           </button>
         </div>
       </div>
-      <pre
-        ref={ref}
-        className="overflow-x-auto p-3.5 sm:p-5 text-xs sm:text-sm leading-relaxed text-ink font-mono"
-        style={{ margin: 0 }}
-      >
-        {children}
-      </pre>
+
+      {/* Code / Diagram Body with technical grid background */}
+      <div className="relative overflow-x-auto">
+        <pre
+          ref={ref}
+          className="p-4 sm:p-6 text-xs sm:text-[13px] leading-relaxed text-blue-100/95 font-mono whitespace-pre select-text font-normal tracking-wide"
+          style={{
+            margin: 0,
+            tabSize: 2,
+            fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+            letterSpacing: "0.02em",
+          }}
+        >
+          {children}
+        </pre>
+      </div>
     </div>
   );
 }
 
-/* ── Pull-quote Blockquote ── */
+/* ── Callout / Pullquote Block ── */
 function PullQuote({ children }: { children?: React.ReactNode }) {
   return (
     <div
-      className="my-6 sm:my-8 relative pl-4 sm:pl-6 pr-4 sm:pr-5 py-4 sm:py-5 rounded-2xl overflow-hidden"
+      className="my-6 sm:my-8 relative pl-5 sm:pl-7 pr-4 sm:pr-6 py-4 sm:py-5 rounded-2xl overflow-hidden shadow-lg"
       style={{
-        background: "linear-gradient(135deg, rgba(61,142,255,0.08) 0%, rgba(37,99,235,0.03) 100%)",
-        border: "1px solid rgba(61,142,255,0.25)",
-        borderLeft: "4px solid #3d8eff",
+        background: "linear-gradient(135deg, rgba(61,142,255,0.14) 0%, rgba(37,99,235,0.06) 100%)",
+        border: "1px solid rgba(61,142,255,0.4)",
+        borderLeft: "5px solid #3d8eff",
+        boxShadow: "0 8px 24px -6px rgba(0,0,0,0.5), inset 0 0 16px rgba(61,142,255,0.08)",
       }}
     >
-      <Quote className="absolute -top-1 left-2 h-6 w-6 sm:h-8 sm:w-8 rotate-180 text-primary opacity-20" aria-hidden />
-      <div className="relative text-sm sm:text-base leading-relaxed italic text-white/90 font-medium">
+      <Quote className="absolute top-2 right-3 h-8 w-8 text-primary opacity-25" aria-hidden />
+      <div className="relative text-sm sm:text-[15px] leading-relaxed text-blue-50 font-medium [&_strong]:text-primary [&_strong]:font-bold [&_li]:text-white [&_p]:text-blue-50 [&_span]:text-white">
         {children}
       </div>
-      <Quote className="absolute -bottom-1 right-2 h-6 w-6 sm:h-8 sm:w-8 text-primary opacity-20" aria-hidden />
     </div>
   );
 }
@@ -346,7 +370,7 @@ function ProjectContent({
         h2: ({ children, ...props }) => (
           <h2
             {...props}
-            className="group relative mt-8 sm:mt-12 mb-3 sm:mb-4 flex items-center gap-2.5 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold text-white pb-2 border-b border-primary/15"
+            className="group relative mt-8 sm:mt-12 mb-3 sm:mb-4 flex items-center gap-2.5 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold text-white pb-2 border-b border-muted-1"
           >
             <span
               className="flex-shrink-0 h-5 sm:h-6 w-1 sm:w-1.5 rounded-full bg-primary"
@@ -360,22 +384,24 @@ function ProjectContent({
             {...props}
             className="group mt-6 sm:mt-8 mb-2.5 sm:mb-3 flex items-center gap-2 text-base sm:text-lg font-bold text-white/95"
           >
-            <span className="text-xs font-mono text-primary/70">###</span>
+            <span className="text-xs font-mono text-primary">###</span>
             {children}
           </h3>
         ),
         blockquote: ({ children }) => <PullQuote>{children}</PullQuote>,
         pre: ({ children }) => <>{children}</>,
-        code: ({ className, children, ...props }) => {
-          if (!className)
+        code: ({ className, children, node, ...props }) => {
+          const isInline = !className && !String(children).includes("\n");
+          if (isInline) {
             return (
               <code
-                className="rounded-md bg-primary/12 px-1.5 py-0.5 text-[0.85em] font-mono font-medium text-primary break-words"
+                className="rounded-md px-1.5 py-0.5 text-[1em] font-semibold italic tracking-wider text-primary break-words"
                 {...props}
               >
                 {children}
               </code>
             );
+          }
           return <CodeBlock className={className}>{children}</CodeBlock>;
         },
         p: ({ children }) => (
@@ -421,7 +447,7 @@ function ProjectContent({
           <td className="px-3 sm:px-4 py-2.5 sm:py-3 text-white/75 border-b border-white/5">{children}</td>
         ),
         strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-        em: ({ children }) => <em className="italic text-primary">{children}</em>,
+        em: ({ children }) => <em className="italic text-primary font-normal tracking-wider">{children}</em>,
       }}
     >
       {content}
@@ -701,10 +727,10 @@ export function ProjectDetailPage() {
                     <span>Architecture Focus</span>
                   </div>
                   <p className="text-xs sm:text-sm font-semibold text-white mt-1">
-                    {project.role || "Backend Architecture & Engineering"}
+                    {project.role || "Software Engineer"}
                   </p>
                   {project.stackNote && (
-                    <p className="text-[11px] sm:text-xs text-white/50 italic">{project.stackNote}</p>
+                    <p className="text-[11px] sm:text-xs text-white/60 italic">{project.stackNote}</p>
                   )}
                 </div>
 
