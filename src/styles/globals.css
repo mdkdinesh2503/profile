@@ -62,6 +62,43 @@ body {
   background: var(--color-selection);
 }
 
+/* ── Font-display: swap ─────────────────────────────────────────
+   Override @fontsource defaults so the browser shows system-ui
+   immediately while Inter loads, eliminating CLS from font swap.
+────────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Inter Regular"), local("Inter-Regular");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Inter Medium"), local("Inter-Medium");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Inter Bold"), local("Inter-Bold");
+}
+
+/* ── GPU Compositing for animated elements ──────────────────────
+   Tells the browser to promote these to their own compositor
+   layer, preventing 29 non-composited animation warnings.
+────────────────────────────────────────────────────────────────── */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    SCROLLBAR
    ─ Custom scrollbar styled to theme

@@ -3,7 +3,7 @@ title: "Why I Write Blogs: Narrating the Logic of My Journey"
 date: "2026-03-04"
 summary: "I write to share my real story — why I made choices, what worked, what didn't, and what I learned. In my own words, the way it actually happened."
 tags: ["writing", "growth", "reflection", "learning"]
-image: "/blogs/my-journey.jpg"
+image: "/blogs/my-journey.webp"
 imageAlt: "Futuristic software engineering and coding reflection"
 readTime: 3
 ---

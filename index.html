@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Resource Hints: preload LCP image so it starts downloading immediately -->
+    <link rel="preload" as="image" href="/profile/mdk_3.webp" fetchpriority="high" type="image/webp" />
+    <!-- DNS prefetch for external assets -->
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
     <!-- Primary SEO: Fallback title and meta (overridden by react-helmet-async per page) -->
     <title>Dinesh Kumar M | Software Engineer</title>
     <meta name="description" content="Official portfolio of Dinesh Kumar M – Software Engineer specializing in Java, Spring Boot, Rust, PostgreSQL, Microservices, and Distributed Systems. Namakkal, Tamil Nadu, India." />
@@ -14,21 +20,21 @@
     <!-- Default Open Graph (overridden per page by react-helmet-async) -->
     <meta property="og:type" content="profile" />
     <meta property="og:site_name" content="Dinesh Kumar M | Software Engineer" />
-    <meta property="og:title" content="Dinesh Kumar M | Software Engineer" />
-    <meta property="og:description" content="Official portfolio of Dinesh Kumar M – Software Engineer specializing in Java, Spring Boot, Rust, PostgreSQL, and Distributed Systems." />
+    <meta property="og:title" content="Dinesh Kumar M | Backend-focused Software Engineer" />
+    <meta property="og:description" content="Official portfolio of Dinesh Kumar M – Backend-focused Software Engineer specializing in Java, Spring Boot, Rust, PostgreSQL, and Distributed Systems." />
     <meta property="og:url" content="https://mdkdinesh2503.netlify.app/" />
-    <meta property="og:image" content="https://mdkdinesh2503.netlify.app/profile/mdk_3.png" />
-    <meta property="og:image:alt" content="Dinesh Kumar M - Software Engineer" />
+    <meta property="og:image" content="https://mdkdinesh2503.netlify.app/profile/mdk_3.webp" />
+    <meta property="og:image:alt" content="Dinesh Kumar M - Backend-focused Software Engineer" />
     <meta property="profile:first_name" content="Dinesh" />
     <meta property="profile:last_name" content="Kumar M" />
     <meta property="profile:username" content="mdkdinesh2503" />
 
     <!-- Twitter Card (overridden per page by react-helmet-async) -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Dinesh Kumar M | Software Engineer" />
-    <meta name="twitter:description" content="Official portfolio of Dinesh Kumar M – Software Engineer specializing in Java, Spring Boot, Rust, and scalable distributed systems." />
-    <meta name="twitter:image" content="https://mdkdinesh2503.netlify.app/profile/mdk_3.png" />
-    <meta name="twitter:image:alt" content="Dinesh Kumar M - Software Engineer" />
+    <meta name="twitter:title" content="Dinesh Kumar M | Backend-focused Software Engineer" />
+    <meta name="twitter:description" content="Official portfolio of Dinesh Kumar M – Backend-focused Software Engineer specializing in Java, Spring Boot, Rust, and scalable distributed systems." />
+    <meta name="twitter:image" content="https://mdkdinesh2503.netlify.app/profile/mdk_3.webp" />
+    <meta name="twitter:image:alt" content="Dinesh Kumar M - Backend-focused Software Engineer" />
 
     <!-- Schema.org JSON-LD: Person & WebSite (base, per-page WebPage added by react-helmet-async) -->
     <script type="application/ld+json">
@@ -86,7 +92,7 @@
     }
     </script>
 
-    <link rel="icon" type="image/png" href="/default/Avatar.png" />
+    <link rel="icon" type="image/png" href="/default/Avatar.webp" />
   </head>
   <body>
     <div id="root"></div>

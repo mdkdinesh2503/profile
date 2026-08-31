@@ -65,20 +65,30 @@ export function HeroPortrait({
             {/* Placeholder (initials) shown until image loads or on error */}
             {(!loaded || !hasImage || failed) && initialsBlock}
             {hasImage && !failed && (
-              <motion.img
-                src={src}
-                alt={alt}
+              <picture
                 className={cx(
-                  "absolute inset-0 h-full w-full object-cover transition-opacity duration-300",
+                  "absolute inset-0 h-full w-full transition-opacity duration-300",
                   loaded ? "opacity-100" : "opacity-0",
                 )}
-                loading="eager"
-                fetchPriority="high"
-                onLoad={() => setLoaded(true)}
-                onError={() => setFailed(true)}
-                whileHover={{ scale: 1.06 }}
-                transition={{ type: "spring", stiffness: 260, damping: 22 }}
-              />
+              >
+                {/* Serve WebP to all modern browsers (40KB vs 1.9MB PNG) */}
+                <source
+                  srcSet={src!.replace(/\.png$/, ".webp").replace(/\.jpg$/, ".webp")}
+                  type="image/webp"
+                />
+                <motion.img
+                  src={src}
+                  alt={alt}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  onLoad={() => setLoaded(true)}
+                  onError={() => setFailed(true)}
+                  whileHover={{ scale: 1.06 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 22 }}
+                />
+              </picture>
             )}
 
             {/* Profile Title */}

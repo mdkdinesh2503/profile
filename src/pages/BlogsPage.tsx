@@ -114,12 +114,19 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
 
           {/* ── Full-bleed image layer ── */}
           <div className="absolute inset-0">
-            <img
-              src={b.image ?? DEFAULT_BLOG_IMAGE}
-              alt=""
-              className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
-              loading="eager"
-            />
+            <picture className="h-full w-full">
+              <source
+                srcSet={(b.image ?? DEFAULT_BLOG_IMAGE).replace(/\.jpg$/, ".webp").replace(/\.png$/, ".webp")}
+                type="image/webp"
+              />
+              <img
+                src={b.image ?? DEFAULT_BLOG_IMAGE}
+                alt=""
+                className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
             {/* deep cinematic gradient overlay */}
             <div
               className="absolute inset-0"

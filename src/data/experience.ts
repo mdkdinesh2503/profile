@@ -111,7 +111,7 @@ export const experience: ExperienceItem[] = [
   {
     category: "Professional Experience",
     company: "Aretedge Innovations Private Limited",
-    logo: "./experience/Aretedge.jpg",
+    logo: "./experience/Aretedge.webp",
     title: "Associate Software Developer",
     location: "Hyderabad, Telangana, India · On-site",
     domains: [
@@ -187,7 +187,7 @@ export const experience: ExperienceItem[] = [
   {
     category: "Professional Experience",
     company: "Aspire Systems",
-    logo: "./experience/Aspire_Systems.jpg",
+    logo: "./experience/Aspire_Systems.webp",
     title: "Software Engineering Intern",
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: [
@@ -219,7 +219,7 @@ export const experience: ExperienceItem[] = [
   {
     category: "Training Experience",
     company: "Aspire Systems",
-    logo: "./experience/Aspire_Systems.jpg",
+    logo: "./experience/Aspire_Systems.webp",
     title: "Graduate Trainee",
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: [
