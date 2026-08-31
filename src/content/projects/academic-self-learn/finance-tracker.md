@@ -9,7 +9,7 @@ demoStack: "Next.js, TypeScript, PostgreSQL"
 originalStack: "Next.js, TypeScript, PostgreSQL (NeonDB), Zustand, Tailwind CSS"
 tags: ["Next.js", "PostgreSQL", "Tailwind CSS"]
 image: "/default/Blog.svg"
-demoUrl: "https://mdkdinesh2503.github.io/finance-tracker/"
+demoUrl: "https://mdk-expense.vercel.app/"
 repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
 ---
 
@@ -92,5 +92,5 @@ Engineered a personal finance and wealth management platform designed to provide
 
 ## 🔗 Demos & Source Code
 
-- **Live Application**: [mdkdinesh2503.github.io/finance-tracker](https://mdkdinesh2503.github.io/finance-tracker/)
+- **Live Application**: [mdk-expense.vercel.app/](https://mdk-expense.vercel.app/)
 - **Source Repository**: [github.com/mdkdinesh2503/finance-tracker](https://github.com/mdkdinesh2503/finance-tracker)

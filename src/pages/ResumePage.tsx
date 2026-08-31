@@ -4,6 +4,7 @@ import { Reveal } from "@/shared/motion/Reveal";
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { profile } from "@/data/profile";
 import { headings } from "@/data/headings";
+import { trackEvent } from "@/lib/analytics";
 import {
   Download,
   ExternalLink,
@@ -177,6 +178,7 @@ export function ResumePage() {
   const handleDownload = () => {
     setDownloadToast(true);
     setTimeout(() => setDownloadToast(false), 3000);
+    trackEvent("resume_click", { destination: profile.resume.pdfSrc });
   };
 
   const handleReload = () => setIframeKey((k) => k + 1);

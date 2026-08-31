@@ -2,9 +2,8 @@ import { Suspense, lazy, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { SiteLayout } from "@/shared/layout/SiteLayout";
-import { SiteHeader } from "@/shared/layout/SiteHeader";
-import { SiteFooter } from "@/shared/layout/SiteFooter";
 import { PageTransition } from "@/shared/motion/PageTransition";
+import { useAnalytics } from "@/shared/seo/useAnalytics";
 
 const HomePage = lazy(() => import("@/pages/HomePage").then((m) => ({ default: m.HomePage })));
 const ProjectsPage = lazy(() => import("@/pages/ProjectsPage").then((m) => ({ default: m.ProjectsPage })));
@@ -28,6 +27,9 @@ function PageFallback() {
 
 export function AnimatedRoutes() {
   const location = useLocation();
+
+  // Initialize GA4 and track page views on each route change
+  useAnalytics();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });

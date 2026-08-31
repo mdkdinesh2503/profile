@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Container } from "@/shared/ui/Container";
 import { profile } from "@/data/profile";
+import { trackEvent } from "@/lib/analytics";
 import {
   Layers,
   Briefcase,
@@ -196,7 +197,8 @@ export function SiteHeader() {
               href={profile.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub Profile"
+              aria-label="View Dinesh Kumar's GitHub"
+              onClick={() => trackEvent("github_click", { section: "header", destination: profile.links.github })}
               className="flex h-8 w-8 items-center justify-center rounded-xl text-muted-2 hover:text-black hover:bg-white hover:border hover:border-white"
             >
               <Github size={15} />
@@ -205,7 +207,8 @@ export function SiteHeader() {
               href={profile.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
+              aria-label="View Dinesh Kumar's LinkedIn"
+              onClick={() => trackEvent("linkedin_click", { section: "header", destination: profile.links.linkedin })}
               className="flex h-8 w-8 items-center justify-center rounded-xl text-muted-2 hover:text-white hover:bg-primary hover:border hover:border-primary"
             >
               <Linkedin size={15} />

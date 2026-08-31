@@ -247,8 +247,9 @@ export function NotFoundPage() {
     <section className="relative flex h-dvh min-h-dvh max-h-dvh w-full flex-col items-center justify-center overflow-hidden px-4 py-2 select-none">
       <PageMeta
         title="Page Not Found"
-        description="This page doesn't exist. Back to Dinesh Kumar M's profile."
+        description="This page doesn't exist. Back to Dinesh Kumar M's software engineering portfolio."
         path="/404"
+        noindex={true}
       />
 
       <style>{`

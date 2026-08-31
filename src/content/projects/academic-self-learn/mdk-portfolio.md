@@ -9,7 +9,7 @@ demoStack: "Next.js, React, TypeScript"
 originalStack: "Next.js, React, TypeScript, Tailwind CSS, Framer Motion"
 tags: ["Frontend", "Next.js", "React","Tailwind CSS"]
 image: "/default/Blog.svg"
-demoUrl: "https://mdkdinesh2503.netlify.app/"
+demoUrl: "https://mdkdinesh2503.netlify.app"
 repoUrl: "https://github.com/mdkdinesh2503/profile"
 ---
 

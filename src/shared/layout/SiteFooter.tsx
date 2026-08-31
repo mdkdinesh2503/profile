@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/shared/ui/Container";
 import { profile } from "@/data/profile";
 import { cx } from "@/shared/ui/cx";
+import { trackEvent } from "@/lib/analytics";
 
 const socialLinks = [
   {
@@ -11,12 +12,14 @@ const socialLinks = [
     label: "GitHub",
     icon: Github,
     hoverBg: "hover:bg-white hover:border-white/20 hover:text-black",
+    event: "github_click",
   },
   {
     href: profile.links.linkedin,
     label: "LinkedIn",
     icon: Linkedin,
     hoverBg: "hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/40 hover:text-[#38bdf8]",
+    event: "linkedin_click",
   },
 ].filter((link) => link.href);
 
@@ -100,13 +103,14 @@ export function SiteFooter() {
           </Link>
 
           <div className="flex items-center gap-2">
-            {socialLinks.map(({ href, label, icon: Icon, hoverBg }) => (
+            {socialLinks.map(({ href, label, icon: Icon, hoverBg, event }) => (
               <motion.a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
+                onClick={() => trackEvent(event, { section: "footer", destination: href })}
                 className={cx(
                   "flex h-10 w-10 items-center justify-center rounded-xl border border-line bg-white/[0.04] text-muted-1 transition-all duration-200",
                   hoverBg
