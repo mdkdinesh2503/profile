@@ -267,7 +267,7 @@ function SkillsPillars() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-[10px] font-semibold text-primary">
+            <div className="flex items-center gap-2 rounded-full border border-primary px-3 py-1 text-[10px] font-semibold text-primary">
               <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
               <span>{activeGroup.items.length} Tech Pillars</span>
             </div>

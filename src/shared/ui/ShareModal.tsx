@@ -10,6 +10,7 @@ import {
   Send,
   X,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cx } from "@/shared/ui/cx";
@@ -78,36 +79,31 @@ export function ShareModal({
     {
       name: "WhatsApp",
       icon: MessageCircle,
-      bg: "hover:bg-[#25D366]/20 hover:border-[#25D366]/50 hover:text-[#25D366]",
-      textColor: "text-[#25D366]",
+      gradient: "from-[#25D366]/20 to-[#128C7E]/10 hover:from-[#25D366]/30 hover:to-[#128C7E]/20 text-[#25D366] border-[#25D366]/30",
       href: `https://api.whatsapp.com/send?text=${encodedTitle}%20-%20${encodedUrl}`,
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
-      bg: "hover:bg-[#0A66C2]/20 hover:border-[#0A66C2]/50 hover:text-[#38bdf8]",
-      textColor: "text-[#0A66C2]",
+      gradient: "from-[#0A66C2]/20 to-[#0077B5]/10 hover:from-[#0A66C2]/30 hover:to-[#0077B5]/20 text-[#38bdf8] border-[#0A66C2]/30",
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
     },
     {
       name: "Telegram",
       icon: Send,
-      bg: "hover:bg-[#229ED9]/20 hover:border-[#229ED9]/50 hover:text-[#229ED9]",
-      textColor: "text-[#229ED9]",
+      gradient: "from-[#229ED9]/20 to-[#0088cc]/10 hover:from-[#229ED9]/30 hover:to-[#0088cc]/20 text-[#229ED9] border-[#229ED9]/30",
       href: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
     },
     {
-      name: "X",
+      name: "X (Twitter)",
       icon: Twitter,
-      bg: "hover:bg-sky-500/20 hover:border-sky-500/50 hover:text-sky-400",
-      textColor: "text-sky-400",
+      gradient: "from-sky-500/20 to-blue-600/10 hover:from-sky-500/30 hover:to-blue-600/20 text-sky-400 border-sky-500/30",
       href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
     },
     {
       name: "Email",
       icon: Mail,
-      bg: "hover:bg-amber-500/20 hover:border-amber-500/50 hover:text-amber-400",
-      textColor: "text-amber-400",
+      gradient: "from-amber-500/20 to-orange-600/10 hover:from-amber-500/30 hover:to-orange-600/20 text-amber-400 border-amber-500/30",
       href: `mailto:?subject=${encodedTitle}&body=${encodedSummary}%0A%0A${encodedUrl}`,
     },
   ];
@@ -115,8 +111,8 @@ export function ShareModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop with dark blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -125,112 +121,131 @@ export function ShareModal({
             className="fixed inset-0 bg-black/80 backdrop-blur-md"
           />
 
-          {/* Modal / Bottom Sheet Container */}
+          {/* Modal Container - Fixed with NO Scroll */}
           <motion.div
-            initial={{ y: "100%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "100%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border-t sm:border border-primary/30 bg-[#070d1e] p-5 sm:p-7 shadow-2xl shadow-primary/25 z-10"
+            initial={{ opacity: 0, scale: 0.94, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 10 }}
+            transition={{ type: "spring", duration: 0.35, bounce: 0 }}
+            className="relative w-full max-w-md rounded-2xl border border-line bg-[#060b18] p-5 shadow-[0_0_50px_-10px_rgba(56,189,248,0.25),0_25px_50px_-12px_rgba(0,0,0,0.9)] overflow-hidden z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Drag Indicator for mobile bottom sheet */}
-            <div className="mx-auto -mt-2 mb-3 h-1 w-10 rounded-full bg-white/20 sm:hidden" />
+            {/* Top Border Accent Line */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-80" />
 
-            {/* Top Glow Ambient */}
+            {/* Ambient Background Glows */}
             <div
-              className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 h-44 w-72 rounded-full blur-3xl opacity-30 bg-primary"
+              className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 h-36 w-60 rounded-full blur-3xl opacity-30 bg-primary"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-40 rounded-full blur-2xl opacity-20 bg-primary"
               aria-hidden
             />
 
             {/* Header */}
-            <div className="relative flex items-center justify-between pb-3 sm:pb-4 border-b border-white/10">
+            <div className="relative flex items-center justify-between pb-3.5 border-b border-line">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl bg-primary/15 border border-primary/30 text-primary">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary text-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
                   <Share2 className="h-4 w-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm sm:text-base font-bold text-white">Share</h3>
-                  <p className="text-[11px] sm:text-xs text-white/50">Send via your favorite platform</p>
+                  <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
+                    Share
+                  </h3>
+                  <p className="text-[11px] text-ink-light">Distribute or send via your favorite platform</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl p-1.5 sm:p-2 text-white/60 hover:bg-white/10 hover:text-white transition-colors"
+                className="rounded-xl p-1.5 text-white/50 hover:text-primary transition-colors cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Title / Target Preview */}
-            <div className="my-3 sm:my-4 rounded-xl bg-white/[0.03] border border-white/8 p-2.5 sm:p-3 text-xs text-white/80 line-clamp-2">
-              <span className="font-semibold text-primary">Preview: </span>
-              <span className="break-words">{title}</span>
+            {/* Content Preview Box */}
+            <div className="my-3 rounded-xl bg-white/[0.03] border border-line px-3 py-2.5 relative overflow-hidden">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-primary flex items-center gap-1 mb-0.5">
+                <Sparkles className="h-3 w-3" /> Preview Content
+              </div>
+              <p className="text-xs font-medium text-white/90 truncate">
+                {title}
+              </p>
             </div>
 
-            {/* Share Grid / Quick Channels (Responsive 5-col on desktop, flexible wrap on mobile) */}
-            <div className="grid grid-cols-5 gap-2 sm:gap-2.5 my-4 sm:my-5">
-              {channels.map((channel) => (
-                <a
-                  key={channel.name}
-                  href={channel.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={onClose}
+            {/* Platform Channels */}
+            <div className="my-3">
+              <div className="grid grid-cols-5 gap-2">
+                {channels.map((channel) => (
+                  <a
+                    key={channel.name}
+                    href={channel.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onClose}
+                    className={cx(
+                      "group flex flex-col items-center justify-center gap-1.5 rounded-xl border bg-gradient-to-b py-2.5 px-1 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95",
+                      channel.gradient
+                    )}
+                    title={`Share on ${channel.name}`}
+                  >
+                    <div className="p-1.5 rounded-lg bg-black/25 group-hover:scale-110 transition-transform">
+                      <channel.icon className="h-4 w-4 shrink-0" />
+                    </div>
+                    <span className="text-[10px] font-medium truncate w-full text-center text-white/80 group-hover:text-white">
+                      {channel.name}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Copy Link Input Bar */}
+            <div className="mt-3.5 space-y-1">
+              <div className="flex items-center gap-1.5 rounded-xl border border-line p-1.5 pl-3 transition-colors">
+                <input
+                  type="text"
+                  readOnly
+                  value={shareUrl}
+                  className="w-full bg-transparent text-xs text-white/80 outline-none select-all font-mono truncate"
+                />
+                <button
+                  type="button"
+                  onClick={copyToClipboard}
                   className={cx(
-                    "flex flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.03] p-2.5 sm:p-3 text-white/70 transition-all duration-200 hover:scale-105 active:scale-95",
-                    channel.bg
+                    "flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer",
+                    copied
+                      ? "bg-primary text-white shadow-md"
+                      : "bg-white/10 text-white hover:bg-primary hover:text-white active:scale-95"
                   )}
-                  title={`Share on ${channel.name}`}
                 >
-                  <channel.icon className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
-                  <span className="text-[9.5px] sm:text-[11px] font-medium truncate w-full text-center">
-                    {channel.name}
-                  </span>
-                </a>
-              ))}
+                  {copied ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-white stroke-[2.5]" />
+                      <span>Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-3.5 w-3.5" />
+                      <span>Copy Link</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
-            {/* Copy Link Input Bar (Responsive flex) */}
-            <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 rounded-2xl border border-white/12 bg-black/40 p-1.5 sm:pl-3.5">
-              <input
-                type="text"
-                readOnly
-                value={shareUrl}
-                className="w-full bg-transparent px-2 py-1 sm:py-0 text-xs text-white/70 outline-none select-all font-mono truncate"
-              />
-              <button
-                type="button"
-                onClick={copyToClipboard}
-                className={cx(
-                  "flex shrink-0 items-center justify-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold transition-all duration-200",
-                  copied
-                    ? "bg-primary text-white shadow-lg shadow-primary/40"
-                    : "bg-white/10 text-white hover:bg-primary hover:text-white active:bg-primary/90"
-                )}
-              >
-                {copied ? (
-                  <>
-                    <Check className="h-3.5 w-3.5 text-white" /> Copied!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5" /> Copy Link
-                  </>
-                )}
-              </button>
-            </div>
-
-            {/* Native Mobile Share Button (if supported on device) */}
+            {/* Native Mobile / System Share Option */}
             {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
               <button
                 type="button"
                 onClick={handleNativeShare}
-                className="mt-3 sm:mt-3.5 w-full flex items-center justify-center gap-2 rounded-xl sm:rounded-2xl border border-primary/30 bg-primary/10 py-2.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary hover:text-white transition-all duration-200"
+                className="mt-3 w-full flex items-center justify-center gap-2 rounded-xl border border-primary py-2 text-xs font-semibold text-primary hover:bg-primary hover:text-white hover:border-transparent transition-all duration-200 cursor-pointer"
               >
-                <Sparkles className="h-3.5 w-3.5" /> More System Apps
+                <ExternalLink className="h-3.5 w-3.5" />
+                <span>More Share Options</span>
               </button>
             )}
           </motion.div>

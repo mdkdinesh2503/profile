@@ -117,72 +117,6 @@ function ProgressRing({ progress }: { progress: number }) {
   );
 }
 
-/* ── Responsive Floating Toolbar ── */
-function FloatingToolbar({
-  progress,
-  onShare,
-}: {
-  progress: number;
-  onShare: () => void;
-}) {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const fn = () => setShow(window.scrollY > 250);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  const btnStyle = {
-    background: "rgba(8,14,30,0.85)",
-    border: "1px solid rgba(61,142,255,0.22)",
-    backdropFilter: "blur(14px)",
-  };
-
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 30, scale: 0.9 }}
-          transition={{ duration: 0.25 }}
-          className="fixed bottom-5 right-4 z-40 flex flex-row items-center gap-2 rounded-full p-1.5 shadow-2xl sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 sm:flex-col sm:gap-2.5 sm:p-0 sm:rounded-none sm:shadow-none"
-          style={{
-            background: "rgba(6,10,24,0.75)",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(61,142,255,0.2)",
-          }}
-        >
-          <div className="rounded-full p-0.5 sm:p-1 shadow-lg shadow-black/40" style={btnStyle}>
-            <ProgressRing progress={progress} />
-          </div>
-          <button
-            type="button"
-            onClick={onShare}
-            aria-label="Share post"
-            title="Share to WhatsApp, LinkedIn, etc."
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-105 shadow-lg shadow-black/40 text-white/80 hover:text-primary"
-            style={btnStyle}
-          >
-            <Share2 className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={scrollTop}
-            aria-label="Scroll to top"
-            title="Back to top"
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-white/80 hover:text-white transition-all hover:scale-105 shadow-lg shadow-black/40"
-            style={btnStyle}
-          >
-            <ArrowUp className="h-3.5 w-3.5" />
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 /* ── Lightbox Image Modal (Mobile Optimized) ── */
 function ImageLightbox({
   src,
@@ -215,10 +149,10 @@ function ImageLightbox({
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative max-h-[94vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-primary/30 bg-[#060a16] shadow-2xl shadow-primary/20 flex flex-col"
+          className="relative max-h-[94vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-[#060a16] shadow-2xl flex flex-col"
         >
           {/* Top Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-3.5 py-2.5 text-xs text-white/70">
+          <div className="flex items-center justify-between border-b border-line bg-white/5 px-3.5 py-2.5 text-xs text-white/70">
             <span className="flex items-center gap-1.5 font-medium truncate max-w-[200px] sm:max-w-md">
               <Maximize2 className="h-3.5 w-3.5 text-primary shrink-0" />
               <span className="truncate">{alt || "Full Resolution View"}</span>
@@ -228,7 +162,7 @@ function ImageLightbox({
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 rounded-lg bg-white/5 px-2.5 py-1 text-white/70 hover:bg-primary/20 hover:text-primary transition-colors text-[11px] sm:text-xs"
+                className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-white/70 hover:text-primary transition-colors text-[11px] sm:text-xs"
               >
                 <Download className="h-3 w-3" />
                 <span className="hidden sm:inline">Open Original</span>
@@ -237,7 +171,7 @@ function ImageLightbox({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-lg p-1 text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                className="rounded-lg p-1 text-white/70 hover:text-primary transition-colors"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -557,9 +491,6 @@ export function BlogDetailPage() {
       {/* Top Reading Progress Bar */}
       <ReadingProgressBar progress={scrollProgress} />
 
-      {/* Floating Side Toolbar (Bottom sheet style on mobile, vertical on desktop) */}
-      <FloatingToolbar progress={scrollProgress} onShare={() => setShareOpen(true)} />
-
       {/* Share Modal for WhatsApp, LinkedIn, Telegram, X, Email & Copy */}
       <ShareModal
         isOpen={shareOpen}
@@ -578,11 +509,11 @@ export function BlogDetailPage() {
       )}
 
       {/* ══ ARTICLE (RESPONSIVE SINGLE-COLUMN LAYOUT) ═════════ */}
-      <article className="pb-24 pt-4 sm:pt-8 md:pt-12">
+      <article className="pb-14 pt-4 sm:pt-8 md:pt-12">
         <Container className="max-w-4xl px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb + Share Button */}
           <Reveal>
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 sm:pb-6 border-b border-white/8">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 sm:pb-6 border-b border-muted-1">
               <nav aria-label="Breadcrumb" className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
                 <Link
                   to="/blogs"
@@ -601,7 +532,7 @@ export function BlogDetailPage() {
                 onClick={() => setShareOpen(true)}
                 className={cx(
                   buttonStyles.base,
-                  "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 transition-all duration-200 border bg-white/5 text-white/80 border-white/10 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                  "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 transition-all duration-200 border text-muted-2 border-muted-1 hover:border-primary hover:text-primary"
                 )}
               >
                 <Share2 className="h-3.5 w-3.5" />
@@ -613,14 +544,14 @@ export function BlogDetailPage() {
           {/* Tags */}
           <Reveal delay={0.03}>
             <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <span className="flex items-center gap-1 rounded-lg border border-primary/30 bg-primary/10 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary">
+              <span className="flex items-center gap-1 rounded-lg border border-primary px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary">
                 <Sparkles className="h-3 w-3" /> Technical Story
               </span>
               {blog.tags.map((t) => (
                 <Link
                   key={t}
                   to={`/blogs?tag=${t}`}
-                  className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white/70 hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-colors"
+                  className="flex items-center gap-1 rounded-lg border border-muted-1 bg-white/5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium text-muted-1 hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-colors"
                 >
                   <Tag className="h-3 w-3 text-primary/70" />
                   {t}
@@ -659,7 +590,7 @@ export function BlogDetailPage() {
           {/* Featured Visual Image (Responsive Container) */}
           {blog.image && (
             <Reveal delay={0.09}>
-              <div className="mt-6 sm:mt-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-primary/25 bg-[#060a16] shadow-2xl shadow-primary/10 group relative">
+              <div className="mt-6 sm:mt-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-line bg-[#060a16] shadow-2xl shadow-primary/10 group relative">
                 <div
                   className="relative cursor-zoom-in flex items-center justify-center p-2 sm:p-4 bg-gradient-to-b from-primary/5 to-transparent"
                   onClick={() => setLightboxImg({ src: blog.image!, alt: blog.title })}
@@ -671,12 +602,12 @@ export function BlogDetailPage() {
                     loading="eager"
                   />
                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/80 px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-white backdrop-blur-md border border-white/20 shadow-xl">
+                    <span className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/80 px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-white backdrop-blur-md border border-muted-1 shadow-xl">
                       <ZoomIn className="h-3.5 w-3.5 text-primary" /> Click to zoom
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t border-white/8 bg-white/[0.02] px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white/50">
+                <div className="flex items-center justify-between border-t border-line px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white/50">
                   <span className="flex items-center gap-1.5">
                     <Maximize2 className="h-3.5 w-3.5 text-primary" /> Visual Post / Diagram
                   </span>
@@ -701,7 +632,7 @@ export function BlogDetailPage() {
                   }}
                 >
                   <div className="flex items-start gap-3 sm:gap-3.5">
-                    <div className="mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-xl bg-primary/20 text-primary border border-primary/30">
+                    <div className="mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-xl text-primary border border-primary">
                       <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </div>
                     <div>
@@ -734,36 +665,43 @@ export function BlogDetailPage() {
               </div>
             </Reveal>
 
-            {/* Bottom Post Navigation & Engagement CTA */}
+            {/* Bottom Post Navigation & Engagement CTA (2-column layout) */}
             <Reveal delay={0.08}>
               <div
-                className="mt-8 sm:mt-12 rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden shadow-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(61,142,255,0.12) 0%, rgba(37,99,235,0.06) 50%, rgba(56,189,248,0.04) 100%)",
-                  border: "1px solid rgba(61,142,255,0.25)",
-                }}
+                className="mt-8 sm:mt-10 rounded-2xl p-5 sm:p-6 sm:px-7 relative overflow-hidden shadow-xl border border-line bg-[#060b18]/85 backdrop-blur-md"
               >
-                <div className="mx-auto mb-3.5 sm:mb-4 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-primary/20 text-primary border border-primary/35 shadow-lg shadow-primary/20">
-                  <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white">Thanks for reading!</h2>
-                <p className="mt-2 text-xs sm:text-sm text-white/60 max-w-md mx-auto">
-                  Found this insightful? Explore more engineering reflections, deep-dives, and system designs.
-                </p>
-                <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3.5">
-                  <ButtonLink to="/blogs" variant="shine" size="lg" className="group justify-center">
-                    <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-                    All Posts
-                  </ButtonLink>
-                  <button
-                    type="button"
-                    onClick={() => setShareOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 transition-all hover:bg-primary/15 hover:text-primary hover:border-primary/30"
-                  >
-                    <Share2 className="h-4 w-4" />
-                    Share Post
-                  </button>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+                  {/* Column 1: Info */}
+                  <div className="flex items-center gap-3.5 text-center sm:text-left">
+                    <div className="hidden sm:flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-primary border border-primary bg-primary/5 shadow-sm">
+                      <Sparkles className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                        <Sparkles className="h-4 w-4 text-primary sm:hidden inline" />
+                        Thanks for reading!
+                      </h2>
+                      <p className="text-xs sm:text-sm text-ink-light mt-0.5">
+                        Enjoyed this post? Explore more technical articles or share it.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Column 2: Actions */}
+                  <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-center">
+                    <ButtonLink to="/blogs" variant="shine" size="md" className="group justify-center text-xs sm:text-sm py-2 px-4">
+                      <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+                      All Posts
+                    </ButtonLink>
+                    <button
+                      type="button"
+                      onClick={() => setShareOpen(true)}
+                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-muted px-4 py-2 text-xs sm:text-sm font-semibold text-white/80 transition-all hover:text-primary hover:border-primary cursor-pointer bg-white/5"
+                    >
+                      <Share2 className="h-4 w-4" />
+                      Share Post
+                    </button>
+                  </div>
                 </div>
               </div>
             </Reveal>

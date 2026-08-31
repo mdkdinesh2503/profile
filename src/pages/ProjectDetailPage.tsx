@@ -123,105 +123,6 @@ function ProgressRing({ progress }: { progress: number }) {
   );
 }
 
-/* ── Responsive Floating Toolbar ── */
-function FloatingToolbar({
-  progress,
-  onShare,
-  demoUrl,
-  repoUrl,
-}: {
-  progress: number;
-  onShare: () => void;
-  demoUrl?: string;
-  repoUrl?: string;
-}) {
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    const fn = () => setShow(window.scrollY > 250);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-  const btnStyle = {
-    background: "rgba(8,14,30,0.85)",
-    border: "1px solid rgba(61,142,255,0.22)",
-    backdropFilter: "blur(14px)",
-  };
-
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 30, scale: 0.9 }}
-          transition={{ duration: 0.25 }}
-          className="fixed bottom-5 right-4 z-40 flex flex-row items-center gap-2 rounded-full p-1.5 shadow-2xl sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 sm:flex-col sm:gap-2.5 sm:p-0 sm:rounded-none sm:shadow-none"
-          style={{
-            background: "rgba(6,10,24,0.75)",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(61,142,255,0.2)",
-          }}
-        >
-          <div className="rounded-full p-0.5 sm:p-1 shadow-lg shadow-black/40" style={btnStyle}>
-            <ProgressRing progress={progress} />
-          </div>
-
-          {demoUrl && (
-            <a
-              href={demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Live Demo"
-              aria-label="Live Demo"
-              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-white/80 hover:text-primary transition-all hover:scale-105 shadow-lg shadow-black/40"
-              style={btnStyle}
-            >
-              <Globe className="h-3.5 w-3.5" />
-            </a>
-          )}
-
-          {repoUrl && (
-            <a
-              href={repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Source Code"
-              aria-label="Source Code"
-              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-white/80 hover:text-primary transition-all hover:scale-105 shadow-lg shadow-black/40"
-              style={btnStyle}
-            >
-              <Github className="h-3.5 w-3.5" />
-            </a>
-          )}
-
-          <button
-            type="button"
-            onClick={onShare}
-            aria-label="Share project"
-            title="Share to WhatsApp, LinkedIn, etc."
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full transition-all duration-200 hover:scale-105 shadow-lg shadow-black/40 text-white/80 hover:text-primary"
-            style={btnStyle}
-          >
-            <Share2 className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={scrollTop}
-            aria-label="Scroll to top"
-            title="Back to top"
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-white/80 hover:text-white transition-all hover:scale-105 shadow-lg shadow-black/40"
-            style={btnStyle}
-          >
-            <ArrowUp className="h-3.5 w-3.5" />
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
 /* ── Lightbox Image Modal (Mobile Optimized) ── */
 function ImageLightbox({
   src,
@@ -254,10 +155,10 @@ function ImageLightbox({
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative max-h-[94vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-primary/30 bg-[#060a16] shadow-2xl shadow-primary/20 flex flex-col"
+          className="relative max-h-[94vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-[#060a16] shadow-2xl flex flex-col"
         >
           {/* Top Bar */}
-          <div className="flex items-center justify-between border-b border-white/10 bg-white/5 px-3.5 py-2.5 text-xs text-white/70">
+          <div className="flex items-center justify-between border-b border-line px-3.5 py-2.5 text-xs text-white/70">
             <span className="flex items-center gap-1.5 font-medium truncate max-w-[200px] sm:max-w-md">
               <Maximize2 className="h-3.5 w-3.5 text-primary shrink-0" />
               <span className="truncate">{alt || "Full Resolution View"}</span>
@@ -267,7 +168,7 @@ function ImageLightbox({
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 rounded-lg bg-white/5 px-2.5 py-1 text-white/70 hover:bg-primary/20 hover:text-primary transition-colors text-[11px] sm:text-xs"
+                className="flex items-center gap-1 rounded-lg px-2.5 py-1 text-white/70 hover:text-primary transition-colors text-[11px] sm:text-xs"
               >
                 <Download className="h-3 w-3" />
                 <span className="hidden sm:inline">Open Original</span>
@@ -276,7 +177,7 @@ function ImageLightbox({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-lg p-1 text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+                className="rounded-lg p-1 text-white/70 hover:text-primary transition-colors"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -405,14 +306,14 @@ function ProjectContent({
               {...rest}
               target={isExt ? "_blank" : undefined}
               rel={isExt ? "noopener noreferrer" : undefined}
-              className="font-medium text-primary underline underline-offset-2 decoration-primary/40 hover:decoration-primary transition-colors break-words"
+              className="font-medium text-primary underline underline-offset-2 decoration-primary hover:decoration-primary transition-colors break-words"
             />
           );
         },
         img: ({ src, alt }) => {
           if (!src) return null;
           return (
-            <div className="my-6 sm:my-8 overflow-hidden rounded-2xl border border-primary/25 bg-[#060a16] shadow-xl group relative">
+            <div className="my-6 sm:my-8 overflow-hidden rounded-2xl border border-primary bg-[#060a16] shadow-xl group relative">
               <div className="relative cursor-zoom-in" onClick={() => onImageClick(src, alt)}>
                 <img
                   src={src}
@@ -469,7 +370,7 @@ function ProjectContent({
           if (!className)
             return (
               <code
-                className="rounded-md bg-primary/12 border border-primary/25 px-1.5 py-0.5 text-[0.85em] font-mono font-medium text-primary break-words"
+                className="rounded-md bg-primary/12 px-1.5 py-0.5 text-[0.85em] font-mono font-medium text-primary break-words"
                 {...props}
               >
                 {children}
@@ -504,12 +405,12 @@ function ProjectContent({
           </div>
         ),
         table: ({ children }) => (
-          <div className="my-5 sm:my-6 overflow-x-auto rounded-xl border border-primary/25 bg-black/40">
+          <div className="my-5 sm:my-6 overflow-x-auto rounded-xl border border-primary bg-black/40">
             <table className="w-full border-collapse text-xs sm:text-sm">{children}</table>
           </div>
         ),
         thead: ({ children }) => (
-          <thead className="bg-primary/15 border-b border-primary/25">{children}</thead>
+          <thead className="bg-primary/15 border-b border-primary">{children}</thead>
         ),
         th: ({ children }) => (
           <th className="px-3 sm:px-4 py-2.5 sm:py-3 text-left text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary">
@@ -520,7 +421,7 @@ function ProjectContent({
           <td className="px-3 sm:px-4 py-2.5 sm:py-3 text-white/75 border-b border-white/5">{children}</td>
         ),
         strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-        em: ({ children }) => <em className="italic text-primary/90">{children}</em>,
+        em: ({ children }) => <em className="italic text-primary">{children}</em>,
       }}
     >
       {content}
@@ -598,14 +499,6 @@ export function ProjectDetailPage() {
       {/* Top Reading Progress Bar */}
       <ReadingProgressBar progress={scrollProgress} />
 
-      {/* Floating Side Toolbar (Bottom dock style on mobile, side dock on desktop) */}
-      <FloatingToolbar
-        progress={scrollProgress}
-        onShare={() => setShareOpen(true)}
-        demoUrl={project.demoUrl}
-        repoUrl={project.repoUrl}
-      />
-
       {/* Share Modal for WhatsApp, LinkedIn, Telegram, X, Email & Copy */}
       <ShareModal
         isOpen={shareOpen}
@@ -648,7 +541,7 @@ export function ProjectDetailPage() {
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-primary/30 bg-primary/10 px-2.5 sm:px-3.5 py-1.5 text-xs font-bold text-primary transition-all duration-200 hover:bg-primary hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-primary px-2.5 sm:px-3.5 py-1.5 text-xs font-bold text-primary transition-all duration-200 hover:bg-primary hover:text-white"
                   >
                     <Globe className="h-3.5 w-3.5" />
                     <span>Demo</span>
@@ -671,7 +564,7 @@ export function ProjectDetailPage() {
                   onClick={() => setShareOpen(true)}
                   className={cx(
                     buttonStyles.base,
-                    "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 transition-all duration-200 border bg-white/5 text-white/80 border-white/10 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                    "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 transition-all duration-200 border text-muted border-muted hover:border-primary hover:text-primary"
                   )}
                 >
                   <Share2 className="h-3.5 w-3.5" />
@@ -684,7 +577,7 @@ export function ProjectDetailPage() {
           {/* Classification & Metadata Badges */}
           <Reveal delay={0.03}>
             <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-1.5 sm:gap-2.5">
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-primary px-2.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary">
                 {isLearning ? (
                   <GraduationCap className="h-3.5 w-3.5" />
                 ) : (
@@ -694,14 +587,14 @@ export function ProjectDetailPage() {
               </span>
 
               {project.role && (
-                <span className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white/70">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-muted px-2.5 py-1 text-[11px] sm:text-xs font-medium text-muted">
                   <Briefcase className="h-3.5 w-3.5 text-primary/80" />
                   {project.role}
                 </span>
               )}
 
               {(project.timeline || project.year) && (
-                <span className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] sm:text-xs font-medium text-white/70">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-muted px-2.5 py-1 text-[11px] sm:text-xs font-medium text-muted">
                   <Calendar className="h-3.5 w-3.5 text-primary/80" />
                   {project.timeline ?? project.year}
                 </span>
@@ -729,11 +622,11 @@ export function ProjectDetailPage() {
           {project.tags?.length > 0 && (
             <Reveal delay={0.07}>
               <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                <Tag className="h-3.5 w-3.5 text-primary/60 mr-1 shrink-0" />
+                <Tag className="h-3.5 w-3.5 text-primary mr-1 shrink-0" />
                 {project.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-lg border border-primary/20 bg-primary/8 px-2 sm:px-2.5 py-0.5 text-[11px] sm:text-xs font-semibold text-primary"
+                    className="rounded-lg border border-primary px-2 sm:px-2.5 py-0.5 text-[11px] sm:text-xs font-semibold text-primary"
                   >
                     {t}
                   </span>
@@ -745,7 +638,7 @@ export function ProjectDetailPage() {
           {/* Featured Cover Visual */}
           {project.image && (
             <Reveal delay={0.09}>
-              <div className="mt-6 sm:mt-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-primary/25 bg-[#060a16] shadow-2xl shadow-primary/10 group relative">
+              <div className="mt-6 sm:mt-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-line bg-[#060a16] shadow-2xl group relative">
                 <div
                   className="relative cursor-zoom-in flex items-center justify-center p-2 sm:p-4 bg-gradient-to-b from-primary/5 to-transparent"
                   onClick={() => setLightboxImg({ src: project.image!, alt: project.name })}
@@ -762,7 +655,7 @@ export function ProjectDetailPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t border-white/8 bg-white/[0.02] px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white/50">
+                <div className="flex items-center justify-between border-t border-line bg-white/[0.02] px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white/50">
                   <span className="flex items-center gap-1.5">
                     <Maximize2 className="h-3.5 w-3.5 text-primary" /> Project Cover & Visuals
                   </span>
@@ -793,7 +686,7 @@ export function ProjectDetailPage() {
                     {(originalTechs.length > 0 ? originalTechs : project.tags).slice(0, 8).map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-md border border-primary/25 bg-primary/10 px-2 py-0.5 text-[11px] sm:text-xs font-medium text-primary"
+                        className="rounded-md border border-primary px-2 py-0.5 text-[11px] sm:text-xs font-medium text-primary"
                       >
                         {tech}
                       </span>
@@ -835,12 +728,12 @@ export function ProjectDetailPage() {
 
               {/* Demo stack row if present */}
               {demoTechs.length > 0 && (
-                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/5 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span className="text-[11px] sm:text-xs font-semibold text-white/60">Demo Implementation:</span>
+                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-primary flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span className="text-[11px] sm:text-xs font-semibold text-primary">Demo Implementation:</span>
                   {demoTechs.map((t) => (
                     <span
                       key={t}
-                      className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] sm:text-xs text-white"
+                      className="rounded-md border border-muted px-2 py-0.5 text-[11px] sm:text-xs text-muted"
                     >
                       {t}
                     </span>
@@ -865,7 +758,7 @@ export function ProjectDetailPage() {
                   }}
                 >
                   <div className="flex items-start gap-3 sm:gap-3.5">
-                    <div className="mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-xl bg-primary/20 text-primary border border-primary/30">
+                    <div className="mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-xl text-primary border border-primary">
                       <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </div>
                     <div>
@@ -898,61 +791,68 @@ export function ProjectDetailPage() {
               </div>
             </Reveal>
 
-            {/* Bottom Project Navigation & Action CTA */}
+            {/* Bottom Project Navigation & Action CTA (2-column layout) */}
             <Reveal delay={0.08}>
               <div
-                className="mt-8 sm:mt-12 rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden shadow-2xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(61,142,255,0.12) 0%, rgba(37,99,235,0.06) 50%, rgba(56,189,248,0.04) 100%)",
-                  border: "1px solid rgba(61,142,255,0.25)",
-                }}
+                className="mt-8 sm:mt-10 rounded-2xl p-5 sm:p-6 sm:px-7 relative overflow-hidden shadow-xl border border-line bg-[#060b18]/85 backdrop-blur-md"
               >
-                <div className="mx-auto mb-3.5 sm:mb-4 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-primary/20 text-primary border border-primary/35 shadow-lg shadow-primary/20">
-                  <BookmarkCheck className="h-5 w-5 sm:h-6 sm:w-6" />
-                </div>
-                <h2 className="text-xl sm:text-2xl font-bold text-white">Explore More Projects</h2>
-                <p className="mt-2 text-xs sm:text-sm text-white/60 max-w-md mx-auto">
-                  Discover more engineering case studies, real-time distributed systems, and backend architecture experiments.
-                </p>
-                <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3.5">
-                  <ButtonLink to="/projects" variant="shine" size="lg" className="group justify-center">
-                    <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-                    All Projects
-                  </ButtonLink>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+                  {/* Column 1: Info */}
+                  <div className="flex items-center gap-3.5 text-center sm:text-left">
+                    <div className="hidden sm:flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-primary border border-primary bg-primary/5 shadow-sm">
+                      <BookmarkCheck className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
+                        <BookmarkCheck className="h-4 w-4 text-primary sm:hidden inline" />
+                        Explore More Projects
+                      </h2>
+                      <p className="text-xs sm:text-sm text-ink-light mt-0.5">
+                        Discover more engineering case studies, systems, and backend experiments.
+                      </p>
+                    </div>
+                  </div>
 
-                  {project.demoUrl && (
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary bg-primary/10 px-5 py-3 text-sm font-bold text-primary transition-all hover:bg-primary hover:text-white"
+                  {/* Column 2: Actions */}
+                  <div className="flex flex-wrap items-center gap-2.5 shrink-0 w-full sm:w-auto justify-center">
+                    <ButtonLink to="/projects" variant="shine" size="md" className="group justify-center text-xs sm:text-sm py-2 px-4">
+                      <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+                      All Projects
+                    </ButtonLink>
+
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-primary px-3.5 py-2 text-xs sm:text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-white"
+                      >
+                        <Globe className="h-4 w-4" />
+                        Demo
+                      </a>
+                    )}
+
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-muted px-3.5 py-2 text-xs sm:text-sm font-semibold text-white/80 transition-all hover:border-primary hover:text-primary bg-white/5"
+                      >
+                        <Github className="h-4 w-4" />
+                        GitHub
+                      </a>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => setShareOpen(true)}
+                      className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-muted px-3.5 py-2 text-xs sm:text-sm font-semibold text-white/80 transition-all hover:text-primary hover:border-primary cursor-pointer bg-white/5"
                     >
-                      <Globe className="h-4 w-4" />
-                      Open Live Demo
-                    </a>
-                  )}
-
-                  {project.repoUrl && (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 transition-all hover:border-primary hover:text-primary hover:bg-white/10"
-                    >
-                      <Github className="h-4 w-4" />
-                      View GitHub
-                    </a>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => setShareOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 transition-all hover:bg-primary/15 hover:text-primary hover:border-primary/30"
-                  >
-                    <Share2 className="h-4 w-4" />
-                    Share Project
-                  </button>
+                      <Share2 className="h-4 w-4" />
+                      Share
+                    </button>
+                  </div>
                 </div>
               </div>
             </Reveal>
