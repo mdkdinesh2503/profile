@@ -36,10 +36,11 @@ export function initGA(): void {
 
   const measurementId = GA_MEASUREMENT_ID!.trim();
 
-  // Create dataLayer and gtag function
+  // Create dataLayer and gtag function (Google's official snippet)
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer?.push(args);
+  window.gtag = function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer?.push(arguments);
   };
 
   window.gtag("js", new Date());
