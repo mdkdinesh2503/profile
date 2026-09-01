@@ -90,19 +90,25 @@ export function SiteHeader() {
           to="/"
           className="group relative flex items-center gap-2.5 rounded-2xl p-1.5 pr-3 outline-none transition-all duration-200"
         >
-          {/* Avatar / Initials Orb */}
+          {/* Avatar / Logo Orb */}
           <div
-            className="relative flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden transition-transform duration-300 group-hover:scale-105"
+            className="relative flex h-8 w-8 items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105"
             style={{
-              background: "linear-gradient(135deg, rgba(61,142,255,0.18), rgba(129,140,248,0.15))",
-              border: "1px solid rgba(61,142,255,0.3)",
-              boxShadow: "0 0 14px rgba(61,142,255,0.2)",
+              background: "transparent",
             }}
           >
-            <div className="dot-two-layer" aria-hidden>
-              <span className="dot-outer" />
-              <span className="dot-core" />
-            </div>
+            {profile.logo ? (
+              <img
+                src={profile.logo}
+                alt={`${profile.name} Logo`}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="dot-two-layer" aria-hidden>
+                <span className="dot-outer" />
+                <span className="dot-core" />
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col">

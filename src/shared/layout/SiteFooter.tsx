@@ -129,13 +129,17 @@ export function SiteFooter() {
           {/* Col 1: Logo & Brand */}
           <div className="flex items-center gap-3">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-primary font-black"
-              style={{
-                background: "linear-gradient(135deg, rgba(61,142,255,0.2), rgba(129,140,248,0.15))",
-                border: "1px solid rgba(61,142,255,0.3)",
-              }}
+              className="flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden text-primary font-black"
             >
-              {profile.hero.initials || profile.name.charAt(0)}
+              {profile.logo ? (
+                <img
+                  src={profile.logo}
+                  alt={`${profile.name} Logo`}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                profile.hero.initials || profile.name.charAt(0)
+              )}
             </div>
             <div>
               <span className="text-base font-extrabold text-white tracking-tight block">

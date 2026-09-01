@@ -20,8 +20,9 @@ const TARGETS = [
   { src: "profile/mdk_3.png",  quality: 82, width: 800 },
   { src: "profile/mdk.png",    quality: 80, width: 800 },
   { src: "profile/mdk_1.png",  quality: 80, width: 800 },
-  // App icon / avatar
+  // App icon / avatar / logo
   { src: "default/Avatar.png", quality: 85, width: 256 },
+  { src: "default/Logo.png",   quality: 85, width: 512 },
   // Blog cover
   { src: "blog/my-journey.jpg", quality: 80, width: 1200 },
 ];

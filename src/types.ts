@@ -150,6 +150,7 @@ export type Profile = {
   phone: string;
   email: string;
   avatar?: string;
+  logo?: string;
   primaryCta: PrimaryCta;
   hero: Hero;
   links: ProfileLinks;
