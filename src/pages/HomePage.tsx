@@ -294,9 +294,9 @@ function SkillsPillars() {
           {/* Interactive Footer */}
           <div className="pt-4 mt-5 border-t border-line flex items-center justify-between text-[10px] text-muted-2 relative z-10">
             <span className="flex items-center gap-1">
-              <Zap size={11} className="text-primary" /> Verified Stack Integration
+              <Zap size={11} className="text-primary" /> Used in production systems
             </span>
-            <span className="font-mono text-primary/70">PRO_MODE_ACTIVE</span>
+            <span className="font-mono text-primary/70">NOT A COMPLETE LIST</span>
           </div>
         </div>
       </div>
@@ -408,11 +408,7 @@ function FeaturedCard({ p, idx }: { p: ReturnType<typeof getProjectsByCategory>[
 ══════════════════════════════════════════════════════════════════ */
 export function HomePage() {
   const realTimeFeatured = getProjectsByCategory("real-time").slice(0, FEATURED_PER_SECTION);
-  const heroImageHref = profile.avatar
-    ? profile.avatar.startsWith("./")
-      ? profile.avatar.slice(1)
-      : profile.avatar
-    : null;
+  const heroImageHref = profile.avatar || null;
 
   const { scrollY } = useScroll();
   const heroParallax = useTransform(scrollY, [0, 500], [0, -60]);
@@ -749,8 +745,8 @@ export function HomePage() {
               icon={Zap}
               as="h2"
             />
-            <p className="text-xs text-muted-2 italic hidden sm:block">
-              Select a category to view technologies
+            <p className="text-xs text-muted-2 max-w-xs sm:text-right">
+              Production work I have shipped — not a full inventory, and not a ceiling on what I can do.
             </p>
           </div>
           <SkillsPillars />

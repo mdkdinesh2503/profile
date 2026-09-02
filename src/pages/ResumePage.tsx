@@ -428,7 +428,7 @@ export function ResumePage() {
                       key={iframeKey}
                       ref={iframeRef}
                       title={profile.resume.pdfTitle}
-                      src={profile.resume.pdfSrc}
+                      src={`${profile.resume.pdfSrc}#view=FitH`}
                       className="block h-full w-full"
                       style={{
                         minHeight: "72vh",

@@ -25,8 +25,8 @@ export const certifications: EnhancedCertification[] = [
     description:
       "Deep dive into high-concurrency systems programming, ownership & borrowing, zero-cost abstractions, Tokio async runtime, and robust memory safety without garbage collection.",
     highlightStat: "Grade: Distinction (96%)",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/Rust_Programming_Essentials.pdf",
+    thumbnail: "/default/certificate.svg",
+    pdf: "/certification/Rust_Programming_Essentials.pdf",
     skills: ["Rust", "Memory Safety", "Tokio Async", "Concurrency", "Cargo"],
     accentColor: {
       primary: "#f97316", // rust orange
@@ -46,8 +46,8 @@ export const certifications: EnhancedCertification[] = [
     description:
       "Mastery of high-scale NoSQL single-table architecture, partition/sort key design, Global Secondary Indexes (GSIs), consistency models, and ultra low-latency queries.",
     highlightStat: "Meta Verified",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/AWS_DynamoDB.pdf",
+    thumbnail: "/default/certificate.svg",
+    pdf: "/certification/AWS_DynamoDB.pdf",
     skills: ["DynamoDB", "NoSQL Data Modeling", "GSIs & Keys", "AWS Cloud"],
     accentColor: {
       primary: "#38bdf8", // sky / meta cyan
@@ -67,8 +67,8 @@ export const certifications: EnhancedCertification[] = [
     description:
       "Advanced patterns in modern React 18+: concurrent mode, server components, render performance profiling, custom hook abstractions, and state orchestration.",
     highlightStat: "Top 5% Score",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/Advanced_React.pdf",
+    thumbnail: "/default/certificate.svg",
+    pdf: "/certification/Advanced_React.pdf",
     skills: ["React 18+", "Hooks Architecture", "Performance", "State Management"],
     accentColor: {
       primary: "#818cf8", // indigo react
@@ -88,8 +88,8 @@ export const certifications: EnhancedCertification[] = [
     description:
       "Industry credential in generative AI workflows, structured system prompts, few-shot prompting, chained reasoning, and integrating LLMs into developer pipelines.",
     highlightStat: "Google Certified",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/Google_Prompting_Essentials.pdf",
+    thumbnail: "/default/certificate.svg",
+    pdf: "/certification/Google_Prompting_Essentials.pdf",
     skills: ["Generative AI", "Prompt Engineering", "LLM Pipelines", "AI Workflows"],
     accentColor: {
       primary: "#34d399", // emerald / google green
@@ -109,8 +109,8 @@ export const certifications: EnhancedCertification[] = [
     description:
       "End-to-end enterprise full-stack development, Java REST microservices, Angular single-page applications, relational schema tuning, unit testing, and Agile team delivery.",
     highlightStat: "Corporate Honors",
-    thumbnail: "./default/certificate.svg",
-    pdf: "./certification/Aspire_Systems_Intern.pdf",
+    thumbnail: "/default/certificate.svg",
+    pdf: "/certification/Aspire_Systems_Intern.pdf",
     skills: ["Java REST", "Angular", "MySQL", "Clean SDLC", "Agile"],
     accentColor: {
       primary: "#ec4899", // pink / magenta

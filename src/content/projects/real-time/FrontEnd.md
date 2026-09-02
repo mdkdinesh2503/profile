@@ -1,7 +1,7 @@
 ---
 name: "White-Label Next.js Monorepo & Multi-Tenant Frontend Platform"
 summary: "Production multi-app frontend architecture serving 20K+ users with Next.js App Router, NextAuth (OTP/OAuth), Apollo GraphQL, Zustand, Tailwind CSS, and third-party integrations."
-role: "Full-Stack Engineer / Frontend Engineer"
+role: "Frontend Engineer"
 timeline: "2024 – 2026"
 category: "real-time"
 stackNote: "Next.js (App Router), TypeScript, NextAuth, Apollo Client, GraphQL, Zustand, React Hook Form, Zod, Tailwind CSS, Angular"

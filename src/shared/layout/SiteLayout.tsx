@@ -45,17 +45,17 @@ export function SiteLayout() {
   const is404 = location.pathname === "/404";
 
   return (
-    <div className="relative flex min-h-dvh flex-col bg-[#02060e] text-slate-100 selection:bg-primary/30 selection:text-white overflow-x-hidden">
+    <div className="relative flex min-h-dvh flex-col bg-[#02060e] text-slate-100 selection:bg-primary/30 selection:text-white overflow-x-clip">
       <GlobalPageBackground />
       {!is404 && <SiteHeader />}
-      <main className="flex-1 pt-16">
+      <main className="relative z-[1] flex-1 pt-16">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
           >
             <Outlet />
           </motion.div>

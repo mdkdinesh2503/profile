@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Github, Linkedin, ArrowUpRight, Mail, Sparkles, Heart, Terminal, Code2, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { Container } from "@/shared/ui/Container";
+import { BrandLogo } from "@/shared/layout/BrandLogo";
 import { profile } from "@/data/profile";
 import { cx } from "@/shared/ui/cx";
 import { trackEvent } from "@/lib/analytics";
@@ -35,7 +36,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-12 border-t overflow-hidden" style={{ borderColor: "rgba(255, 255, 255, 0.08)", background: "rgba(2, 6, 14, 0.75)" }}>
+    <footer className="relative z-0 mt-12 border-t overflow-hidden" style={{ borderColor: "rgba(255, 255, 255, 0.08)", background: "rgba(2, 6, 14, 0.96)" }}>
       {/* Decorative top multi-stop gradient beam */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1.5px]"
@@ -128,19 +129,7 @@ export function SiteFooter() {
         <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t pt-4" style={{ borderColor: "rgba(255, 255, 255, 0.07)" }}>
           {/* Col 1: Logo & Brand */}
           <div className="flex items-center gap-3">
-            <div
-              className="flex h-9 w-9 items-center justify-center rounded-xl overflow-hidden text-primary font-black"
-            >
-              {profile.logo ? (
-                <img
-                  src={profile.logo}
-                  alt={`${profile.name} Logo`}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                profile.hero.initials || profile.name.charAt(0)
-              )}
-            </div>
+            <BrandLogo className="h-9 w-9 rounded-xl" />
             <div>
               <span className="text-base font-extrabold text-white tracking-tight block">
                 {profile.name}
@@ -152,7 +141,7 @@ export function SiteFooter() {
           </div>
 
           {/* Col 2: Navigation Links */}
-          <div className="grid grid-cols-2 gap-5 text-xs font-medium block">
+          <div className="grid grid-cols-2 gap-5 text-xs font-medium">
             {navLinks.map((item) => (
               <Link
                 key={item.to}

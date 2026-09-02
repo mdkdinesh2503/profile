@@ -15,11 +15,26 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
+    X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     X-XSS-Protection = "1; mode=block"
+
+# PDF files: explicit inline type so the in-page viewer can embed them.
+[[headers]]
+  for = "/resume/*.pdf"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline"
+
+[[headers]]
+  for = "/certification/*.pdf"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline"
 
 [[headers]]
   for = "/assets/*"

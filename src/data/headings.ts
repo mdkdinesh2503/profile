@@ -34,7 +34,7 @@ export const headings = {
     eyebrow: "Technical Skills",
     title: "Technologies I Work With",
     description:
-      "A hands-on overview of the languages, frameworks, databases, and tools I use to design and deliver production systems.",
+      "A snapshot of languages, frameworks, and tools I have used in production — not a complete list of what I can do, and not a measure of capability on its own.",
   } satisfies SelectedSectionHeading,
 
   education: {

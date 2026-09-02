@@ -9,14 +9,14 @@ export const profile: Profile = {
   location: "Namakkal, Tamil Nadu, India",
   phone: "+91 97879 43467",
   email: "mdkdinesh2503@gmail.com",
-  avatar: "./profile/mdk.webp",
-  logo: "./default/Logo.webp",
+  avatar: "/profile/mdk.webp",
+  logo: "/default/Logo.webp",
   primaryCta: {
     label: "View Selected Work",
     href: "/projects",
   },
   resume: {
-    pdfSrc: "./resume/Dinesh_Resume.pdf",
+    pdfSrc: "/resume/Dinesh_Resume.pdf",
     pdfTitle: "Dinesh Resume",
   },
   hero: {

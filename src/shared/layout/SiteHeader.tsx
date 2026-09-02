@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Container } from "@/shared/ui/Container";
+import { BrandLogo } from "@/shared/layout/BrandLogo";
 import { profile } from "@/data/profile";
 import { trackEvent } from "@/lib/analytics";
 import {
@@ -90,26 +91,7 @@ export function SiteHeader() {
           to="/"
           className="group relative flex items-center gap-2.5 rounded-2xl p-1.5 pr-3 outline-none transition-all duration-200"
         >
-          {/* Avatar / Logo Orb */}
-          <div
-            className="relative flex h-8 w-8 items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105"
-            style={{
-              background: "transparent",
-            }}
-          >
-            {profile.logo ? (
-              <img
-                src={profile.logo}
-                alt={`${profile.name} Logo`}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="dot-two-layer" aria-hidden>
-                <span className="dot-outer" />
-                <span className="dot-core" />
-              </div>
-            )}
-          </div>
+          <BrandLogo className="h-8 w-8 transition-transform duration-300 group-hover:scale-105" />
 
           <div className="flex flex-col">
             <span

@@ -1,11 +1,12 @@
 import { Link, useParams } from "react-router-dom";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Container, ButtonLink, buttonStyles, cx, ShareModal } from "@/shared/ui";
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { getBlogBySlug } from "@/lib/blogs";
 import { Reveal } from "@/shared/motion/Reveal";
+import { profile } from "@/data/profile";
 import {
   ArrowLeft,
   BookOpen,
@@ -25,6 +26,7 @@ import {
   Maximize2,
   Download,
   Terminal,
+  Cpu,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -37,26 +39,46 @@ function formatDate(iso: string) {
   }).format(dt);
 }
 
-/* ── Ambient Background with Blue Glow & Technical Grid ── */
+function slugifyHeading(raw: string) {
+  return raw
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+function extractToc(markdown: string) {
+  return [...markdown.matchAll(/^##\s+(.+)$/gm)].map((m) => {
+    const label = m[1].trim();
+    return { id: slugifyHeading(label), label };
+  });
+}
+
+function headingText(children: React.ReactNode): string {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.map(headingText).join("");
+  if (children && typeof children === "object" && "props" in (children as object)) {
+    return headingText((children as { props: { children?: React.ReactNode } }).props.children);
+  }
+  return "";
+}
+
+/* ── Ambient Background ── */
 function AmbientBg() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
-      {/* Top primary glow */}
       <div
-        className="absolute left-1/2 top-0 h-[350px] w-[500px] sm:h-[650px] sm:w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] sm:blur-[140px] opacity-30 sm:opacity-35"
+        className="absolute left-1/2 top-0 h-[350px] w-[500px] sm:h-[700px] sm:w-[980px] -translate-x-1/2 -translate-y-1/3 rounded-full blur-[110px] sm:blur-[150px] opacity-35"
         style={{ background: "radial-gradient(circle, #3d8eff 0%, #2563eb 40%, transparent 70%)" }}
       />
-      {/* Right ambient glow */}
       <div
-        className="absolute top-1/3 right-0 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] translate-x-1/3 rounded-full blur-[90px] sm:blur-[130px] opacity-15 sm:opacity-20"
+        className="absolute top-1/3 right-0 h-[300px] w-[300px] sm:h-[520px] sm:w-[520px] translate-x-1/3 rounded-full blur-[100px] opacity-20"
         style={{ background: "radial-gradient(circle, #38bdf8 0%, #818cf8 50%, transparent 70%)" }}
       />
-      {/* Bottom ambient glow */}
       <div
-        className="absolute bottom-0 left-1/4 h-[300px] w-[350px] sm:h-[500px] sm:w-[600px] rounded-full blur-[100px] sm:blur-[140px] opacity-10 sm:opacity-15"
+        className="absolute bottom-0 left-1/4 h-[280px] w-[340px] sm:h-[500px] sm:w-[600px] rounded-full blur-[130px] opacity-15"
         style={{ background: "radial-gradient(circle, #1d4ed8 0%, transparent 70%)" }}
       />
-      {/* Subtle grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.035]"
         style={{
@@ -69,55 +91,6 @@ function AmbientBg() {
   );
 }
 
-/* ── Top Reading Progress Bar ── */
-function ReadingProgressBar({ progress }: { progress: number }) {
-  return (
-    <div className="fixed left-0 right-0 top-0 z-50 h-[3px] bg-white/5" aria-hidden>
-      <div
-        className="h-full relative overflow-visible transition-all duration-200"
-        style={{ width: `${progress * 100}%` }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, #38bdf8, #3d8eff, #60a5fa)" }}
-        />
-        <div
-          className="absolute right-0 top-1/2 -translate-y-1/2 h-5 w-20 blur-md bg-primary opacity-90"
-        />
-      </div>
-    </div>
-  );
-}
-
-/* ── Progress Ring ── */
-function ProgressRing({ progress }: { progress: number }) {
-  const r = 14;
-  const c = 2 * Math.PI * r;
-  return (
-    <div className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center">
-      <svg className="-rotate-90" viewBox="0 0 36 36" fill="none" width={36} height={36}>
-        <circle cx="18" cy="18" r={r} stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" fill="none" />
-        <circle
-          cx="18"
-          cy="18"
-          r={r}
-          stroke="#3d8eff"
-          strokeWidth="2.5"
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={c}
-          strokeDashoffset={c * (1 - progress)}
-          style={{ transition: "stroke-dashoffset 0.25s ease", filter: "drop-shadow(0 0 4px #3d8eff)" }}
-        />
-      </svg>
-      <span className="absolute text-[8px] font-bold text-primary">
-        {Math.round(progress * 100)}%
-      </span>
-    </div>
-  );
-}
-
-/* ── Lightbox Image Modal (Mobile Optimized) ── */
 function ImageLightbox({
   src,
   alt,
@@ -151,7 +124,6 @@ function ImageLightbox({
           onClick={(e) => e.stopPropagation()}
           className="relative max-h-[94vh] w-full max-w-5xl overflow-hidden rounded-2xl border border-line bg-[#060a16] shadow-2xl flex flex-col"
         >
-          {/* Top Bar */}
           <div className="flex items-center justify-between border-b border-line bg-white/5 px-3.5 py-2.5 text-xs text-white/70">
             <span className="flex items-center gap-1.5 font-medium truncate max-w-[200px] sm:max-w-md">
               <Maximize2 className="h-3.5 w-3.5 text-primary shrink-0" />
@@ -166,26 +138,14 @@ function ImageLightbox({
               >
                 <Download className="h-3 w-3" />
                 <span className="hidden sm:inline">Open Original</span>
-                <span className="sm:hidden">Original</span>
               </a>
-              <button
-                type="button"
-                onClick={onClose}
-                className="rounded-lg p-1 text-white/70 hover:text-primary transition-colors"
-                aria-label="Close"
-              >
+              <button type="button" onClick={onClose} className="rounded-lg p-1 text-white/70 hover:text-primary" aria-label="Close">
                 <X className="h-4 w-4" />
               </button>
             </div>
           </div>
-
-          {/* Full Image */}
           <div className="max-h-[82vh] overflow-auto p-2 sm:p-4 flex items-center justify-center">
-            <img
-              src={src}
-              alt={alt || "Post visual"}
-              className="max-h-[75vh] sm:max-h-[80vh] w-auto max-w-full object-contain rounded-lg shadow-inner select-none"
-            />
+            <img src={src} alt={alt || "Post visual"} className="max-h-[75vh] sm:max-h-[80vh] w-auto max-w-full object-contain rounded-lg select-none" />
           </div>
         </motion.div>
       </motion.div>
@@ -193,7 +153,6 @@ function ImageLightbox({
   );
 }
 
-/* ── Responsive Code Block with Copy ── */
 function CodeBlock({
   children,
   className,
@@ -212,82 +171,107 @@ function CodeBlock({
   };
 
   const lang = className?.replace("language-", "") ?? "";
+  const isDiagram = !lang || lang === "text" || lang === "diagram";
 
   return (
     <div
-      className="group relative my-5 sm:my-6 rounded-2xl overflow-hidden"
+      className="group relative my-6 sm:my-8 rounded-2xl overflow-hidden"
       style={{
-        background: "#040814",
-        border: "1px solid rgba(61,142,255,0.22)",
-        boxShadow: "0 12px 36px -8px rgba(0,0,0,0.6), 0 0 20px rgba(61,142,255,0.06)",
+        background: "linear-gradient(180deg, #050b18 0%, #030712 100%)",
+        border: "1px solid rgba(61,142,255,0.35)",
+        boxShadow: "0 16px 40px -10px rgba(0,0,0,0.7), 0 0 25px rgba(61,142,255,0.12)",
       }}
     >
-      {/* Terminal header */}
-      <div className="flex items-center justify-between px-3.5 sm:px-4 py-2 sm:py-2.5 border-b border-white/8 bg-white/5">
-        <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
-        </div>
+      <div
+        className="h-[2px] w-full"
+        style={{ background: "linear-gradient(90deg, transparent, #38bdf8 30%, #3d8eff 70%, transparent)" }}
+      />
+      <div className="flex items-center justify-between px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-white/10 bg-white/[0.03]">
         <div className="flex items-center gap-2">
-          {lang ? (
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary">
-              {lang}
+          <div className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.5)]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+          </div>
+          <span className="hidden sm:inline-block text-[11px] font-mono text-white/30 ml-2">
+            {isDiagram ? "journey://diagram" : `source://${lang}`}
+          </span>
+        </div>
+        <div className="flex items-center gap-2.5">
+          {isDiagram ? (
+            <span className="inline-flex items-center gap-1 rounded-md border border-primary px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
+              <Cpu className="h-3 w-3" />
+              Diagram
             </span>
           ) : (
-            <span className="flex items-center gap-1 text-[10px] font-mono font-medium text-white/40">
-              <Terminal className="h-3 w-3 text-primary/70" /> Code / Diagram
+            <span className="inline-flex items-center gap-1 rounded-md bg-primary/15 border border-primary/30 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
+              <Terminal className="h-3 w-3" />
+              {lang}
             </span>
           )}
           <button
             type="button"
             onClick={copy}
-            className="flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-medium transition-all duration-150 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 bg-white/10 text-white/80 hover:bg-primary/20 hover:text-primary"
+            className="flex items-center gap-1 rounded-md px-2.5 py-1 text-[10px] font-medium bg-white/10 text-white/80 hover:bg-primary/25 hover:text-primary"
           >
-            {copied ? <Check className="h-3 w-3 text-primary" /> : <Copy className="h-3 w-3" />}
+            {copied ? <Check className="h-3 w-3 text-green-400" /> : <Copy className="h-3 w-3" />}
             {copied ? "Copied" : "Copy"}
           </button>
         </div>
       </div>
-      <pre
-        ref={ref}
-        className="overflow-x-auto p-3.5 sm:p-5 text-xs sm:text-sm leading-relaxed text-ink font-mono"
-        style={{ margin: 0 }}
+      <div
+        className="relative overflow-x-auto"
+        style={{
+          backgroundImage: isDiagram
+            ? "radial-gradient(circle at 1px 1px, rgba(61,142,255,0.12) 1px, transparent 0)"
+            : undefined,
+          backgroundSize: isDiagram ? "18px 18px" : undefined,
+        }}
       >
-        {children}
-      </pre>
+        <pre
+          ref={ref}
+          className="p-4 sm:p-6 text-xs sm:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
+          style={{ margin: 0, letterSpacing: "0.02em" }}
+        >
+          {children}
+        </pre>
+      </div>
     </div>
   );
 }
 
-/* ── Pull-quote Blockquote ── */
 function PullQuote({ children }: { children?: React.ReactNode }) {
   return (
-    <div
-      className="my-6 sm:my-8 relative pl-4 sm:pl-6 pr-4 sm:pr-5 py-4 sm:py-5 rounded-2xl overflow-hidden"
+    <figure
+      className="my-7 sm:my-9 relative overflow-hidden rounded-2xl px-5 sm:px-8 py-5 sm:py-7"
       style={{
-        background: "linear-gradient(135deg, rgba(61,142,255,0.08) 0%, rgba(37,99,235,0.03) 100%)",
-        border: "1px solid rgba(61,142,255,0.25)",
-        borderLeft: "4px solid #3d8eff",
+        background: "linear-gradient(135deg, rgba(61,142,255,0.16) 0%, rgba(129,140,248,0.06) 100%)",
+        border: "1px solid rgba(61,142,255,0.35)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06), 0 12px 32px -12px rgba(61,142,255,0.25)",
       }}
     >
-      <Quote className="absolute -top-1 left-2 h-6 w-6 sm:h-8 sm:w-8 rotate-180 text-primary opacity-20" aria-hidden />
-      <div className="relative text-sm sm:text-base leading-relaxed italic text-white/90 font-medium">
+      <div
+        className="absolute left-0 top-0 bottom-0 w-[4px]"
+        style={{ background: "linear-gradient(180deg, #38bdf8, #3d8eff, #818cf8)" }}
+      />
+      <Quote className="absolute top-3 right-4 h-10 w-10 text-primary/20" aria-hidden />
+      <blockquote className="relative m-0 text-[1.05rem] sm:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
         {children}
-      </div>
-      <Quote className="absolute -bottom-1 right-2 h-6 w-6 sm:h-8 sm:w-8 text-primary opacity-20" aria-hidden />
-    </div>
+      </blockquote>
+    </figure>
   );
 }
 
-/* ── Markdown Content Renderer ── */
 function BlogContent({
   content,
   onImageClick,
+  headings,
 }: {
   content: string;
   onImageClick: (src: string, alt?: string) => void;
+  headings: { id: string; label: string }[];
 }) {
+
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
@@ -300,7 +284,7 @@ function BlogContent({
               {...rest}
               target={isExt ? "_blank" : undefined}
               rel={isExt ? "noopener noreferrer" : undefined}
-              className="font-medium text-primary underline underline-offset-2 decoration-primary/40 hover:decoration-primary transition-colors break-words"
+              className="font-medium text-primary underline underline-offset-4 decoration-primary/40 hover:decoration-primary"
             />
           );
         },
@@ -309,113 +293,111 @@ function BlogContent({
           return (
             <div className="my-6 sm:my-8 overflow-hidden rounded-2xl border border-primary/25 bg-[#060a16] shadow-xl group relative">
               <div className="relative cursor-zoom-in" onClick={() => onImageClick(src, alt)}>
-                <img
-                  src={src}
-                  alt={alt || "Illustration"}
-                  className="w-full object-contain max-h-[380px] sm:max-h-[520px] transition-transform duration-300 group-hover:scale-[1.01]"
-                  loading="lazy"
-                />
+                <img src={src} alt={alt || "Illustration"} className="w-full object-contain max-h-[380px] sm:max-h-[520px]" loading="lazy" />
                 <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm border border-white/15 shadow-lg">
+                  <span className="flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1.5 text-xs font-semibold text-white border border-white/15">
                     <ZoomIn className="h-3.5 w-3.5 text-primary" /> Click to expand
                   </span>
                 </div>
               </div>
-              {alt && (
-                <div className="border-t border-white/8 bg-white/3 px-3 sm:px-4 py-2 text-center text-xs text-muted-1">
-                  {alt}
-                </div>
-              )}
             </div>
           );
         },
         h1: ({ children, ...props }) => (
-          <h1
-            {...props}
-            className="mt-8 sm:mt-12 mb-4 sm:mb-5 text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight text-white"
-          >
+          <h1 {...props} className="mt-10 mb-5 text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             {children}
           </h1>
         ),
-        h2: ({ children, ...props }) => (
-          <h2
-            {...props}
-            className="group relative mt-8 sm:mt-12 mb-3 sm:mb-4 flex items-center gap-2.5 sm:gap-3 text-lg sm:text-xl md:text-2xl font-bold text-white pb-2 border-b border-primary/15"
-          >
-            <span
-              className="flex-shrink-0 h-5 sm:h-6 w-1 sm:w-1.5 rounded-full bg-primary"
-              aria-hidden
-            />
-            <span>{children}</span>
-          </h2>
-        ),
+        h2: ({ children, ...props }) => {
+          const id = slugifyHeading(headingText(children));
+          const n = String(Math.max(1, headings.findIndex((h) => h.id === id) + 1)).padStart(2, "0");
+          return (
+            <h2
+              {...props}
+              id={id}
+              className="group relative mt-5 mb-3 scroll-mt-28 first:mt-0 flex items-start gap-3 sm:gap-4 text-xl sm:text-2xl md:text-[1.7rem] font-bold text-white"
+            >
+              <span
+                className="mt-1 shrink-0 font-mono text-[11px] sm:text-xs font-bold tracking-[0.18em] text-primary"
+                style={{ textShadow: "0 0 12px rgba(61,142,255,0.7)" }}
+              >
+                {n}
+              </span>
+              <span className="flex-1 pb-3 border-b border-white/10">{children}</span>
+            </h2>
+          );
+        },
         h3: ({ children, ...props }) => (
-          <h3
-            {...props}
-            className="group mt-6 sm:mt-8 mb-2.5 sm:mb-3 flex items-center gap-2 text-base sm:text-lg font-bold text-white/95"
-          >
-            <span className="text-xs font-mono text-primary/70">###</span>
+          <h3 {...props} className="mt-8 mb-3 flex items-center gap-2 text-lg font-bold text-white/95">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             {children}
           </h3>
         ),
         blockquote: ({ children }) => <PullQuote>{children}</PullQuote>,
         pre: ({ children }) => <>{children}</>,
         code: ({ className, children, ...props }) => {
-          if (!className)
+          const isInline = !className && !String(children).includes("\n");
+          if (isInline) {
             return (
-              <code
-                className="rounded-md bg-primary/12 border border-primary/25 px-1.5 py-0.5 text-[0.85em] font-mono font-medium text-primary break-words"
-                {...props}
-              >
+              <code className="rounded-md bg-primary/12 border border-primary/25 px-1.5 py-0.5 text-[0.85em] font-mono font-medium text-primary" {...props}>
                 {children}
               </code>
             );
+          }
           return <CodeBlock className={className}>{children}</CodeBlock>;
         },
         p: ({ children }) => (
-          <p className="my-3 sm:my-4 leading-[1.8] sm:leading-[1.85] text-white/80 text-[0.95rem] sm:text-[1.02rem]">
+          <p className="blog-beat my-2.5 sm:my-3 leading-[1.85] text-white/78 text-[0.98rem] sm:text-[1.05rem]">
             {children}
           </p>
         ),
-        ul: ({ children }) => <ul className="my-3 sm:my-4 space-y-2 pl-1 sm:pl-2">{children}</ul>,
+        ul: ({ children }) => <ul className="my-4 space-y-2.5 pl-1">{children}</ul>,
         ol: ({ children }) => (
-          <ol className="my-3 sm:my-4 space-y-2 pl-5 sm:pl-6 list-decimal text-white/80 text-[0.95rem] sm:text-[1.02rem]">{children}</ol>
+          <ol className="my-4 space-y-2 pl-6 list-decimal text-white/80">{children}</ol>
         ),
         li: ({ children }) => (
-          <li className="flex items-start gap-2.5 sm:gap-3 text-white/80 leading-relaxed text-[0.92rem] sm:text-[0.98rem]">
-            <span className="mt-[8px] sm:mt-[9px] flex-shrink-0 h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
+          <li className="flex items-start gap-3 text-white/80 leading-relaxed">
+            <span className="mt-[9px] shrink-0 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_#3d8eff]" />
             <span className="flex-1 min-w-0">{children}</span>
           </li>
         ),
         hr: () => (
-          <div className="my-8 sm:my-10 flex items-center gap-3">
-            <div className="flex-1 h-px bg-white/10" />
-            <div className="flex gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-              <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
-              <span className="h-1.5 w-1.5 rounded-full bg-primary/30" />
-            </div>
-            <div className="flex-1 h-px bg-white/10" />
+          <div className="my-4 flex items-center gap-3" aria-hidden>
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.45))" }} />
+            <span className="h-2 w-2 rotate-45 border border-primary/70 bg-primary/20" />
+            <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(129,140,248,0.45), transparent)" }} />
           </div>
         ),
         table: ({ children }) => (
-          <div className="my-5 sm:my-6 overflow-x-auto rounded-xl border border-primary/25 bg-black/40">
-            <table className="w-full border-collapse text-xs sm:text-sm">{children}</table>
+          <div
+            className="my-6 overflow-x-auto rounded-2xl"
+            style={{
+              background: "rgba(4,10,24,0.7)",
+              border: "1px solid rgba(61,142,255,0.28)",
+              boxShadow: "0 12px 32px -12px rgba(0,0,0,0.55)",
+            }}
+          >
+            <table className="w-full min-w-[280px] border-collapse text-sm">{children}</table>
           </div>
         ),
         thead: ({ children }) => (
-          <thead className="bg-primary/15 border-b border-primary/25">{children}</thead>
+          <thead
+            className="border-b border-primary/30"
+            style={{ background: "linear-gradient(90deg, rgba(61,142,255,0.18), rgba(129,140,248,0.08))" }}
+          >
+            {children}
+          </thead>
         ),
         th: ({ children }) => (
-          <th className="px-3 sm:px-4 py-2.5 sm:py-3 text-left text-[11px] sm:text-xs font-bold uppercase tracking-wider text-primary">
+          <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
             {children}
           </th>
         ),
         td: ({ children }) => (
-          <td className="px-3 sm:px-4 py-2.5 sm:py-3 text-white/75 border-b border-white/5">{children}</td>
+          <td className="px-4 py-3 text-white/80 border-b border-white/[0.06]">{children}</td>
         ),
-        strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-        em: ({ children }) => <em className="italic text-primary/90">{children}</em>,
+        strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+        em: ({ children }) => <em className="italic text-sky-200/90">{children}</em>,
       }}
     >
       {content}
@@ -423,47 +405,48 @@ function BlogContent({
   );
 }
 
-/* ══════════════════════════════════════════════════════════
-   MAIN PAGE
-══════════════════════════════════════════════════════════ */
 export function BlogDetailPage() {
   const { slug } = useParams();
   const blog = slug ? getBlogBySlug(slug) : null;
   const [scrollProgress, setScrollProgress] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt?: string } | null>(null);
+  const [activeId, setActiveId] = useState("");
+  const toc = useMemo(() => (blog ? extractToc(blog.content) : []), [blog]);
 
   useEffect(() => {
     if (!blog) return;
     const fn = () => {
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docH <= 0 ? 1 : Math.min(1, window.scrollY / docH));
+
+      const headings = toc
+        .map((t) => document.getElementById(t.id))
+        .filter((el): el is HTMLElement => Boolean(el));
+      let current = headings[0]?.id ?? "";
+      for (const el of headings) {
+        if (el.getBoundingClientRect().top < 140) current = el.id;
+      }
+      setActiveId(current);
     };
     window.addEventListener("scroll", fn, { passive: true });
     fn();
     return () => window.removeEventListener("scroll", fn);
-  }, [blog]);
+  }, [blog, toc]);
 
   if (!blog) {
     return (
       <article className="pt-12 sm:pt-16 pb-24">
         <Container>
           <div
-            className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-16 text-center shadow-xl"
-            style={{
-              background: "rgba(10,18,36,0.6)",
-              border: "1px solid rgba(61,142,255,0.2)",
-            }}
+            className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-16 text-center"
+            style={{ background: "rgba(10,18,36,0.6)", border: "1px solid rgba(61,142,255,0.2)" }}
           >
-            <div
-              className="mx-auto mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30"
-            >
-              <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30">
+              <BookOpen className="h-7 w-7 text-primary" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-white">Post Not Found</h1>
-            <p className="mt-2 text-muted-1 text-xs sm:text-sm">
-              This blog or note doesn't exist yet. Explore other engineering posts.
-            </p>
+            <h1 className="text-2xl font-bold text-white">Post Not Found</h1>
+            <p className="mt-2 text-muted-1 text-sm">This blog or note doesn't exist yet.</p>
             <ButtonLink to="/blogs" variant="soft" size="md" className="mt-6">
               <ArrowLeft className="h-4 w-4" /> Back to Blogs
             </ButtonLink>
@@ -475,6 +458,7 @@ export function BlogDetailPage() {
 
   const words = blog.content.trim().split(/\s+/).length;
   const readMin = blog.readTime ?? Math.max(1, Math.round(words / 200));
+  const storyLabel = blog.tags[0] || "Essay";
 
   return (
     <>
@@ -485,226 +469,241 @@ export function BlogDetailPage() {
         ogType="article"
       />
 
-      {/* Ambient Blue Glow & Grid Background */}
       <AmbientBg />
 
-      {/* Top Reading Progress Bar */}
-      <ReadingProgressBar progress={scrollProgress} />
+      <ShareModal isOpen={shareOpen} onClose={() => setShareOpen(false)} title={blog.title} summary={blog.summary} />
 
-      {/* Share Modal for WhatsApp, LinkedIn, Telegram, X, Email & Copy */}
-      <ShareModal
-        isOpen={shareOpen}
-        onClose={() => setShareOpen(false)}
-        title={blog.title}
-        summary={blog.summary}
-      />
-
-      {/* Image Lightbox Modal */}
       {lightboxImg && (
-        <ImageLightbox
-          src={lightboxImg.src}
-          alt={lightboxImg.alt}
-          onClose={() => setLightboxImg(null)}
-        />
+        <ImageLightbox src={lightboxImg.src} alt={lightboxImg.alt} onClose={() => setLightboxImg(null)} />
       )}
 
-      {/* ══ ARTICLE (RESPONSIVE SINGLE-COLUMN LAYOUT) ═════════ */}
-      <article className="pb-14 pt-4 sm:pt-8 md:pt-12">
-        <Container className="max-w-4xl px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb + Share Button */}
+      <article className="pb-16 pt-4 sm:pt-8">
+        <Container className="max-w-6xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 sm:pb-6 border-b border-muted-1">
-              <nav aria-label="Breadcrumb" className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
-                <Link
-                  to="/blogs"
-                  className="flex items-center gap-1 font-medium text-primary hover:text-primary/80 transition-colors"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Blogs
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-5">
+              <nav aria-label="Breadcrumb" className="inline-flex items-center gap-2 text-sm">
+                <Link to="/blogs" className="flex items-center gap-1 font-medium text-primary hover:text-primary/80">
+                  <ArrowLeft className="h-4 w-4" /> Blogs
                 </Link>
-                <ChevronRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white/30" aria-hidden />
-                <span className="text-white/50 truncate max-w-[140px] xs:max-w-[200px] sm:max-w-md font-medium">
-                  {blog.title}
-                </span>
+                <ChevronRight className="h-3.5 w-3.5 text-white/30" />
+                <span className="text-white/50 truncate max-w-[180px] sm:max-w-md">{blog.title}</span>
               </nav>
-
               <button
                 type="button"
                 onClick={() => setShareOpen(true)}
                 className={cx(
                   buttonStyles.base,
-                  "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 transition-all duration-200 border text-muted-2 border-muted-1 hover:border-primary hover:text-primary"
+                  "rounded-xl px-4 py-1.5 text-sm gap-2 border text-muted-2 border-white/10 hover:border-primary hover:text-primary bg-white/5"
                 )}
               >
                 <Share2 className="h-3.5 w-3.5" />
-                <span>Share</span>
+                Share
               </button>
             </div>
           </Reveal>
 
-          {/* Tags */}
-          <Reveal delay={0.03}>
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <span className="flex items-center gap-1 rounded-lg border border-primary px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-primary">
-                <Sparkles className="h-3 w-3" /> Technical Story
-              </span>
-              {blog.tags.map((t) => (
-                <Link
-                  key={t}
-                  to={`/blogs?tag=${t}`}
-                  className="flex items-center gap-1 rounded-lg border border-muted-1 bg-white/5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-medium text-muted-1 hover:border-primary/40 hover:bg-primary/10 hover:text-primary transition-colors"
-                >
-                  <Tag className="h-3 w-3 text-primary/70" />
-                  {t}
-                </Link>
-              ))}
-            </div>
-          </Reveal>
-
-          {/* Headline Title */}
-          <Reveal delay={0.05}>
-            <h1 className="mt-4 sm:mt-6 text-balance text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tight text-white leading-tight sm:leading-[1.15]">
-              {blog.title}
-            </h1>
-          </Reveal>
-
-          {/* Metadata Row */}
-          <Reveal delay={0.07}>
-            <div className="mt-4 sm:mt-6 flex flex-wrap items-center gap-2.5 sm:gap-4 text-xs sm:text-sm text-white/60">
-              <span className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-                <time dateTime={blog.date}>{formatDate(blog.date)}</time>
-              </span>
-              <span className="text-white/20">·</span>
-              <span className="flex items-center gap-1.5 text-primary font-medium">
-                <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                {readMin} min read
-              </span>
-              <span className="text-white/20">·</span>
-              <span className="flex items-center gap-1.5">
-                <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary/70" />
-                {words.toLocaleString()} words
-              </span>
-            </div>
-          </Reveal>
-
-          {/* Featured Visual Image (Responsive Container) */}
-          {blog.image && (
-            <Reveal delay={0.09}>
-              <div className="mt-6 sm:mt-10 overflow-hidden rounded-2xl sm:rounded-3xl border border-line bg-[#060a16] shadow-2xl shadow-primary/10 group relative">
-                <div
-                  className="relative cursor-zoom-in flex items-center justify-center p-2 sm:p-4 bg-gradient-to-b from-primary/5 to-transparent"
-                  onClick={() => setLightboxImg({ src: blog.image!, alt: blog.title })}
-                >
+          {/* Cinematic hero */}
+          <Reveal delay={0.04}>
+            <header
+              className="relative overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem]"
+              style={{
+                border: "1px solid rgba(61,142,255,0.28)",
+                boxShadow: "0 30px 80px -24px rgba(0,0,0,0.75), 0 0 40px rgba(61,142,255,0.12)",
+              }}
+            >
+              <div className="relative min-h-[320px] sm:min-h-[420px] md:min-h-[480px]">
+                {blog.image ? (
                   <img
                     src={blog.image}
                     alt={blog.title}
-                    className="max-h-[340px] sm:max-h-[540px] w-full object-contain rounded-xl sm:rounded-2xl transition-transform duration-300 group-hover:scale-[1.008]"
+                    className="absolute inset-0 h-full w-full object-cover"
                     loading="eager"
                   />
-                  <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-black/80 px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold text-white backdrop-blur-md border border-muted-1 shadow-xl">
-                      <ZoomIn className="h-3.5 w-3.5 text-primary" /> Click to zoom
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between border-t border-line px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs text-white/50">
-                  <span className="flex items-center gap-1.5">
-                    <Maximize2 className="h-3.5 w-3.5 text-primary" /> Visual Post / Diagram
-                  </span>
-                  <span>Tap to expand</span>
-                </div>
-              </div>
-            </Reveal>
-          )}
-
-          {/* ══ CONTENT BODY ═══════════════════════════════════ */}
-          <div className="mt-6 sm:mt-10 min-w-0">
-            {/* Executive Summary / TL;DR Callout */}
-            {blog.summary && (
-              <Reveal delay={0.04}>
+                ) : (
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(135deg, #0b1730, #122044 50%, #0a1020)" }}
+                  />
+                )}
                 <div
-                  className="mb-6 sm:mb-8 rounded-2xl p-4 sm:p-6 relative overflow-hidden"
+                  className="absolute inset-0"
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(61,142,255,0.1) 0%, rgba(37,99,235,0.04) 100%)",
-                    border: "1px solid rgba(61,142,255,0.25)",
-                    borderLeft: "4px solid #3d8eff",
+                      "linear-gradient(180deg, rgba(2,6,14,0.15) 0%, rgba(2,6,14,0.55) 45%, rgba(2,6,14,0.96) 100%)",
                   }}
-                >
-                  <div className="flex items-start gap-3 sm:gap-3.5">
-                    <div className="mt-0.5 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded-xl text-primary border border-primary">
-                      <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-primary">
-                        In a Nutshell
+                />
+                <div
+                  className="absolute inset-x-0 top-0 h-px"
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
+                />
+
+                <div className="relative z-10 flex h-full min-h-[320px] sm:min-h-[420px] flex-col justify-end p-5 sm:p-8 md:p-12">
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/50 bg-primary/15 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary backdrop-blur-md">
+                      <Sparkles className="h-3 w-3" />
+                      {storyLabel}
+                    </span>
+                    {blog.tags.slice(1).map((t) => (
+                      <Link
+                        key={t}
+                        to={`/blogs?tag=${t}`}
+                        className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/30 px-2.5 py-1 text-[11px] text-white/75 backdrop-blur-md hover:border-primary/40 hover:text-primary"
+                      >
+                        <Tag className="h-3 w-3" />
+                        {t}
+                      </Link>
+                    ))}
+                  </div>
+
+                  <h1 className="max-w-4xl text-balance text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.12]">
+                    {blog.title}
+                  </h1>
+
+                  <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-white/70">
+                    <span className="inline-flex items-center gap-2">
+                      <span
+                        className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-black text-white"
+                        style={{ background: "linear-gradient(135deg, #3d8eff, #818cf8)" }}
+                      >
+                        {profile.hero.initials}
                       </span>
-                      <p className="mt-1 text-xs sm:text-sm md:text-base leading-relaxed text-white/90">
-                        {blog.summary}
-                      </p>
-                    </div>
+                      {profile.name}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Calendar className="h-4 w-4 text-primary" />
+                      <time dateTime={blog.date}>{formatDate(blog.date)}</time>
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-primary font-medium">
+                      <Clock className="h-4 w-4" />
+                      {readMin} min read
+                    </span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <BookOpen className="h-4 w-4 text-primary/80" />
+                      {words.toLocaleString()} words
+                    </span>
+                    {blog.image && (
+                      <button
+                        type="button"
+                        onClick={() => setLightboxImg({ src: blog.image!, alt: blog.title })}
+                        className="inline-flex items-center gap-1.5 text-white/60 hover:text-primary"
+                      >
+                        <ZoomIn className="h-4 w-4" /> Expand cover
+                      </button>
+                    )}
                   </div>
                 </div>
-              </Reveal>
-            )}
+              </div>
+            </header>
+          </Reveal>
 
-            {/* Article Content */}
-            <Reveal delay={0.06}>
+          <div className="mt-8 lg:mt-12 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_15.5rem] gap-8 xl:gap-12">
+            <div className="min-w-0">
+              {blog.summary && (
+                <Reveal delay={0.05}>
+                  <div
+                    className="mb-8 rounded-2xl p-5 sm:p-6 relative overflow-hidden"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(61,142,255,0.12) 0%, rgba(37,99,235,0.04) 100%)",
+                      border: "1px solid rgba(61,142,255,0.28)",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-x-0 top-0 h-px"
+                      style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
+                    />
+                    <div className="flex items-start gap-3.5">
+                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary border border-primary/40 bg-primary/10">
+                        <Zap className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <span className="text-[11px] font-bold uppercase tracking-widest text-primary">In a nutshell</span>
+                        <p className="mt-1.5 text-sm sm:text-base leading-relaxed text-white/90">{blog.summary}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              )}
+
               <div
-                className="rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-12 shadow-2xl shadow-black/40 overflow-hidden"
+                className="blog-article relative z-[1] rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-9 md:p-12"
                 style={{
-                  background: "rgba(10,18,36,0.6)",
-                  border: "1px solid rgba(61,142,255,0.18)",
-                  backdropFilter: "blur(14px)",
+                  background: "linear-gradient(180deg, rgba(10,18,36,0.92) 0%, rgba(6,12,26,0.92) 100%)",
+                  border: "1px solid rgba(61,142,255,0.2)",
+                  boxShadow: "0 24px 60px -20px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
                 }}
               >
                 <BlogContent
                   content={blog.content}
+                  headings={toc}
                   onImageClick={(src, alt) => setLightboxImg({ src, alt })}
                 />
               </div>
-            </Reveal>
 
-            {/* Bottom Post Navigation & Engagement CTA (2-column layout) */}
-            <Reveal delay={0.08}>
-              <div
-                className="mt-8 sm:mt-10 rounded-2xl p-5 sm:p-6 sm:px-7 relative overflow-hidden shadow-xl border border-line bg-[#060b18]/85 backdrop-blur-md"
-              >
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
-                  {/* Column 1: Info */}
-                  <div className="flex items-center gap-3.5 text-center sm:text-left">
-                    <div className="hidden sm:flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-primary border border-primary bg-primary/5 shadow-sm">
-                      <Sparkles className="h-5 w-5" />
+              <Reveal delay={0.08}>
+                <div
+                  className="mt-10 overflow-hidden rounded-2xl p-6 sm:p-8 relative"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(61,142,255,0.12), rgba(6,11,24,0.9))",
+                    border: "1px solid rgba(61,142,255,0.25)",
+                  }}
+                >
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
+                    <div className="flex items-center gap-4 text-center sm:text-left">
+                      <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-primary border border-primary/40 bg-primary/10">
+                        <Sparkles className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h2 className="text-lg font-bold text-white">Thanks for reading</h2>
+                        <p className="text-sm text-white/60 mt-0.5">A record of how I figured things out — more notes soon.</p>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-base sm:text-lg font-bold text-white flex items-center justify-center sm:justify-start gap-2">
-                        <Sparkles className="h-4 w-4 text-primary sm:hidden inline" />
-                        Thanks for reading!
-                      </h2>
-                      <p className="text-xs sm:text-sm text-ink-light mt-0.5">
-                        Enjoyed this post? Explore more technical articles or share it.
-                      </p>
+                    <div className="flex items-center gap-3 w-full sm:w-auto justify-center">
+                      <ButtonLink to="/blogs" variant="shine" size="md" className="group justify-center">
+                        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+                        All Posts
+                      </ButtonLink>
+                      <button
+                        type="button"
+                        onClick={() => setShareOpen(true)}
+                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white/80 hover:text-primary hover:border-primary bg-white/5"
+                      >
+                        <Share2 className="h-4 w-4" />
+                        Share
+                      </button>
                     </div>
-                  </div>
-
-                  {/* Column 2: Actions */}
-                  <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto justify-center">
-                    <ButtonLink to="/blogs" variant="shine" size="md" className="group justify-center text-xs sm:text-sm py-2 px-4">
-                      <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-                      All Posts
-                    </ButtonLink>
-                    <button
-                      type="button"
-                      onClick={() => setShareOpen(true)}
-                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-muted px-4 py-2 text-xs sm:text-sm font-semibold text-white/80 transition-all hover:text-primary hover:border-primary cursor-pointer bg-white/5"
-                    >
-                      <Share2 className="h-4 w-4" />
-                      Share Post
-                    </button>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
+
+            {toc.length > 0 && (
+              <aside className="hidden lg:block">
+                <div className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto pr-1">
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary/80">Chapters</p>
+                  <nav className="relative pl-4 border-l border-white/10 space-y-1">
+                    {toc.map((item, i) => {
+                      const active = activeId === item.id;
+                      return (
+                        <a
+                          key={item.id}
+                          href={`#${item.id}`}
+                          className={cx(
+                            "relative block py-1.5 text-[12px] leading-snug transition-colors",
+                            active ? "text-white font-semibold" : "text-white/40 hover:text-white/80"
+                          )}
+                        >
+                          {active && (
+                            <span className="absolute -left-[17px] top-2 h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_#3d8eff]" />
+                          )}
+                          <span className="font-mono text-[10px] text-primary/70 mr-1.5">{String(i + 1).padStart(2, "0")}</span>
+                          {item.label}
+                        </a>
+                      );
+                    })}
+                  </nav>
+                </div>
+              </aside>
+            )}
           </div>
         </Container>
       </article>

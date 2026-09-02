@@ -1,7 +1,7 @@
 ---
 name: "Esports & Gaming Platform — Distributed Backend & Microservices"
 summary: "High-throughput microservices ecosystem serving 20K+ users with Rust, Tokio, Tonic gRPC, Axum GraphQL Gateway, Java/Spring Boot, PostgreSQL, Redis, and DynamoDB."
-role: "Full-Stack Engineer / Backend Engineer"
+role: "Backend Engineer"
 timeline: "2024 – 2026"
 category: "real-time"
 stackNote: "Rust (Tokio, Axum, Tonic gRPC, async-graphql), Java (Spring Boot, JPA), PostgreSQL, Redis / Valkey, DynamoDB, AWS SQS"
