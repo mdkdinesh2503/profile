@@ -27,6 +27,8 @@ import {
   Download,
   Terminal,
   Cpu,
+  List,
+  ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -243,7 +245,7 @@ function CodeBlock({
 function PullQuote({ children }: { children?: React.ReactNode }) {
   return (
     <figure
-      className="my-7 sm:my-9 relative overflow-hidden rounded-2xl px-5 sm:px-8 py-5 sm:py-7"
+      className="my-7 sm:my-9 relative overflow-hidden rounded-2xl pl-5 sm:pl-8 pr-12 sm:pr-14 py-5 sm:py-7"
       style={{
         background: "linear-gradient(135deg, rgba(61,142,255,0.16) 0%, rgba(129,140,248,0.06) 100%)",
         border: "1px solid rgba(61,142,255,0.35)",
@@ -254,8 +256,8 @@ function PullQuote({ children }: { children?: React.ReactNode }) {
         className="absolute left-0 top-0 bottom-0 w-[4px]"
         style={{ background: "linear-gradient(180deg, #38bdf8, #3d8eff, #818cf8)" }}
       />
-      <Quote className="absolute top-3 right-4 h-10 w-10 text-primary/20" aria-hidden />
-      <blockquote className="relative m-0 text-[1.05rem] sm:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
+      <Quote className="absolute top-3 right-3 h-6 w-6 sm:h-10 sm:w-10 text-primary/15 sm:text-primary/20 pointer-events-none" aria-hidden />
+      <blockquote className="relative m-0 text-base sm:text-[1.05rem] md:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
         {children}
       </blockquote>
     </figure>
@@ -304,7 +306,7 @@ function BlogContent({
           );
         },
         h1: ({ children, ...props }) => (
-          <h1 {...props} className="mt-10 mb-5 text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 {...props} className="mt-10 mb-5 text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
             {children}
           </h1>
         ),
@@ -315,7 +317,7 @@ function BlogContent({
             <h2
               {...props}
               id={id}
-              className="group relative mt-5 mb-3 scroll-mt-28 first:mt-0 flex items-start gap-3 sm:gap-4 text-xl sm:text-2xl md:text-[1.7rem] font-bold text-white"
+              className="group relative mt-5 mb-3 scroll-mt-28 first:mt-0 flex items-start gap-3 sm:gap-4 text-lg sm:text-xl md:text-2xl lg:text-[1.7rem] font-bold text-white"
             >
               <span
                 className="mt-1 shrink-0 font-mono text-[11px] sm:text-xs font-bold tracking-[0.18em] text-primary"
@@ -328,7 +330,7 @@ function BlogContent({
           );
         },
         h3: ({ children, ...props }) => (
-          <h3 {...props} className="mt-8 mb-3 flex items-center gap-2 text-lg font-bold text-white/95">
+          <h3 {...props} className="mt-8 mb-3 flex items-center gap-2 text-base sm:text-lg font-bold text-white/95">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             {children}
           </h3>
@@ -347,7 +349,7 @@ function BlogContent({
           return <CodeBlock className={className}>{children}</CodeBlock>;
         },
         p: ({ children }) => (
-          <p className="blog-beat my-2.5 sm:my-3 leading-[1.85] text-white/78 text-[0.98rem] sm:text-[1.05rem]">
+          <p className="blog-beat my-2.5 sm:my-3 leading-[1.85] text-white/78 text-[0.92rem] sm:text-[0.98rem] md:text-[1.05rem]">
             {children}
           </p>
         ),
@@ -402,6 +404,97 @@ function BlogContent({
     >
       {content}
     </ReactMarkdown>
+  );
+}
+
+/* ── Reading Progress Bar ── */
+function ReadingProgressBar({ progress }: { progress: number }) {
+  return (
+    <div className="fixed left-0 right-0 top-0 z-50 h-[3px] bg-white/5" aria-hidden>
+      <div
+        className="h-full relative overflow-visible transition-all duration-200"
+        style={{ width: `${progress * 100}%` }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(90deg, #38bdf8, #3d8eff, #60a5fa)" }}
+        />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-5 w-20 blur-md bg-primary opacity-90" />
+      </div>
+    </div>
+  );
+}
+
+/* ── Mobile TOC accordion ── */
+function MobileToc({
+  toc,
+  activeId,
+}: {
+  toc: { id: string; label: string }[];
+  activeId: string;
+}) {
+  const [open, setOpen] = useState(false);
+  if (toc.length === 0) return null;
+
+  const active = toc.find((t) => t.id === activeId);
+  const activeLabel = active?.label ?? toc[0]?.label ?? "Chapters";
+
+  return (
+    <div className="lg:hidden mb-6">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="flex w-full items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/8 px-4 py-3 text-sm font-semibold text-white"
+        aria-expanded={open}
+      >
+        <span className="flex items-center gap-2 min-w-0">
+          <List className="h-4 w-4 text-primary shrink-0" />
+          <span className="truncate text-white/70 text-xs">{open ? "Chapters" : activeLabel}</span>
+        </span>
+        <ChevronDown
+          className={cx("h-4 w-4 text-primary shrink-0 transition-transform duration-200", open && "rotate-180")}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="overflow-hidden"
+          >
+            <nav className="mt-2 rounded-2xl border border-white/10 bg-[#060c1e]/90 backdrop-blur-md px-4 py-3 space-y-0.5">
+              {toc.map((item, i) => {
+                const isActive = activeId === item.id;
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setOpen(false)}
+                    className={cx(
+                      "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13px] leading-snug transition-colors",
+                      isActive
+                        ? "bg-primary/12 text-white font-semibold"
+                        : "text-white/50 hover:text-white/80 hover:bg-white/5"
+                    )}
+                  >
+                    <span className="font-mono text-[10px] text-primary/70 shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1 min-w-0 truncate">{item.label}</span>
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_#3d8eff] shrink-0" />
+                    )}
+                  </a>
+                );
+              })}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
 
@@ -471,13 +564,16 @@ export function BlogDetailPage() {
 
       <AmbientBg />
 
+      {/* Reading progress */}
+      <ReadingProgressBar progress={scrollProgress} />
+
       <ShareModal isOpen={shareOpen} onClose={() => setShareOpen(false)} title={blog.title} summary={blog.summary} />
 
       {lightboxImg && (
         <ImageLightbox src={lightboxImg.src} alt={lightboxImg.alt} onClose={() => setLightboxImg(null)} />
       )}
 
-      <article className="pb-16 pt-4 sm:pt-8">
+      <article className="pb-1 pt-4 sm:pt-8">
         <Container className="max-w-6xl px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="flex flex-wrap items-center justify-between gap-3 pb-5">
@@ -486,7 +582,7 @@ export function BlogDetailPage() {
                   <ArrowLeft className="h-4 w-4" /> Blogs
                 </Link>
                 <ChevronRight className="h-3.5 w-3.5 text-white/30" />
-                <span className="text-white/50 truncate max-w-[180px] sm:max-w-md">{blog.title}</span>
+                <span className="text-white/50 truncate max-w-[140px] xs:max-w-[200px] sm:max-w-md">{blog.title}</span>
               </nav>
               <button
                 type="button"
@@ -555,11 +651,11 @@ export function BlogDetailPage() {
                     ))}
                   </div>
 
-                  <h1 className="max-w-4xl text-balance text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.12]">
+                  <h1 className="max-w-4xl text-balance text-2xl sm:text-3xl md:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.12]">
                     {blog.title}
                   </h1>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-white/70">
+                  <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-white/70">
                     <span className="inline-flex items-center gap-2">
                       <span
                         className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-black text-white"
@@ -598,6 +694,8 @@ export function BlogDetailPage() {
 
           <div className="mt-8 lg:mt-12 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_15.5rem] gap-8 xl:gap-12">
             <div className="min-w-0">
+              <MobileToc toc={toc} activeId={activeId} />
+
               {blog.summary && (
                 <Reveal delay={0.05}>
                   <div
@@ -612,7 +710,7 @@ export function BlogDetailPage() {
                       style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
                     />
                     <div className="flex items-start gap-3.5">
-                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary border border-primary/40 bg-primary/10">
+                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary border border-primary">
                         <Zap className="h-4 w-4" />
                       </div>
                       <div>
@@ -625,7 +723,7 @@ export function BlogDetailPage() {
               )}
 
               <div
-                className="blog-article relative z-[1] rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-9 md:p-12"
+                className="blog-article relative z-[1] rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 md:p-9 lg:p-12"
                 style={{
                   background: "linear-gradient(180deg, rgba(10,18,36,0.92) 0%, rgba(6,12,26,0.92) 100%)",
                   border: "1px solid rgba(61,142,255,0.2)",
@@ -649,7 +747,7 @@ export function BlogDetailPage() {
                 >
                   <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
                     <div className="flex items-center gap-4 text-center sm:text-left">
-                      <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-primary border border-primary/40 bg-primary/10">
+                      <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-primary border border-primary">
                         <Sparkles className="h-5 w-5" />
                       </div>
                       <div>

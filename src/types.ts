@@ -99,10 +99,7 @@ export type Certification = {
   name: string;
   issuer: string;
   year: string;
-  thumbnail: string;
   pdf: string;
-  verifyLink?: string;
-  skills?: string[];
   credentialId?: string;
 };
 
@@ -157,4 +154,4 @@ export type Profile = {
   certifications: Certification[];
   education: EducationItem[];
   resume: Resume;
-};
+};

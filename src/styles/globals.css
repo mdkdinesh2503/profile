@@ -73,6 +73,7 @@ body {
   font-display: swap;
   src: local("Inter Regular"), local("Inter-Regular");
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -80,6 +81,7 @@ body {
   font-display: swap;
   src: local("Inter Medium"), local("Inter-Medium");
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -95,6 +97,7 @@ body {
 .will-change-transform {
   will-change: transform;
 }
+
 .will-change-opacity {
   will-change: opacity;
 }

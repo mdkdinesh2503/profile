@@ -2,7 +2,6 @@ import type { Profile } from "@/types";
 import { certifications } from "./certifications";
 import { experience, getYearsExperience } from "./experience";
 
-
 export const profile: Profile = {
   name: "Dinesh Kumar M",
   role: "Software Engineer",

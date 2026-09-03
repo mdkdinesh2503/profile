@@ -46,12 +46,12 @@ const projectSlugs = projectFiles.map((f) => slugFromPath(f));
 
 // Priority levels for sitemap
 const staticPaths = [
-  { path: "/",           changefreq: "weekly",  priority: "1.0" },
-  { path: "/projects",   changefreq: "weekly",  priority: "0.9" },
+  { path: "/", changefreq: "weekly", priority: "1.0" },
+  { path: "/projects", changefreq: "weekly", priority: "0.9" },
   { path: "/experience", changefreq: "monthly", priority: "0.9" },
-  { path: "/blogs",      changefreq: "weekly",  priority: "0.8" },
-  { path: "/resume",     changefreq: "monthly", priority: "0.8" },
-  { path: "/contact",    changefreq: "monthly", priority: "0.7" },
+  { path: "/blogs", changefreq: "weekly", priority: "0.8" },
+  { path: "/resume", changefreq: "monthly", priority: "0.8" },
+  { path: "/contact", changefreq: "monthly", priority: "0.7" },
 ];
 
 const blogUrls = blogSlugs.map((s) => ({
@@ -72,16 +72,16 @@ const lastmod = new Date().toISOString().slice(0, 10);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allUrls
-  .map(
-    ({ path, changefreq, priority }) =>
-      `  <url>
+    .map(
+      ({ path, changefreq, priority }) =>
+        `  <url>
     <loc>${SITE_URL}${path}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`
-  )
-  .join("\n")}
+    )
+    .join("\n")}
 </urlset>
 `;
 
