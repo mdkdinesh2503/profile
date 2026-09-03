@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Container, ButtonLink, buttonStyles, cx, ShareModal } from "@/shared/ui";
+import { Container, ButtonLink, ShareModal } from "@/shared/ui";
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { getBlogBySlug } from "@/lib/blogs";
 import { Reveal } from "@/shared/motion/Reveal";
@@ -16,7 +16,6 @@ import {
   Sparkles,
   Calendar,
   Tag,
-  ArrowUp,
   Share2,
   Copy,
   Quote,
@@ -27,8 +26,6 @@ import {
   Download,
   Terminal,
   Cpu,
-  List,
-  ChevronDown,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -49,13 +46,6 @@ function slugifyHeading(raw: string) {
     .replace(/\s+/g, "-");
 }
 
-function extractToc(markdown: string) {
-  return [...markdown.matchAll(/^##\s+(.+)$/gm)].map((m) => {
-    const label = m[1].trim();
-    return { id: slugifyHeading(label), label };
-  });
-}
-
 function headingText(children: React.ReactNode): string {
   if (typeof children === "string") return children;
   if (Array.isArray(children)) return children.map(headingText).join("");
@@ -70,15 +60,15 @@ function AmbientBg() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
       <div
-        className="absolute left-1/2 top-0 h-[350px] w-[500px] sm:h-[700px] sm:w-[980px] -translate-x-1/2 -translate-y-1/3 rounded-full blur-[110px] sm:blur-[150px] opacity-35"
+        className="absolute left-1/2 top-0 h-[280px] w-[420px] sm:h-[560px] sm:w-[780px] md:h-[700px] md:w-[980px] -translate-x-1/2 -translate-y-1/3 rounded-full blur-[90px] sm:blur-[120px] md:blur-[150px] opacity-35"
         style={{ background: "radial-gradient(circle, #3d8eff 0%, #2563eb 40%, transparent 70%)" }}
       />
       <div
-        className="absolute top-1/3 right-0 h-[300px] w-[300px] sm:h-[520px] sm:w-[520px] translate-x-1/3 rounded-full blur-[100px] opacity-20"
+        className="absolute top-1/3 right-0 h-[240px] w-[240px] sm:h-[420px] sm:w-[420px] md:h-[520px] md:w-[520px] translate-x-1/3 rounded-full blur-[80px] sm:blur-[100px] opacity-20"
         style={{ background: "radial-gradient(circle, #38bdf8 0%, #818cf8 50%, transparent 70%)" }}
       />
       <div
-        className="absolute bottom-0 left-1/4 h-[280px] w-[340px] sm:h-[500px] sm:w-[600px] rounded-full blur-[130px] opacity-15"
+        className="absolute bottom-0 left-1/4 h-[220px] w-[280px] sm:h-[400px] sm:w-[480px] md:h-[500px] md:w-[600px] rounded-full blur-[100px] sm:blur-[130px] opacity-15"
         style={{ background: "radial-gradient(circle, #1d4ed8 0%, transparent 70%)" }}
       />
       <div
@@ -177,7 +167,7 @@ function CodeBlock({
 
   return (
     <div
-      className="group relative my-6 sm:my-8 rounded-2xl overflow-hidden"
+      className="group relative my-5 sm:my-6 md:my-8 rounded-2xl overflow-hidden"
       style={{
         background: "linear-gradient(180deg, #050b18 0%, #030712 100%)",
         border: "1px solid rgba(61,142,255,0.35)",
@@ -232,7 +222,7 @@ function CodeBlock({
       >
         <pre
           ref={ref}
-          className="p-4 sm:p-6 text-xs sm:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
+          className="p-3 sm:p-5 md:p-6 text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
           style={{ margin: 0, letterSpacing: "0.02em" }}
         >
           {children}
@@ -245,7 +235,7 @@ function CodeBlock({
 function PullQuote({ children }: { children?: React.ReactNode }) {
   return (
     <figure
-      className="my-7 sm:my-9 relative overflow-hidden rounded-2xl pl-5 sm:pl-8 pr-12 sm:pr-14 py-5 sm:py-7"
+      className="my-6 sm:my-7 md:my-9 relative overflow-hidden rounded-2xl pl-4 sm:pl-6 md:pl-8 pr-10 sm:pr-12 md:pr-14 py-4 sm:py-5 md:py-7"
       style={{
         background: "linear-gradient(135deg, rgba(61,142,255,0.16) 0%, rgba(129,140,248,0.06) 100%)",
         border: "1px solid rgba(61,142,255,0.35)",
@@ -256,8 +246,8 @@ function PullQuote({ children }: { children?: React.ReactNode }) {
         className="absolute left-0 top-0 bottom-0 w-[4px]"
         style={{ background: "linear-gradient(180deg, #38bdf8, #3d8eff, #818cf8)" }}
       />
-      <Quote className="absolute top-3 right-3 h-6 w-6 sm:h-10 sm:w-10 text-primary/15 sm:text-primary/20 pointer-events-none" aria-hidden />
-      <blockquote className="relative m-0 text-base sm:text-[1.05rem] md:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
+      <Quote className="absolute top-3 right-3 h-5 w-5 sm:h-7 sm:w-7 md:h-10 md:w-10 text-primary/15 sm:text-primary/20 pointer-events-none" aria-hidden />
+      <blockquote className="relative m-0 text-sm sm:text-base md:text-[1.05rem] lg:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
         {children}
       </blockquote>
     </figure>
@@ -267,11 +257,9 @@ function PullQuote({ children }: { children?: React.ReactNode }) {
 function BlogContent({
   content,
   onImageClick,
-  headings,
 }: {
   content: string;
   onImageClick: (src: string, alt?: string) => void;
-  headings: { id: string; label: string }[];
 }) {
 
   return (
@@ -293,44 +281,62 @@ function BlogContent({
         img: ({ src, alt }) => {
           if (!src) return null;
           return (
-            <div className="my-6 sm:my-8 overflow-hidden rounded-2xl border border-primary/25 bg-[#060a16] shadow-xl group relative">
-              <div className="relative cursor-zoom-in" onClick={() => onImageClick(src, alt)}>
-                <img src={src} alt={alt || "Illustration"} className="w-full object-contain max-h-[380px] sm:max-h-[520px]" loading="lazy" />
-                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1.5 text-xs font-semibold text-white border border-white/15">
-                    <ZoomIn className="h-3.5 w-3.5 text-primary" /> Click to expand
-                  </span>
+            <figure className="my-6 sm:my-7 md:my-9 overflow-hidden rounded-2xl sm:rounded-[1.5rem] border border-line bg-[#060a16] shadow-2xl shadow-black/40 group relative">
+              <div
+                className="absolute inset-x-0 top-0 h-px z-10"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
+                aria-hidden
+              />
+              <div
+                className="relative cursor-zoom-in flex items-center justify-center overflow-hidden bg-gradient-to-b from-primary/10 via-[#060a16] to-[#04080f] p-1.5 sm:p-3 md:p-4"
+                onClick={() => onImageClick(src, alt)}
+              >
+                <img
+                  src={src}
+                  alt={alt || "Illustration"}
+                  className="w-full object-contain max-h-[300px] sm:max-h-[420px] md:max-h-[520px] rounded-xl sm:rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.015] select-none shadow-xl"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#04080f]/40 via-transparent to-transparent pointer-events-none" aria-hidden />
+                <div className="absolute inset-0 bg-primary/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" aria-hidden />
+                <div className="absolute top-3 sm:top-5 right-3 sm:right-5 flex items-center gap-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 px-3 sm:px-3.5 py-1.5 text-[10px] sm:text-[11px] font-semibold text-white shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0 pointer-events-none">
+                  <ZoomIn className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+                  <span>Click to expand</span>
                 </div>
               </div>
-            </div>
+              {alt && (
+                <figcaption className="flex items-center justify-between gap-3 border-t border-line bg-white/[0.025] px-3.5 sm:px-5 py-2.5 sm:py-3 text-[11px] sm:text-xs">
+                  <span className="flex items-center gap-2 text-white/55 truncate">
+                    <Maximize2 className="h-3.5 w-3.5 text-primary shrink-0" />
+                    <span className="truncate">{alt}</span>
+                  </span>
+                  <span className="text-white/35 font-medium whitespace-nowrap shrink-0">
+                    Tap to expand
+                  </span>
+                </figcaption>
+              )}
+            </figure>
           );
         },
         h1: ({ children, ...props }) => (
-          <h1 {...props} className="mt-10 mb-5 text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          <h1 {...props} className="mt-8 sm:mt-10 mb-4 sm:mb-5 text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight">
             {children}
           </h1>
         ),
         h2: ({ children, ...props }) => {
           const id = slugifyHeading(headingText(children));
-          const n = String(Math.max(1, headings.findIndex((h) => h.id === id) + 1)).padStart(2, "0");
           return (
             <h2
               {...props}
               id={id}
-              className="group relative mt-5 mb-3 scroll-mt-28 first:mt-0 flex items-start gap-3 sm:gap-4 text-lg sm:text-xl md:text-2xl lg:text-[1.7rem] font-bold text-white"
+              className="group relative mt-6 sm:mt-8 md:mt-10 mb-3 sm:mb-4 scroll-mt-28 first:mt-0 text-lg sm:text-xl md:text-2xl lg:text-[1.7rem] font-bold text-white pb-3 border-b border-white/10"
             >
-              <span
-                className="mt-1 shrink-0 font-mono text-[11px] sm:text-xs font-bold tracking-[0.18em] text-primary"
-                style={{ textShadow: "0 0 12px rgba(61,142,255,0.7)" }}
-              >
-                {n}
-              </span>
-              <span className="flex-1 pb-3 border-b border-white/10">{children}</span>
+              {children}
             </h2>
           );
         },
         h3: ({ children, ...props }) => (
-          <h3 {...props} className="mt-8 mb-3 flex items-center gap-2 text-base sm:text-lg font-bold text-white/95">
+          <h3 {...props} className="mt-6 sm:mt-8 mb-2 sm:mb-3 flex items-center gap-2 text-[15px] sm:text-base md:text-lg font-bold text-white/95">
             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             {children}
           </h3>
@@ -349,22 +355,22 @@ function BlogContent({
           return <CodeBlock className={className}>{children}</CodeBlock>;
         },
         p: ({ children }) => (
-          <p className="blog-beat my-2.5 sm:my-3 leading-[1.85] text-white/78 text-[0.92rem] sm:text-[0.98rem] md:text-[1.05rem]">
+          <p className="blog-beat my-2 sm:my-2.5 md:my-3 leading-[1.75] sm:leading-[1.85] text-white/78 text-[0.88rem] sm:text-[0.92rem] md:text-[0.98rem] lg:text-[1.05rem]">
             {children}
           </p>
         ),
-        ul: ({ children }) => <ul className="my-4 space-y-2.5 pl-1">{children}</ul>,
+        ul: ({ children }) => <ul className="my-3 sm:my-4 space-y-2 sm:space-y-2.5 pl-1">{children}</ul>,
         ol: ({ children }) => (
-          <ol className="my-4 space-y-2 pl-6 list-decimal text-white/80">{children}</ol>
+          <ol className="my-3 sm:my-4 space-y-1.5 sm:space-y-2 pl-5 sm:pl-6 list-decimal text-white/80 text-[0.88rem] sm:text-[0.95rem]">{children}</ol>
         ),
         li: ({ children }) => (
-          <li className="flex items-start gap-3 text-white/80 leading-relaxed">
-            <span className="mt-[9px] shrink-0 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_#3d8eff]" />
+          <li className="flex items-start gap-2.5 sm:gap-3 text-white/80 leading-relaxed text-[0.88rem] sm:text-[0.95rem]">
+            <span className="mt-[7px] sm:mt-[9px] shrink-0 h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_#3d8eff]" />
             <span className="flex-1 min-w-0">{children}</span>
           </li>
         ),
         hr: () => (
-          <div className="my-4 flex items-center gap-3" aria-hidden>
+          <div className="my-4 sm:my-6 flex items-center gap-3" aria-hidden>
             <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.45))" }} />
             <span className="h-2 w-2 rotate-45 border border-primary/70 bg-primary/20" />
             <div className="flex-1 h-px" style={{ background: "linear-gradient(90deg, rgba(129,140,248,0.45), transparent)" }} />
@@ -372,14 +378,14 @@ function BlogContent({
         ),
         table: ({ children }) => (
           <div
-            className="my-6 overflow-x-auto rounded-2xl"
+            className="my-5 sm:my-6 overflow-x-auto rounded-2xl"
             style={{
               background: "rgba(4,10,24,0.7)",
               border: "1px solid rgba(61,142,255,0.28)",
               boxShadow: "0 12px 32px -12px rgba(0,0,0,0.55)",
             }}
           >
-            <table className="w-full min-w-[280px] border-collapse text-sm">{children}</table>
+            <table className="w-full min-w-[280px] border-collapse text-[12px] sm:text-sm">{children}</table>
           </div>
         ),
         thead: ({ children }) => (
@@ -391,12 +397,12 @@ function BlogContent({
           </thead>
         ),
         th: ({ children }) => (
-          <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.14em] text-primary">
+          <th className="px-3 sm:px-4 py-2.5 sm:py-3 text-left text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.12em] sm:tracking-[0.14em] text-primary">
             {children}
           </th>
         ),
         td: ({ children }) => (
-          <td className="px-4 py-3 text-white/80 border-b border-white/[0.06]">{children}</td>
+          <td className="px-3 sm:px-4 py-2.5 sm:py-3 text-white/80 border-b border-white/[0.06] text-[12px] sm:text-sm">{children}</td>
         ),
         strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
         em: ({ children }) => <em className="italic text-sky-200/90">{children}</em>,
@@ -425,121 +431,37 @@ function ReadingProgressBar({ progress }: { progress: number }) {
   );
 }
 
-/* ── Mobile TOC accordion ── */
-function MobileToc({
-  toc,
-  activeId,
-}: {
-  toc: { id: string; label: string }[];
-  activeId: string;
-}) {
-  const [open, setOpen] = useState(false);
-  if (toc.length === 0) return null;
-
-  const active = toc.find((t) => t.id === activeId);
-  const activeLabel = active?.label ?? toc[0]?.label ?? "Chapters";
-
-  return (
-    <div className="lg:hidden mb-6">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between gap-3 rounded-2xl border border-primary/25 bg-primary/8 px-4 py-3 text-sm font-semibold text-white"
-        aria-expanded={open}
-      >
-        <span className="flex items-center gap-2 min-w-0">
-          <List className="h-4 w-4 text-primary shrink-0" />
-          <span className="truncate text-white/70 text-xs">{open ? "Chapters" : activeLabel}</span>
-        </span>
-        <ChevronDown
-          className={cx("h-4 w-4 text-primary shrink-0 transition-transform duration-200", open && "rotate-180")}
-        />
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22 }}
-            className="overflow-hidden"
-          >
-            <nav className="mt-2 rounded-2xl border border-white/10 bg-[#060c1e]/90 backdrop-blur-md px-4 py-3 space-y-0.5">
-              {toc.map((item, i) => {
-                const isActive = activeId === item.id;
-                return (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={() => setOpen(false)}
-                    className={cx(
-                      "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13px] leading-snug transition-colors",
-                      isActive
-                        ? "bg-primary/12 text-white font-semibold"
-                        : "text-white/50 hover:text-white/80 hover:bg-white/5"
-                    )}
-                  >
-                    <span className="font-mono text-[10px] text-primary/70 shrink-0">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="flex-1 min-w-0 truncate">{item.label}</span>
-                    {isActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_#3d8eff] shrink-0" />
-                    )}
-                  </a>
-                );
-              })}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 export function BlogDetailPage() {
   const { slug } = useParams();
   const blog = slug ? getBlogBySlug(slug) : null;
   const [scrollProgress, setScrollProgress] = useState(0);
   const [shareOpen, setShareOpen] = useState(false);
   const [lightboxImg, setLightboxImg] = useState<{ src: string; alt?: string } | null>(null);
-  const [activeId, setActiveId] = useState("");
-  const toc = useMemo(() => (blog ? extractToc(blog.content) : []), [blog]);
 
   useEffect(() => {
     if (!blog) return;
     const fn = () => {
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docH <= 0 ? 1 : Math.min(1, window.scrollY / docH));
-
-      const headings = toc
-        .map((t) => document.getElementById(t.id))
-        .filter((el): el is HTMLElement => Boolean(el));
-      let current = headings[0]?.id ?? "";
-      for (const el of headings) {
-        if (el.getBoundingClientRect().top < 140) current = el.id;
-      }
-      setActiveId(current);
     };
     window.addEventListener("scroll", fn, { passive: true });
     fn();
     return () => window.removeEventListener("scroll", fn);
-  }, [blog, toc]);
+  }, [blog]);
 
   if (!blog) {
     return (
       <article className="pt-12 sm:pt-16 pb-24">
         <Container>
           <div
-            className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-16 text-center"
+            className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-16 text-center shadow-xl"
             style={{ background: "rgba(10,18,36,0.6)", border: "1px solid rgba(61,142,255,0.2)" }}
           >
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30">
-              <BookOpen className="h-7 w-7 text-primary" />
+            <div className="mx-auto mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30">
+              <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
             </div>
-            <h1 className="text-2xl font-bold text-white">Post Not Found</h1>
-            <p className="mt-2 text-muted-1 text-sm">This blog or note doesn't exist yet.</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">Post Not Found</h1>
+            <p className="mt-2 text-muted-1 text-xs sm:text-sm">This blog or note doesn't exist yet.</p>
             <ButtonLink to="/blogs" variant="soft" size="md" className="mt-6">
               <ArrowLeft className="h-4 w-4" /> Back to Blogs
             </ButtonLink>
@@ -573,117 +495,195 @@ export function BlogDetailPage() {
         <ImageLightbox src={lightboxImg.src} alt={lightboxImg.alt} onClose={() => setLightboxImg(null)} />
       )}
 
-      <article className="pb-1 pt-4 sm:pt-8">
-        <Container className="max-w-6xl px-4 sm:px-6 lg:px-8">
+      <article className="pb-10 pt-4 sm:pt-8 md:pt-12">
+        <Container className="max-w-4xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="flex flex-wrap items-center justify-between gap-3 pb-5">
-              <nav aria-label="Breadcrumb" className="inline-flex items-center gap-2 text-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 pb-4 sm:pb-5">
+              <nav aria-label="Breadcrumb" className="inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
                 <Link to="/blogs" className="flex items-center gap-1 font-medium text-primary hover:text-primary/80">
-                  <ArrowLeft className="h-4 w-4" /> Blogs
+                  <ArrowLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Blogs
                 </Link>
-                <ChevronRight className="h-3.5 w-3.5 text-white/30" />
-                <span className="text-white/50 truncate max-w-[140px] xs:max-w-[200px] sm:max-w-md">{blog.title}</span>
+                <ChevronRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-white/30" />
+                <span className="text-white/50 truncate max-w-[120px] xs:max-w-[180px] sm:max-w-[260px] md:max-w-md">{blog.title}</span>
               </nav>
               <button
                 type="button"
                 onClick={() => setShareOpen(true)}
-                className={cx(
-                  buttonStyles.base,
-                  "rounded-xl px-4 py-1.5 text-sm gap-2 border text-muted-2 border-white/10 hover:border-primary hover:text-primary bg-white/5"
-                )}
+                className={
+                  "rounded-xl px-3 sm:px-4 py-1.5 text-xs sm:text-sm gap-1.5 sm:gap-2 border text-muted-2 border-white/10 hover:border-primary hover:text-primary bg-white/5 inline-flex items-center font-medium"
+                }
               >
                 <Share2 className="h-3.5 w-3.5" />
-                Share
+                <span className="hidden sm:inline">Share</span>
               </button>
             </div>
           </Reveal>
 
-          {/* Cinematic hero */}
+          {/* Blog Cover Hero */}
           <Reveal delay={0.04}>
             <header
-              className="relative overflow-hidden rounded-[1.75rem] sm:rounded-[2.25rem]"
+              className="relative overflow-hidden rounded-[1.25rem] sm:rounded-[1.75rem] md:rounded-[2.25rem] shadow-2xl shadow-black/40"
               style={{
-                border: "1px solid rgba(61,142,255,0.28)",
-                boxShadow: "0 30px 80px -24px rgba(0,0,0,0.75), 0 0 40px rgba(61,142,255,0.12)",
+                border: "1px solid rgba(61,142,255,0.22)",
+                boxShadow: "0 36px 80px -28px rgba(0,0,0,0.85), 0 0 48px rgba(61,142,255,0.08)",
               }}
             >
-              <div className="relative min-h-[320px] sm:min-h-[420px] md:min-h-[480px]">
-                {blog.image ? (
+              <div
+                className="absolute inset-x-0 top-0 h-px z-20"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.75), transparent)" }}
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 h-px z-20"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(129,140,248,0.5), transparent)" }}
+              />
+
+              {/* Cover Image Section */}
+              {blog.image ? (
+                <div
+                  className="relative cursor-zoom-in flex items-center justify-center overflow-hidden bg-gradient-to-b from-primary/10 via-[#060a16] to-[#04080f]"
+                  onClick={() => setLightboxImg({ src: blog.image!, alt: blog.title })}
+                >
                   <img
                     src={blog.image}
                     alt={blog.title}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="w-full object-cover max-h-[220px] sm:max-h-[320px] md:max-h-[420px] transition-transform duration-700 ease-out hover:scale-[1.02] select-none"
                     loading="eager"
                   />
-                ) : (
-                  <div
-                    className="absolute inset-0"
-                    style={{ background: "linear-gradient(135deg, #0b1730, #122044 50%, #0a1020)" }}
-                  />
-                )}
+                  <div className="absolute inset-0 bg-primary/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                  <div className="absolute top-3 sm:top-5 right-3 sm:right-5 flex items-center gap-2 pointer-events-none opacity-0 hover-target:opacity-100 transition-opacity duration-300">
+                    <span className="hidden sm:flex items-center gap-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 px-3.5 py-1.5 text-[11px] font-semibold text-white shadow-2xl">
+                      <ZoomIn className="h-3.5 w-3.5 text-primary" /> Click to zoom
+                    </span>
+                  </div>
+                </div>
+              ) : (
                 <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(2,6,14,0.15) 0%, rgba(2,6,14,0.55) 45%, rgba(2,6,14,0.96) 100%)",
-                  }}
+                  className="w-full max-h-[220px] sm:max-h-[320px] md:max-h-[420px] min-h-[180px] sm:min-h-[260px] md:min-h-[320px] flex items-center justify-center relative overflow-hidden"
+                  style={{ background: "linear-gradient(135deg, #0b1730, #122044 50%, #0a1020)" }}
+                >
+                  <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px] opacity-30"
+                    style={{ background: "radial-gradient(circle, #3d8eff 0%, transparent 70%)" }}
+                  />
+                </div>
+              )}
+
+              {/* Divider strip between image and content */}
+              <div
+                className="h-[2px] w-full relative z-10"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent 0%, rgba(61,142,255,0.55) 35%, rgba(129,140,248,0.55) 65%, transparent 100%)",
+                  boxShadow: "0 0 14px rgba(61,142,255,0.4)",
+                }}
+              />
+
+              {/* Content Section */}
+              <div
+                className="relative z-10 p-4 sm:p-7 md:p-10 lg:p-12 overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(8,14,30,0.96) 0%, rgba(6,11,24,0.985) 100%)",
+                }}
+              >
+                {/* Decorative corner glows */}
+                <div
+                  className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full blur-[110px] opacity-30"
+                  style={{ background: "radial-gradient(circle, #3d8eff 0%, transparent 70%)" }}
+                  aria-hidden
                 />
                 <div
-                  className="absolute inset-x-0 top-0 h-px"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
+                  className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full blur-[110px] opacity-20"
+                  style={{ background: "radial-gradient(circle, #818cf8 0%, transparent 70%)" }}
+                  aria-hidden
                 />
 
-                <div className="relative z-10 flex h-full min-h-[320px] sm:min-h-[420px] flex-col justify-end p-5 sm:p-8 md:p-12">
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/50 bg-primary/15 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-primary backdrop-blur-md">
-                      <Sparkles className="h-3 w-3" />
-                      {storyLabel}
+                {/* Top meta: category + tags */}
+                <div className="relative flex flex-wrap items-center gap-1.5 sm:gap-2 mb-4 sm:mb-6 md:mb-7">
+                  <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-primary backdrop-blur px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.22em] text-primary">
+                    <Sparkles className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
+                    {storyLabel}
+                  </span>
+                  {blog.tags.slice(1).map((t) => (
+                    <Link
+                      key={t}
+                      to={`/blogs?tag=${t}`}
+                      className="group inline-flex items-center gap-0.5 sm:gap-1 rounded-full border border-white/10 bg-white/[0.04] px-2 sm:px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] text-white/65 backdrop-blur transition-all duration-200 hover:border-primary/40 hover:text-primary hover:bg-primary/5"
+                    >
+                      <Tag className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-primary/60 group-hover:text-primary/90 transition-colors" />
+                      {t}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Title */}
+                <h1 className="relative max-w-4xl text-balance text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.15] sm:leading-[1.1]">
+                  {blog.title}
+                  <span
+                    className="block mt-3 sm:mt-4 h-[3px] w-16 sm:w-24 rounded-full"
+                    style={{
+                      background: "linear-gradient(90deg, #38bdf8, #3d8eff, #818cf8)",
+                      boxShadow: "0 0 12px rgba(61,142,255,0.6)",
+                    }}
+                    aria-hidden
+                  />
+                </h1>
+
+                {/* Bottom meta row */}
+                <div className="relative mt-5 sm:mt-7 md:mt-8 flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4">
+                  {/* Author chip */}
+                  <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-2xl border border-muted-1 bg-white/[0.04] px-3 py-2 sm:px-4 sm:py-2.5 backdrop-blur">
+                    <span
+                      className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-black text-white shadow-lg"
+                      style={{ background: "linear-gradient(135deg, #3d8eff, #818cf8)" }}
+                    >
+                      {profile.hero.initials}
                     </span>
-                    {blog.tags.slice(1).map((t) => (
-                      <Link
-                        key={t}
-                        to={`/blogs?tag=${t}`}
-                        className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/30 px-2.5 py-1 text-[11px] text-white/75 backdrop-blur-md hover:border-primary/40 hover:text-primary"
-                      >
-                        <Tag className="h-3 w-3" />
-                        {t}
-                      </Link>
-                    ))}
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-[12px] sm:text-sm font-semibold text-white">
+                        {profile.name}
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] text-white/45 font-medium uppercase tracking-wider">
+                        Author
+                      </span>
+                    </div>
                   </div>
 
-                  <h1 className="max-w-4xl text-balance text-2xl sm:text-3xl md:text-5xl lg:text-[3.35rem] font-extrabold tracking-tight text-white leading-[1.12]">
-                    {blog.title}
-                  </h1>
-
-                  <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-white/70">
-                    <span className="inline-flex items-center gap-2">
-                      <span
-                        className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-black text-white"
-                        style={{ background: "linear-gradient(135deg, #3d8eff, #818cf8)" }}
-                      >
-                        {profile.hero.initials}
-                      </span>
-                      {profile.name}
-                    </span>
+                  {/* Meta stats chip */}
+                  <div className="inline-flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1.5 text-[11px] sm:text-xs md:text-sm text-white/65">
                     <span className="inline-flex items-center gap-1.5">
-                      <Calendar className="h-4 w-4 text-primary" />
+                      <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                       <time dateTime={blog.date}>{formatDate(blog.date)}</time>
                     </span>
-                    <span className="inline-flex items-center gap-1.5 text-primary font-medium">
-                      <Clock className="h-4 w-4" />
+                    <span
+                      className="hidden sm:inline-block h-1 w-1 rounded-full bg-white/20"
+                      aria-hidden
+                    />
+                    <span className="inline-flex items-center gap-1.5 text-primary font-semibold">
+                      <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       {readMin} min read
                     </span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <BookOpen className="h-4 w-4 text-primary/80" />
-                      {words.toLocaleString()} words
+                    <span
+                      className="hidden sm:inline-block h-1 w-1 rounded-full bg-white/20"
+                      aria-hidden
+                    />
+                    <span className="inline-flex items-center gap-1.5 text-white/55">
+                      <BookOpen className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary/70" />
+                      <span className="font-medium">{words.toLocaleString()}</span>
+                      <span className="text-white/40">words</span>
                     </span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex-1 min-w-[140px] sm:flex-none sm:ml-auto flex items-center justify-end gap-2 sm:gap-2.5">
                     {blog.image && (
                       <button
                         type="button"
                         onClick={() => setLightboxImg({ src: blog.image!, alt: blog.title })}
-                        className="inline-flex items-center gap-1.5 text-white/60 hover:text-primary"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] sm:text-xs font-semibold text-white/70 transition-all duration-200 hover:text-primary hover:border-primary"
                       >
-                        <ZoomIn className="h-4 w-4" /> Expand cover
+                        <ZoomIn className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <span className="hidden sm:inline">Expand cover</span>
+                        <span className="sm:hidden">Cover</span>
                       </button>
                     )}
                   </div>
@@ -692,116 +692,82 @@ export function BlogDetailPage() {
             </header>
           </Reveal>
 
-          <div className="mt-8 lg:mt-12 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_15.5rem] gap-8 xl:gap-12">
-            <div className="min-w-0">
-              <MobileToc toc={toc} activeId={activeId} />
-
-              {blog.summary && (
-                <Reveal delay={0.05}>
-                  <div
-                    className="mb-8 rounded-2xl p-5 sm:p-6 relative overflow-hidden"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(61,142,255,0.12) 0%, rgba(37,99,235,0.04) 100%)",
-                      border: "1px solid rgba(61,142,255,0.28)",
-                    }}
-                  >
-                    <div
-                      className="absolute inset-x-0 top-0 h-px"
-                      style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
-                    />
-                    <div className="flex items-start gap-3.5">
-                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-primary border border-primary">
-                        <Zap className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-primary">In a nutshell</span>
-                        <p className="mt-1.5 text-sm sm:text-base leading-relaxed text-white/90">{blog.summary}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              )}
-
-              <div
-                className="blog-article relative z-[1] rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-6 md:p-9 lg:p-12"
-                style={{
-                  background: "linear-gradient(180deg, rgba(10,18,36,0.92) 0%, rgba(6,12,26,0.92) 100%)",
-                  border: "1px solid rgba(61,142,255,0.2)",
-                  boxShadow: "0 24px 60px -20px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
-                }}
-              >
-                <BlogContent
-                  content={blog.content}
-                  headings={toc}
-                  onImageClick={(src, alt) => setLightboxImg({ src, alt })}
-                />
-              </div>
-
-              <Reveal delay={0.08}>
+          <div className="mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full min-w-0 max-w-none">
+            {blog.summary && (
+              <Reveal delay={0.05}>
                 <div
-                  className="mt-10 overflow-hidden rounded-2xl p-6 sm:p-8 relative"
+                  className="mb-6 sm:mb-7 md:mb-8 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 relative overflow-hidden"
                   style={{
-                    background: "linear-gradient(135deg, rgba(61,142,255,0.12), rgba(6,11,24,0.9))",
-                    border: "1px solid rgba(61,142,255,0.25)",
+                    background: "linear-gradient(135deg, rgba(61,142,255,0.12) 0%, rgba(37,99,235,0.04) 100%)",
+                    border: "1px solid rgba(61,142,255,0.28)",
                   }}
                 >
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-5">
-                    <div className="flex items-center gap-4 text-center sm:text-left">
-                      <div className="hidden sm:flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-primary border border-primary">
-                        <Sparkles className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h2 className="text-lg font-bold text-white">Thanks for reading</h2>
-                        <p className="text-sm text-white/60 mt-0.5">A record of how I figured things out — more notes soon.</p>
-                      </div>
+                  <div
+                    className="absolute inset-x-0 top-0 h-px"
+                    style={{ background: "linear-gradient(90deg, transparent, rgba(61,142,255,0.7), transparent)" }}
+                  />
+                  <div className="flex items-start gap-3 sm:gap-3.5">
+                    <div className="mt-0.5 flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-lg sm:rounded-xl text-primary border border-primary">
+                      <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </div>
-                    <div className="flex items-center gap-3 w-full sm:w-auto justify-center">
-                      <ButtonLink to="/blogs" variant="shine" size="md" className="group justify-center">
-                        <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-                        All Posts
-                      </ButtonLink>
-                      <button
-                        type="button"
-                        onClick={() => setShareOpen(true)}
-                        className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 px-4 py-2 text-sm font-semibold text-white/80 hover:text-primary hover:border-primary bg-white/5"
-                      >
-                        <Share2 className="h-4 w-4" />
-                        Share
-                      </button>
+                    <div>
+                      <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-primary">In a nutshell</span>
+                      <p className="mt-1.5 text-sm sm:text-base leading-relaxed text-white/90">{blog.summary}</p>
                     </div>
                   </div>
                 </div>
               </Reveal>
+            )}
+
+            <div
+              className="blog-article relative z-[1] rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem] p-3.5 sm:p-5 md:p-7 lg:p-10 xl:p-12"
+              style={{
+                background: "linear-gradient(180deg, rgba(10,18,36,0.92) 0%, rgba(6,12,26,0.92) 100%)",
+                border: "1px solid rgba(61,142,255,0.2)",
+                boxShadow: "0 20px 52px -18px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.04)",
+              }}
+            >
+              <BlogContent
+                content={blog.content}
+                onImageClick={(src, alt) => setLightboxImg({ src, alt })}
+              />
             </div>
 
-            {toc.length > 0 && (
-              <aside className="hidden lg:block">
-                <div className="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto pr-1">
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary/80">Chapters</p>
-                  <nav className="relative pl-4 border-l border-white/10 space-y-1">
-                    {toc.map((item, i) => {
-                      const active = activeId === item.id;
-                      return (
-                        <a
-                          key={item.id}
-                          href={`#${item.id}`}
-                          className={cx(
-                            "relative block py-1.5 text-[12px] leading-snug transition-colors",
-                            active ? "text-white font-semibold" : "text-white/40 hover:text-white/80"
-                          )}
-                        >
-                          {active && (
-                            <span className="absolute -left-[17px] top-2 h-2 w-2 rounded-full bg-primary shadow-[0_0_10px_#3d8eff]" />
-                          )}
-                          <span className="font-mono text-[10px] text-primary/70 mr-1.5">{String(i + 1).padStart(2, "0")}</span>
-                          {item.label}
-                        </a>
-                      );
-                    })}
-                  </nav>
+            <Reveal delay={0.08}>
+              <div
+                className="mt-8 sm:mt-10 md:mt-12 overflow-hidden rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 relative"
+                style={{
+                  background: "linear-gradient(135deg, rgba(61,142,255,0.12), rgba(6,11,24,0.9))",
+                  border: "1px solid rgba(61,142,255,0.25)",
+                }}
+              >
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-5">
+                  <div className="flex items-center gap-3 sm:gap-4 text-center sm:text-left">
+                    <div className="hidden sm:flex h-11 w-11 md:h-12 md:w-12 shrink-0 items-center justify-center rounded-xl sm:rounded-2xl text-primary border border-primary">
+                      <Sparkles className="h-4.5 w-4.5 sm:h-5 sm:w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-base sm:text-lg md:text-xl font-bold text-white">Thanks for reading</h2>
+                      <p className="text-xs sm:text-sm text-white/60 mt-0.5">A record of how I figured things out — more notes soon.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto justify-center">
+                    <ButtonLink to="/blogs" variant="shine" size="md" className="group justify-center flex-1 sm:flex-none">
+                      <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+                      All Posts
+                    </ButtonLink>
+                    <button
+                      type="button"
+                      onClick={() => setShareOpen(true)}
+                      className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white/80 hover:text-primary hover:border-primary bg-white/5 flex-1 sm:flex-none"
+                    >
+                      <Share2 className="h-4 w-4" />
+                      Share
+                    </button>
+                  </div>
                 </div>
-              </aside>
-            )}
+              </div>
+            </Reveal>
           </div>
         </Container>
       </article>
