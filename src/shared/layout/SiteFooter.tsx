@@ -128,7 +128,7 @@ export function SiteFooter() {
         {/* ── Main Footer Grid ── */}
         <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t pt-4" style={{ borderColor: "rgba(255, 255, 255, 0.07)" }}>
           {/* Col 1: Logo & Brand */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 hover:cursor-pointer" onClick={() => window.location.href = '/'}>
             <BrandLogo className="h-9 w-9 rounded-xl" />
             <div>
               <span className="text-base font-extrabold text-white tracking-tight block">

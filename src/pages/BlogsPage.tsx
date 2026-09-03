@@ -535,6 +535,7 @@ export function BlogsPage() {
                         ? {
                           background:
                             "linear-gradient(135deg, #3d8eff, #818cf8)",
+                          color: "white",
                         }
                         : isHovered
                           ? { background: "rgba(61,142,255,0.08)" }
