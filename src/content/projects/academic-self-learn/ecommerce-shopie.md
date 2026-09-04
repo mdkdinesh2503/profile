@@ -8,7 +8,6 @@ stackNote: "Java, Spring Boot, Spring Data JPA, MySQL, REST APIs"
 demoStack: "HTML, CSS, JS"
 originalStack: "Java, Spring Boot, Spring Data JPA, MySQL, REST APIs"
 tags: ["Frontend", "Backend", "Spring-boot", "Spring Data JPA", "Java", "MySQL", "Rest-API"]
-image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Ecom-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Ecom-V2"
 ---

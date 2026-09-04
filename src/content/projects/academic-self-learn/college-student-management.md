@@ -8,7 +8,6 @@ stackNote: "Angular, TypeScript, Java (OOP), Node.js, MySQL, Rest-API"
 demoStack: "HTML, CSS, JS"
 originalStack: "Angular, Java, Node.js, MySQL, Rest-API"
 tags: ["Frontend", "Backend", "Angular", "Node.js", "JSON-Server", "MySQL", "Java", "Rest-API"]
-image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/SMS-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/SMS-V2"
 ---

@@ -6,7 +6,6 @@ timeline: "2024 – 2026"
 category: "real-time"
 stackNote: "Rust (Tokio, Axum, Tonic gRPC, async-graphql), Java (Spring Boot, JPA), PostgreSQL, Redis / Valkey, DynamoDB, AWS SQS"
 tags: ["Rust", "Spring-boot", "Microservices", "gRPC", "GraphQL", "Redis", "PostgreSQL", "DynamoDB", "AWS"]
-image: "/default/Blog.svg"
 ---
 
 ## ⚡ System Overview & Production Scale

@@ -6,7 +6,6 @@ import { Container, ButtonLink, ShareModal } from "@/shared/ui";
 import { PageMeta } from "@/shared/seo/PageMeta";
 import { getBlogBySlug } from "@/lib/blogs";
 import { Reveal } from "@/shared/motion/Reveal";
-import { profile } from "@/data/profile";
 import {
   ArrowLeft,
   BookOpen,
@@ -212,7 +211,7 @@ function CodeBlock({
         </div>
       </div>
       <div
-        className="relative overflow-x-auto"
+        className="relative overflow-x-auto flex justify-center"
         style={{
           backgroundImage: isDiagram
             ? "radial-gradient(circle at 1px 1px, rgba(61,142,255,0.12) 1px, transparent 0)"
@@ -222,7 +221,7 @@ function CodeBlock({
       >
         <pre
           ref={ref}
-          className="p-3 sm:p-5 md:p-6 text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
+          className="inline-block text-left p-3 sm:p-5 md:p-6 text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
           style={{ margin: 0, letterSpacing: "0.02em" }}
         >
           {children}
@@ -235,7 +234,7 @@ function CodeBlock({
 function PullQuote({ children }: { children?: React.ReactNode }) {
   return (
     <figure
-      className="my-6 sm:my-7 md:my-9 relative overflow-hidden rounded-2xl pl-4 sm:pl-6 md:pl-8 pr-10 sm:pr-12 md:pr-14 py-4 sm:py-5 md:py-7"
+      className="my-6 relative overflow-hidden rounded-2xl pl-4 sm:pl-6 md:pl-8 pr-10 sm:pr-12 md:pr-14 py-4 sm:py-5"
       style={{
         background: "linear-gradient(135deg, rgba(61,142,255,0.16) 0%, rgba(129,140,248,0.06) 100%)",
         border: "1px solid rgba(61,142,255,0.35)",
@@ -246,7 +245,7 @@ function PullQuote({ children }: { children?: React.ReactNode }) {
         className="absolute left-0 top-0 bottom-0 w-[4px]"
         style={{ background: "linear-gradient(180deg, #38bdf8, #3d8eff, #818cf8)" }}
       />
-      <Quote className="absolute top-3 right-3 h-5 w-5 sm:h-7 sm:w-7 md:h-10 md:w-10 text-primary/15 sm:text-primary/20 pointer-events-none" aria-hidden />
+      <Quote className="absolute top-3 right-3 h-5 w-5 sm:h-7 sm:w-7 md:h-10 md:w-10 text-primary pointer-events-none" aria-hidden />
       <blockquote className="relative m-0 text-sm sm:text-base md:text-[1.05rem] lg:text-xl font-medium italic leading-relaxed text-white [&_p]:my-0 [&_p]:text-white">
         {children}
       </blockquote>
@@ -413,24 +412,6 @@ function BlogContent({
   );
 }
 
-/* ── Reading Progress Bar ── */
-function ReadingProgressBar({ progress }: { progress: number }) {
-  return (
-    <div className="fixed left-0 right-0 top-0 z-50 h-[3px] bg-white/5" aria-hidden>
-      <div
-        className="h-full relative overflow-visible transition-all duration-200"
-        style={{ width: `${progress * 100}%` }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(90deg, #38bdf8, #3d8eff, #60a5fa)" }}
-        />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-5 w-20 blur-md bg-primary opacity-90" />
-      </div>
-    </div>
-  );
-}
-
 export function BlogDetailPage() {
   const { slug } = useParams();
   const blog = slug ? getBlogBySlug(slug) : null;
@@ -457,12 +438,12 @@ export function BlogDetailPage() {
             className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-16 text-center shadow-xl"
             style={{ background: "rgba(10,18,36,0.6)", border: "1px solid rgba(61,142,255,0.2)" }}
           >
-            <div className="mx-auto mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-primary/15 border border-primary/30">
-              <BookOpen className="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+            <div className="mx-auto mb-5 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-primary text-white">
+              <BookOpen className="h-6 w-6 sm:h-7 sm:w-7" />
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-white">Post Not Found</h1>
             <p className="mt-2 text-muted-1 text-xs sm:text-sm">This blog or note doesn't exist yet.</p>
-            <ButtonLink to="/blogs" variant="soft" size="md" className="mt-6">
+            <ButtonLink to="/blogs" variant="soft" size="md" className="mt-6 text-primary border border-primary hover:text-white hover:border-white">
               <ArrowLeft className="h-4 w-4" /> Back to Blogs
             </ButtonLink>
           </div>
@@ -485,9 +466,6 @@ export function BlogDetailPage() {
       />
 
       <AmbientBg />
-
-      {/* Reading progress */}
-      <ReadingProgressBar progress={scrollProgress} />
 
       <ShareModal isOpen={shareOpen} onClose={() => setShareOpen(false)} title={blog.title} summary={blog.summary} />
 
@@ -630,23 +608,6 @@ export function BlogDetailPage() {
 
                 {/* Bottom meta row */}
                 <div className="relative mt-5 sm:mt-7 md:mt-8 flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 sm:gap-y-4">
-                  {/* Author chip */}
-                  <div className="inline-flex items-center gap-2.5 sm:gap-3 rounded-2xl border border-muted-1 bg-white/[0.04] px-3 py-2 sm:px-4 sm:py-2.5 backdrop-blur">
-                    <span
-                      className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-[10px] sm:text-[11px] font-black text-white shadow-lg"
-                      style={{ background: "linear-gradient(135deg, #3d8eff, #818cf8)" }}
-                    >
-                      {profile.hero.initials}
-                    </span>
-                    <div className="flex flex-col leading-tight">
-                      <span className="text-[12px] sm:text-sm font-semibold text-white">
-                        {profile.name}
-                      </span>
-                      <span className="text-[10px] sm:text-[11px] text-white/45 font-medium uppercase tracking-wider">
-                        Author
-                      </span>
-                    </div>
-                  </div>
 
                   {/* Meta stats chip */}
                   <div className="inline-flex flex-wrap items-center gap-x-3 sm:gap-x-4 gap-y-1.5 text-[11px] sm:text-xs md:text-sm text-white/65">

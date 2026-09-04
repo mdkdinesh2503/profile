@@ -8,7 +8,6 @@ stackNote: "MEAN Stack (MongoDB, Express.js, Angular, Node.js), REST APIs"
 demoStack: "HTML, CSS, JS"
 originalStack: "Angular, Node.js, MongoDB"
 tags: ["Frontend", "Backend", "Angular", "Node.js", "MongoDB", "Express", "Rest-API"]
-image: "/default/Blog.svg"
 demoUrl: "https://mdkdinesh2503.github.io/Travel-V1/"
 repoUrl: "https://github.com/mdkdinesh2503/Travel-V2"
 ---

@@ -6,7 +6,6 @@ timeline: "2024 – 2026"
 category: "real-time"
 stackNote: "Next.js (App Router), TypeScript, NextAuth, Apollo Client, GraphQL, Zustand, React Hook Form, Zod, Tailwind CSS, Angular"
 tags: ["Next.js", "Angular", "React", "GraphQL", "Tailwind CSS"]
-image: "/default/Blog.svg"
 ---
 
 ## ⚡ System Overview & Production Scale

@@ -5,7 +5,6 @@ import {
   Calendar,
   Clock,
   FileText,
-  Sparkles,
   Hash,
   TrendingUp,
   Eye,
@@ -113,7 +112,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
         <div className="relative overflow-hidden rounded-3xl" style={{ minHeight: "clamp(260px, 45vw, 460px)" }}>
 
           {/* ── Full-bleed image layer ── */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 overflow-hidden">
             <picture className="h-full w-full">
               <source
                 srcSet={(b.image ?? DEFAULT_BLOG_IMAGE).replace(/\.jpg$/, ".webp").replace(/\.png$/, ".webp")}
@@ -122,7 +121,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
               <img
                 src={b.image ?? DEFAULT_BLOG_IMAGE}
                 alt=""
-                className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+                className="h-full w-full object-cover filter blur-[2px] brightness-[0.55] transition-all duration-[1.2s] ease-out group-hover:scale-110 group-hover:brightness-[0.45] group-hover:blur-[3px]"
                 loading="eager"
                 decoding="async"
               />
@@ -132,15 +131,7 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(2,4,10,0.97) 0%, rgba(2,4,10,0.75) 40%, rgba(2,4,10,0.2) 75%, rgba(2,4,10,0.0) 100%)",
-              }}
-            />
-            {/* side vignette */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to right, rgba(2,4,10,0.6) 0%, transparent 40%, transparent 60%, rgba(2,4,10,0.3) 100%)",
+                  "linear-gradient(to top, rgba(2,4,10,0.98) 0%, rgba(2,4,10,0.85) 45%, rgba(2,4,10,0.5) 75%, rgba(2,4,10,0.3) 100%)",
               }}
             />
           </div>
@@ -155,16 +146,6 @@ function FeaturedHeroCard({ b }: { b: BlogMeta }) {
             }}
             aria-hidden
           />
-
-          {/* ── Neon corner accent lines ── */}
-          <div className="absolute top-0 left-0 w-16 h-16 z-10 pointer-events-none" aria-hidden>
-            <div className="absolute top-0 left-0 w-8 h-[2px] rounded-r-full" style={{ background: "linear-gradient(90deg, #3d8eff, transparent)" }} />
-            <div className="absolute top-0 left-0 h-8 w-[2px] rounded-b-full" style={{ background: "linear-gradient(180deg, #3d8eff, transparent)" }} />
-          </div>
-          <div className="absolute top-0 right-0 w-16 h-16 z-10 pointer-events-none" aria-hidden>
-            <div className="absolute top-0 right-0 w-8 h-[2px] rounded-l-full" style={{ background: "linear-gradient(270deg, #818cf8, transparent)" }} />
-            <div className="absolute top-0 right-0 h-8 w-[2px] rounded-b-full" style={{ background: "linear-gradient(180deg, #818cf8, transparent)" }} />
-          </div>
 
           {/* ── Floating "FEATURED" badge (top-left) ── */}
           <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-20 flex items-center gap-1.5 sm:gap-2 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 backdrop-blur-md"
@@ -273,15 +254,15 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
       <TiltCard intensity={8} className="h-full">
         <Link
           to={`/blogs/${b.slug}`}
-          className="group relative flex h-full flex-col overflow-hidden rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          className="group relative flex h-full flex-col overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           style={{ minHeight: "clamp(220px, 38vw, 340px)" }}
         >
           {/* ── Full-bleed image ── */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 overflow-hidden">
             <img
               src={b.image ?? DEFAULT_BLOG_IMAGE}
               alt=""
-              className="h-full w-full object-cover transition-transform duration-[1s] ease-out group-hover:scale-110"
+              className="h-full w-full object-cover filter blur-[2px] brightness-[0.5] transition-all duration-[1s] ease-out group-hover:scale-110 group-hover:brightness-[0.4] group-hover:blur-[3px]"
               loading="lazy"
             />
             {/* base gradient */}
@@ -289,24 +270,14 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(to top, rgba(2,4,10,0.96) 0%, rgba(2,4,10,0.55) 45%, rgba(2,4,10,0.15) 100%)",
+                  "linear-gradient(to top, rgba(2,4,10,0.98) 0%, rgba(2,4,10,0.75) 50%, rgba(2,4,10,0.35) 100%)",
               }}
             />
             {/* extra darken on hover for readability */}
             <div
               className="absolute inset-0 transition-opacity duration-500 opacity-0 group-hover:opacity-100"
-              style={{ background: "rgba(2,4,10,0.25)" }}
+              style={{ background: "rgba(2,4,10,0.35)" }}
             />
-          </div>
-
-          {/* ── Neon corner brackets (appear on hover) ── */}
-          <div className="absolute top-0 left-0 w-10 h-10 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden>
-            <div className="absolute top-0 left-0 w-5 h-[1.5px]" style={{ background: "linear-gradient(90deg, #3d8eff, transparent)" }} />
-            <div className="absolute top-0 left-0 h-5 w-[1.5px]" style={{ background: "linear-gradient(180deg, #3d8eff, transparent)" }} />
-          </div>
-          <div className="absolute top-0 right-0 w-10 h-10 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden>
-            <div className="absolute top-0 right-0 w-5 h-[1.5px]" style={{ background: "linear-gradient(270deg, #818cf8, transparent)" }} />
-            <div className="absolute top-0 right-0 h-5 w-[1.5px]" style={{ background: "linear-gradient(180deg, #818cf8, transparent)" }} />
           </div>
 
           {/* ── Index number (top-left) ── */}
@@ -404,7 +375,6 @@ function GridBlogCard({ b, idx }: { b: BlogMeta; idx: number }) {
     </Reveal>
   );
 }
-
 
 /* ── Stats bar ───────────────────────────────────────────────────── */
 function StatsBar({ total, tagCount }: { total: number; tagCount: number }) {
