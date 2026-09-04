@@ -211,21 +211,24 @@ function CodeBlock({
         </div>
       </div>
       <div
-        className="relative overflow-x-auto flex justify-center"
+        className="relative w-full overflow-x-auto"
         style={{
+          WebkitOverflowScrolling: "touch",
           backgroundImage: isDiagram
             ? "radial-gradient(circle at 1px 1px, rgba(61,142,255,0.12) 1px, transparent 0)"
             : undefined,
           backgroundSize: isDiagram ? "18px 18px" : undefined,
         }}
       >
-        <pre
-          ref={ref}
-          className="inline-block text-left p-3 sm:p-5 md:p-6 text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
-          style={{ margin: 0, letterSpacing: "0.02em" }}
-        >
-          {children}
-        </pre>
+        <div className="w-full flex justify-start sm:justify-center min-w-max p-3 sm:p-5 md:p-6">
+          <pre
+            ref={ref}
+            className="text-left text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre"
+            style={{ margin: 0, letterSpacing: "0.02em" }}
+          >
+            {children}
+          </pre>
+        </div>
       </div>
     </div>
   );

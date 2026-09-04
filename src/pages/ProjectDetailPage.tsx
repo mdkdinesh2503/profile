@@ -242,26 +242,29 @@ function CodeBlock({
       </div>
 
       <div
-        className="relative overflow-x-auto flex justify-center py-2"
+        className="relative w-full overflow-x-auto"
         style={{
+          WebkitOverflowScrolling: "touch",
           backgroundImage: isArchitecture
             ? "radial-gradient(circle at 1px 1px, rgba(61,142,255,0.12) 1px, transparent 0)"
             : undefined,
           backgroundSize: isArchitecture ? "18px 18px" : undefined,
         }}
       >
-        <pre
-          ref={ref}
-          className="inline-block text-left p-3 sm:p-5 md:p-6 text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre select-text font-normal tracking-wide"
-          style={{
-            margin: 0,
-            tabSize: 2,
-            fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-            letterSpacing: "0.02em",
-          }}
-        >
-          {children}
-        </pre>
+        <div className="w-full flex justify-start sm:justify-center min-w-max p-3 sm:p-5 md:p-6">
+          <pre
+            ref={ref}
+            className="text-left text-[11px] sm:text-xs md:text-[13px] leading-relaxed text-sky-100/90 font-mono whitespace-pre select-text font-normal tracking-wide"
+            style={{
+              margin: 0,
+              tabSize: 2,
+              fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+              letterSpacing: "0.02em",
+            }}
+          >
+            {children}
+          </pre>
+        </div>
       </div>
     </div>
   );
