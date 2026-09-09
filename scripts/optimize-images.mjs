@@ -23,8 +23,11 @@ const TARGETS = [
   // App icon / avatar / logo
   { src: "default/Avatar.png", quality: 85, width: 256 },
   { src: "default/Logo.png", quality: 85, width: 512 },
-  // Blog cover
+  // Blog covers
   { src: "blog/my-journey.jpg", quality: 80, width: 1200 },
+  { src: "blogs/redis-beyond-the-cache.jpg", quality: 88, width: 1376 },
+  { src: "blogs/rest-vs-graphql.jpg", quality: 88, width: 1376 },
+  { src: "blogs/lessons-from-production-issues.jpg", quality: 88, width: 1376 },
 ];
 
 let totalSaved = 0;
