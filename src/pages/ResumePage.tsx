@@ -9,14 +9,11 @@ import {
   Download,
   ExternalLink,
   FileText,
-  Sparkles,
   Maximize2,
   Minimize2,
   RotateCcw,
   Share2,
-  Check,
   CheckCircle2,
-  Send,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -337,7 +334,7 @@ export function ResumePage() {
         isOpen={shareOpen}
         onClose={() => setShareOpen(false)}
         title={`${profile.name} – ${profile.role} Resume`}
-        summary={`Check out ${profile.name}'s professional resume (${profile.role} with ${years}+ years experience in backend architecture and distributed systems).`}
+        summary={`Check out ${profile.name}'s professional resume (${profile.role} with ${years} years experience in backend architecture and distributed systems).`}
         url={
           typeof window !== "undefined"
             ? new URL(profile.resume.pdfSrc, window.location.origin).href

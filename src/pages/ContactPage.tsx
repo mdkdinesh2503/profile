@@ -4,7 +4,7 @@ import {
   Terminal, ArrowUpRight, RefreshCw,
   CheckCircle2, User, Building, AtSign, ExternalLink,
   ShieldCheck, X, Activity, Lock, MessageSquare,
-  Zap, Globe, Github, Linkedin, MapPin,
+  Globe, Github, Linkedin, MapPin,
 } from "lucide-react";
 import { Container, buttonStyles, cx } from "@/shared/ui";
 import { SectionHeading } from "@/shared/ui/SectionHeading";

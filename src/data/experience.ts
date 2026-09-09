@@ -82,13 +82,18 @@ export function getDisplayDateRange(item: ExperienceItem): string {
 export function getYearsExperience(
   items: ExperienceItem[],
   includeInternship: boolean = false,
+  includeTraining: boolean = false,
 ): string {
   let total = items
     .filter((item) => !EXCLUDED_FROM_YEARS.has(item.company))
     .reduce((sum, item) => sum + getItemDurationMonths(item) / 12, 0);
 
   if (includeInternship) {
-    total += 3 / 12;
+    total += 3 / 12; // Aspire Systems internship: Jan–Mar 2023
+  }
+
+  if (includeTraining) {
+    total += 22 / 12; // Aspire Systems Graduate Trainee: Sep 2022–Jul 2024
   }
 
   if (total < 1) return "1";
@@ -98,7 +103,7 @@ export function getYearsExperience(
 
   if (fraction >= 0.5) {
     return `${full}.5+`;
-  } else if (fraction > 0.001 || includeInternship) {
+  } else if (fraction > 0.001 || includeInternship || includeTraining) {
     return `${full}+`;
   }
 

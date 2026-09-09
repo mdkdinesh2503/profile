@@ -24,7 +24,7 @@ export const profile: Profile = {
       "Engineering the unseen logic behind flawless digital experiences.",
     subhead:
       "I transform complex business rules into lightning-fast, scalable infrastructure. Currently orchestrating data and microservices to deliver seamless interactions for thousands of concurrent users.",
-    yearsExperience: getYearsExperience(experience, true),
+    yearsExperience: getYearsExperience(experience, true, true),
   },
 
   links: {

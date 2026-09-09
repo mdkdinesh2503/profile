@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Container, ButtonLink, ShareModal } from "@/shared/ui";
 import { PageMeta } from "@/shared/seo/PageMeta";
-import { getProjectBySlug, getAllProjects } from "@/lib/projects";
+import { getProjectBySlug } from "@/lib/projects";
 import { Reveal } from "@/shared/motion/Reveal";
 import {
   ArrowLeft,
@@ -27,18 +27,11 @@ import {
   Download,
   Terminal,
   Server,
-  Activity,
   Cpu,
   BookmarkCheck,
   GraduationCap,
   Layers,
-  FileCode2,
-  ArrowRight,
-  Code2,
-  CheckCircle2,
-  ShieldCheck,
-  Flame,
-  LayoutGrid,
+  FileCode2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
