@@ -28,6 +28,7 @@ const TARGETS = [
   { src: "blogs/redis-beyond-the-cache.jpg", quality: 88, width: 1376 },
   { src: "blogs/rest-vs-graphql.jpg", quality: 88, width: 1376 },
   { src: "blogs/lessons-from-production-issues.jpg", quality: 88, width: 1376 },
+  { src: "blogs/access-token-vs-refresh-token.jpg", quality: 88, width: 1376 },
 ];
 
 let totalSaved = 0;
