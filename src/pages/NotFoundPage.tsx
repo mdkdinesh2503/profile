@@ -210,18 +210,7 @@ export function NotFoundPage() {
   const [termVisible, setTermVisible] = useState(false);
   const [visibleLines, setVisibleLines] = useState(0);
 
-  // Disable document scroll while on 404 page
-  useEffect(() => {
-    const prevOverflow = document.body.style.overflow;
-    const prevHtmlOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
 
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      document.documentElement.style.overflow = prevHtmlOverflow;
-    };
-  }, []);
 
   // Reveal terminal log lines one by one
   useEffect(() => {
@@ -244,7 +233,7 @@ export function NotFoundPage() {
   };
 
   return (
-    <section className="relative flex h-dvh min-h-dvh max-h-dvh w-full flex-col items-center justify-center overflow-hidden px-4 py-2 select-none">
+    <section className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-x-hidden px-4 py-8 sm:py-12 select-none">
       <PageMeta
         title="Page Not Found"
         description="This page doesn't exist. Back to Dinesh Kumar M's software engineering portfolio."
@@ -486,13 +475,13 @@ export function NotFoundPage() {
           {/* ── CTA buttons ── */}
           <motion.div
             variants={fadeUp}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+            className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto"
           >
             {/* Primary */}
             <ParallaxContainer depth={0.5}>
               <Link
                 to="/"
-                className="group inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 btn-shine-wrap"
+                className="group inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 btn-shine-wrap"
                 style={{
                   background: "linear-gradient(135deg, #3d8eff, #818cf8)",
                   boxShadow: "0 4px 24px rgba(61,142,255,0.3)",
@@ -507,7 +496,7 @@ export function NotFoundPage() {
             {/* Ghost explore */}
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium text-muted-1 transition-all duration-200 hover:text-primary"
+              className="inline-flex w-full sm:w-auto justify-center items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium text-muted-1 transition-all duration-200 hover:text-primary"
               style={{
                 background: "rgba(255,255,255,0.03)",
                 borderColor: "rgba(255,255,255,0.09)",
@@ -528,13 +517,13 @@ export function NotFoundPage() {
           {/* ── Quick nav grid ── */}
           <motion.div
             variants={fadeUp}
-            className="mt-8 grid grid-cols-5 gap-2 w-full max-w-xs"
+            className="mt-6 sm:mt-8 grid grid-cols-5 gap-1.5 sm:gap-2 w-full max-w-xs"
           >
             {NAV_LINKS.map(({ to, label, icon: Icon }) => (
               <Link
                 key={to}
                 to={to}
-                className="group flex flex-col items-center gap-1.5 rounded-xl py-3 transition-all duration-200"
+                className="group flex flex-col items-center gap-1.5 rounded-xl py-2.5 sm:py-3 transition-all duration-200"
                 style={{
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.06)",
@@ -559,7 +548,7 @@ export function NotFoundPage() {
           {/* ── Dev hint ── */}
           <motion.p
             variants={fadeUp}
-            className="mt-8 font-mono text-[10px] text-white/20"
+            className="mt-6 sm:mt-8 font-mono text-[10px] text-white/20"
           >
             location.pathname → 404 ∙ error: ROUTE_NOT_FOUND
           </motion.p>

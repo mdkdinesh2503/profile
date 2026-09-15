@@ -2,7 +2,7 @@
 title: "REST or GraphQL? Ask the Right Question First."
 date: "2026-09-09"
 summary: "Choosing between REST and GraphQL shouldn't be based on popularity. They solve API communication differently — here's how to think about the trade-offs."
-tags: ["System Design", "API Design"]
+tags: [ "REST", "GraphQL"]
 image: "/blogs/rest-vs-graphql.webp"
 imageAlt: "Futuristic illustration contrasting REST API endpoints and GraphQL hub"
 readTime: 3

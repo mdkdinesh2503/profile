@@ -123,10 +123,10 @@ export function AnimatedRoutes() {
         <Route
           path="*"
           element={
-            <div className="relative flex min-h-dvh h-dvh flex-col overflow-hidden bg-[#02060e] text-slate-100 selection:bg-primary/30 selection:text-white">
-              <main className="flex-1 flex flex-col items-center justify-center overflow-hidden">
+            <div className="relative flex min-h-dvh flex-col bg-[#02060e] text-slate-100 selection:bg-primary/30 selection:text-white">
+              <main className="flex-1 flex flex-col items-center justify-center w-full">
                 <Suspense fallback={<PageFallback />}>
-                  <PageTransition>
+                  <PageTransition className="w-full flex-1 flex flex-col items-center justify-center">
                     <NotFoundPage />
                   </PageTransition>
                 </Suspense>

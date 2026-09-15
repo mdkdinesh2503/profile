@@ -559,7 +559,7 @@ export function HomePage() {
                       <ArrowRight size={16} aria-hidden className="transition-transform group-hover:translate-x-0.5" />
                     </ButtonLink>
                     <a
-                      href={`mailto:${profile.email}`}
+                      href={`mailto:${profile.email}?subject=${encodeURIComponent("Hello Dinesh, let's connect!")}&body=${encodeURIComponent("Hi Dinesh,\n\nI came across your portfolio and wanted to reach out regarding [collaboration / project inquiry / opportunity].\n\nLooking forward to hearing from you!\n\nBest regards,\n[Portfolio Visitor]")}`}
                       className="group relative inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5"
                       style={{
                         background: "rgba(255,255,255,0.04)",

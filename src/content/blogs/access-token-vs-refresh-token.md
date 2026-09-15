@@ -2,7 +2,7 @@
 title: "Why Applications Use Two Tokens Instead of One"
 date: "2026-09-09"
 summary: "Why do modern backends issue both an Access Token and a Refresh Token instead of one permanent key? Because convenience and security often pull in opposite directions."
-tags: ["Security", "Backend", "Auth"]
+tags: ["Auth", "Security"]
 image: "/blogs/access-token-vs-refresh-token.webp"
 imageAlt: "Cyberpunk visualization of dual key security: short-lived access token countdown and shielded refresh token rotation"
 readTime: 3

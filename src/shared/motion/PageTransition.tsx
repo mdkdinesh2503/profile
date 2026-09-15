@@ -7,7 +7,12 @@ const pageVariants = {
   exit: { opacity: 0, y: 8 },
 };
 
-export function PageTransition({ children }: PropsWithChildren) {
+type PageTransitionProps = PropsWithChildren<{
+  className?: string;
+  style?: React.CSSProperties;
+}>;
+
+export function PageTransition({ children, className, style }: PageTransitionProps) {
   return (
     <motion.div
       initial="initial"
@@ -15,6 +20,8 @@ export function PageTransition({ children }: PropsWithChildren) {
       exit="exit"
       variants={pageVariants}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+      style={style}
     >
       {children}
     </motion.div>
