@@ -1,6 +1,6 @@
 import {
   Code2, Layers, Globe, Zap, Database, Server, Wrench, Activity,
-  Cpu, ShieldCheck, BookOpen, Flame, Sparkles
+  Cpu, ShieldCheck, BookOpen, Flame, Sparkles, Layout
 } from "lucide-react";
 import {
   SiRust, SiTypescript, SiJavascript,
@@ -150,6 +150,9 @@ export function getHighlightIcon(title: string) {
   }
   if (lower.includes("distributed") || lower.includes("microservice") || lower.includes("backend")) {
     return <Cpu className="h-4 w-4 text-primary shrink-0" />;
+  }
+  if (lower.includes("frontend")) {
+    return <Layout className="h-4 w-4 text-primary shrink-0" />;
   }
   if (lower.includes("production") || lower.includes("lifecycle") || lower.includes("engineering")) {
     return <ShieldCheck className="h-4 w-4 text-primary shrink-0" />;

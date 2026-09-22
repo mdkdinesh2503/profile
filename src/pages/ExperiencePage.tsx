@@ -123,7 +123,7 @@ export function ExperiencePage() {
     "Aretedge-0": true,
     "Aretedge-1": true,
     "Aretedge-2": true,
-    "Aspire Systems-0": true,
+    "Aretedge-3": true,
   });
 
   const categories = useMemo(() => {

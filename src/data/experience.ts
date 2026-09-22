@@ -127,7 +127,7 @@ export const experience: ExperienceItem[] = [
     startDate: "Aug 2024",
     endDate: "May 2026",
     summary:
-      "Built and supported production systems for a gaming platform serving 20K+ registered users, working across Java/Spring Boot, Rust microservices, PostgreSQL, Redis, DynamoDB, GraphQL, gRPC, and AWS.",
+      "Built and supported applications for a gaming platform serving 20K+ registered users across Java/Spring Boot, Rust microservices, PostgreSQL, Redis, DynamoDB, REST, GraphQL, gRPC, and AWS.",
     techStack: [
       "Java",
       "Spring Boot",
@@ -142,6 +142,8 @@ export const experience: ExperienceItem[] = [
       "PostgreSQL",
       "DynamoDB",
       "Redis / Valkey",
+      "ElastiCache",
+      "AWS SQS",
       "Next.js",
       "Angular",
       "REST APIs",
@@ -149,50 +151,53 @@ export const experience: ExperienceItem[] = [
       "gRPC",
       "Docker",
       "Jenkins",
-      "Grafana",
       "ArgoCD",
+      "Grafana",
       "AWS",
     ],
     highlights: [
       {
         title: "Feature Ownership",
         points: [
-          "Challenge Module (~90%): Backend APIs, business logic, PostgreSQL, Redis, testing, deployment validation, and production support.",
-          "Casual Games (~90%): Gameplay, participation, scoring, rewards, leaderboards, and third-party Game API integrations.",
-          "Tournament: Implemented Double Elimination — bracket generation, match progression, participant advancement, finals, and winner determination.",
+          "Owned ~90% of Challenge and Casual Games modules end-to-end, covering technical design, API/database design, business logic, integrations, deployment validation and production support.",
+          "Implemented registration, participation, scoring, leaderboards, prize pools, Solana wallet integration and cron-based Challenge lifecycle workflows.",
+          "Implemented Double Elimination tournaments covering winners/losers brackets, match progression, advancement, finals and winner determination.",
         ],
       },
       {
         title: "Backend Engineering",
         points: [
           "Developed 20+ production APIs across Java monolith and Rust microservices using REST, GraphQL, and gRPC.",
-          "Worked with Rust, Tokio, Axum, Tonic, async-graphql, Protocol Buffers, Diesel, and PostgreSQL in production microservices.",
-          "Contributed to an internal Rust GraphQL Gateway — schemas, queries/mutations, Axum routes, service integrations & GraphQL → gRPC communication.",
-          "Worked with PostgreSQL, Redis/Valkey, and DynamoDB for transactions, caching, rankings & application data.",
-          "Contributed to a DynamoDB → PostgreSQL migration involving ~20K records using Node.js scripts.",
+          "Created/modified Protocol Buffer contracts and implemented corresponding gRPC integrations.",
+          "Contributed to an internal Rust GraphQL Gateway using Axum, Tokio and async-graphql, connecting GraphQL operations with internal gRPC services.",
+          "Created/modified 6+ PostgreSQL tables and 12–15 functions/stored procedures, using JSONB/materialized views for transactional and leaderboard workloads.",
+          "Supported migration of ~20K user/login records from DynamoDB to PostgreSQL using Node.js.",
+          "Used Redis/ElastiCache for authentication/session state and country-based leaderboards.",
+          "Enhanced authentication with OTP, JWT, refresh-token rotation, RBAC and Redis-backed sessions.",
+          "Worked with AWS SQS workflows and Aurora PostgreSQL, DynamoDB, ECR and EKS.",
         ],
       },
       {
         title: "Frontend Engineering",
         points: [
-          "Handled ~4 Next.js applications in a white-labeled production monorepo — components, forms, state, auth, API integration & fixes.",
-          "Developed Angular + Spring Boot integrations and worked with React, TypeScript, Tailwind CSS, GraphQL & third-party APIs.",
+          "Independently handled ~4 Next.js applications in a white-labeled production monorepo, covering components, authentication and API integration.",
+          "Developed Angular pages/components integrated with Java/Spring Boot APIs.",
         ],
       },
       {
         title: "Production Engineering",
         points: [
-          "Supported 25+ releases, 10+ incidents, and 8+ hotfixes through log analysis, RCA, API validation, deployment & post-release verification.",
-          "Worked with Jenkins, ArgoCD, Grafana & AWS across CI/CD, deployment, observability & production support.",
+          "Supported 25+ releases, 10+ incidents and 8+ hotfixes through log analysis, RCA, API validation, Docker verification, Jenkins and Argo CD health checks.",
         ],
       },
     ],
     outcomes: [
-      "Owned ~90% backend for Challenge & Casual Games modules serving 20K+ users.",
-      "Built 20+ production APIs across Rust (Axum/Tonic), Java (Spring Boot), and NestJS using REST, GraphQL, and gRPC.",
-      "Implemented Double Elimination tournament logic, Redis leaderboards, and DynamoDB → PostgreSQL migration.",
-      "Handled ~4 Next.js apps in a white-labeled monorepo plus Angular + Spring Boot integrations.",
-      "Supported 25+ releases, 10+ incidents & 8+ hotfixes using Jenkins, ArgoCD, Grafana, and AWS.",
+      "Owned ~90% of Challenge and Casual Games modules serving 20K+ registered users.",
+      "Built 20+ production APIs across Java monolith and Rust microservices with REST, GraphQL, and gRPC.",
+      "Engineered Double Elimination tournament brackets, Solana wallet integration, and lifecycle cron workflows.",
+      "Created 12–15 PostgreSQL stored procedures/functions with JSONB and materialized views.",
+      "Migrated ~20K records from DynamoDB to PostgreSQL with zero data loss.",
+      "Maintained ~4 Next.js white-labeled apps and supported 25+ production releases with CI/CD and observability.",
     ],
   },
   {
@@ -202,28 +207,26 @@ export const experience: ExperienceItem[] = [
     title: "Software Engineering Intern",
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: [
-      "Enterprise Software Engineering",
+      "Enterprise Engineering",
       "Full Stack Development",
-      "Agile Delivery",
     ],
     startDate: "Jan 2023",
     endDate: "Mar 2023",
+    timeframe: "3 mos",
     summary:
-      "Hands-on internship in Java, Angular, MySQL, and REST APIs through project-based enterprise assignments.",
+      "Completed a Software Engineering internship focused on Java, Angular, MySQL, REST APIs, debugging, testing, and enterprise application development through project-based assignments.",
     techStack: [
       "Java",
       "Angular",
       "MySQL",
-      "JSON-Server",
       "REST APIs",
       "Git",
-      "Unit Testing",
       "Debugging",
-      "Agile / Scrum",
+      "API Testing",
     ],
     outcomes: [
-      "Built Angular UIs (components, services, routing, forms) and Java REST backend features.",
-      "Applied MySQL, REST API integration, Git, debugging, and unit testing.",
+      "Built enterprise application features across Angular frontend and Java REST backend.",
+      "Applied MySQL, API integration, Git, debugging, and testing in Agile sprints.",
     ],
   },
   {
@@ -233,15 +236,14 @@ export const experience: ExperienceItem[] = [
     title: "Graduate Trainee",
     location: "Chennai, Tamil Nadu, India · Remote",
     domains: [
-      "Structured Enterprise Engineering Training",
-      "Full-Stack Foundation",
-      "System Architecture & SDLC",
+      "Enterprise Engineering",
+      "Full Stack Foundation",
     ],
     startDate: "Sep 2022",
     endDate: "Jul 2024",
     timeframe: "1 yr 8 mos",
     summary:
-      "Multi-phase enterprise engineering training through mentor-guided development and project-based assignments.",
+      "Completed enterprise software engineering training through mentor-guided development and project-based assignments using Java, Spring Boot, Angular, Node.js, MySQL, and REST APIs.",
     techStack: [
       "Java",
       "Spring Boot",
@@ -249,10 +251,8 @@ export const experience: ExperienceItem[] = [
       "Node.js",
       "MySQL",
       "REST APIs",
-      "OOP & Design Patterns",
-      "Layered Architecture",
+      "OOP",
       "Git",
-      "Agile SDLC",
     ],
     roles: [
       {
@@ -266,25 +266,10 @@ export const experience: ExperienceItem[] = [
         timeframe: "Sep 2022 - Dec 2022 · 4 mos",
       },
     ],
-    highlights: [
-      {
-        title: "Advanced Phase (Apr 2023 – Jul 2024)",
-        points: [
-          "Trained via mentor-led projects in Java, Spring Boot, Angular, Node.js, MySQL, and REST APIs.",
-          "Applied OOP, layered architecture, Git, debugging, and API testing.",
-          "Joined requirement discussions, code reviews, and iterative delivery.",
-        ],
-      },
-      {
-        title: "Foundational Phase (Sep 2022 – Dec 2022)",
-        points: [
-          "Built foundational skills in Java, OOP, MySQL, Git, and software development practices.",
-        ],
-      },
-    ],
     outcomes: [
-      "Trained in Java, Spring Boot, Angular, Node.js, and MySQL via structured project assignments.",
-      "Applied OOP, REST APIs, layered architecture, Git, and Agile delivery practices.",
+      "Built application features across frontend, backend, and relational database layers.",
+      "Applied OOP, layered architecture, API integration, Git, debugging, and API testing.",
+      "Participated in requirements, implementation, code reviews, debugging, and iterative improvements.",
     ],
   },
 ];
