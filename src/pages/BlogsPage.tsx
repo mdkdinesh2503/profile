@@ -398,8 +398,6 @@ function StatsBar({ total, tagCount }: { total: number; tagCount: number }) {
   );
 }
 
-const POSTS_PER_PAGE = 9;
-
 export function BlogsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const tagFromUrl = searchParams.get("tag") ?? null;
@@ -417,12 +415,7 @@ export function BlogsPage() {
     return allBlogs.filter((b) => b.tags.includes(tagFromUrl));
   }, [allBlogs, tagFromUrl]);
 
-  const visibleBlogs = useMemo(
-    () => filteredBlogs.slice(0, POSTS_PER_PAGE),
-    [filteredBlogs]
-  );
-
-  const [featured, second, ...rest] = visibleBlogs;
+  const [featured, ...gridBlogs] = filteredBlogs;
 
   const setTagFilter = (tag: string) => {
     const next = new URLSearchParams(searchParams);
@@ -433,9 +426,6 @@ export function BlogsPage() {
     }
     setSearchParams(next, { replace: true });
   };
-
-  // Layout: featured + second as hero strip, rest as grid
-  const gridBlogs = second ? [second, ...rest] : rest;
 
   return (
     <section className="relative pt-12 md:pt-16 pb-2 sm:pb-10">
