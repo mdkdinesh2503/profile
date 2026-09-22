@@ -802,30 +802,6 @@ export function ProjectDetailPage() {
                       All Projects
                     </ButtonLink>
 
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-primary px-3.5 py-2 text-xs sm:text-sm font-semibold text-primary transition-all hover:bg-primary hover:text-white flex-1 sm:flex-none"
-                      >
-                        <Globe className="h-4 w-4" />
-                        Live Demo
-                      </a>
-                    )}
-
-                    {project.repoUrl && (
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-white/10 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white/80 transition-all hover:border-primary hover:text-primary bg-white/5 flex-1 sm:flex-none"
-                      >
-                        <Github className="h-4 w-4" />
-                        Source Code
-                      </a>
-                    )}
-
                     <button
                       type="button"
                       onClick={() => setShareOpen(true)}
