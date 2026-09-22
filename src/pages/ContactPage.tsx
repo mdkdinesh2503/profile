@@ -14,6 +14,7 @@ import { profile } from "@/data/profile";
 import { inquiryTopics, socialLinks } from "@/data/contact";
 import { headings } from "@/data/headings";
 import { motion, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 const tel = `tel:${profile.phone.replace(/\s+/g, "")}`;
 
@@ -198,8 +199,10 @@ export function ContactPage() {
   const [senderEmail, setSenderEmail] = useState("");
   const [senderOrg, setSenderOrg] = useState("");
   const [messageNote, setMessageNote] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [validationError, setValidationError] = useState("");
 
   const activeTopicObj = inquiryTopics.find((t) => t.id === selectedTopic) || inquiryTopics[0];
 
@@ -245,34 +248,74 @@ export function ContactPage() {
 
   const handleDirectSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (submitting) return;
+
+    // Honeypot check — bots fill hidden fields
+    if (honeypot) return;
+
+    // Client-side validation
+    if (!senderName.trim()) {
+      setValidationError("Please enter your name.");
+      return;
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!senderEmail.trim() || !emailPattern.test(senderEmail.trim())) {
+      setValidationError("Please enter a valid email address.");
+      return;
+    }
+    if (!messageNote.trim()) {
+      setValidationError("Please write a message before sending.");
+      return;
+    }
+
+    setValidationError("");
     setSubmitting(true);
     setSubmitStatus("idle");
+
+    const organizationLine = senderOrg.trim()
+      ? `🏢 ${senderOrg.trim()}`
+      : "";
+
+    const templateParams = {
+      name: senderName,
+      email: senderEmail,
+      organization: organizationLine,
+      topic: activeTopicObj.label,
+      subject,
+      message: messageNote,
+      fullDraft: body,
+    };
+
     try {
-      const response = await fetch("https://formspree.io/f/mdkdinesh2503@gmail.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          topic: activeTopicObj.label, subject,
-          name: senderName || "Visitor",
-          email: senderEmail || "Not provided",
-          organization: senderOrg || "Not provided",
-          message: messageNote || activeTopicObj.starterMessage,
-          fullDraft: body,
-        }),
-      });
-      if (response.ok) {
-        setSubmitStatus("success");
-        setMessageNote("");
-      } else {
-        window.location.href = dynamicMailto;
-        setSubmitStatus("success");
+      // 1. Notification to Dinesh
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID as string,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string,
+        templateParams,
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string }
+      );
+
+      // 2. Auto-reply to sender (if template configured)
+      if (import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID) {
+        emailjs
+          .send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID as string,
+            import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID as string,
+            templateParams,
+            { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string }
+          )
+          .catch((err) => console.warn("Auto-reply trigger failed:", err));
       }
-    } catch {
-      window.location.href = dynamicMailto;
+
       setSubmitStatus("success");
+      setMessageNote("");
+      setTimeout(() => setSubmitStatus("idle"), 6000);
+    } catch {
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 6000);
     } finally {
       setSubmitting(false);
-      setTimeout(() => setSubmitStatus("idle"), 6000);
     }
   };
 
@@ -303,6 +346,7 @@ export function ContactPage() {
   const resetForm = () => {
     setSenderName(""); setSenderEmail(""); setSenderOrg("");
     setMessageNote(""); setSelectedTopic(inquiryTopics[0].id);
+    setValidationError(""); setSubmitStatus("idle");
   };
 
   /* card glass style reused */
@@ -659,21 +703,37 @@ export function ContactPage() {
                       />
                     </div>
 
+                    {/* ── Honeypot (hidden, spam trap) ── */}
+                    <input
+                      type="text"
+                      name="_gotcha"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      style={{ display: "none" }}
+                    />
+
                     {/* ── Footer ── */}
                     <div
                       className="mt-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-3 border-t pt-5"
                       style={{ borderColor: "rgba(255,255,255,0.07)" }}
                     >
-                      <div className="flex items-center gap-2 text-xs text-muted-2">
-                        <Lock size={13} className="text-primary/60 shrink-0" />
-                        <span>Goes directly to Dinesh's inbox.</span>
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-2 text-xs text-muted-2">
+                          <Lock size={13} className="text-primary/60 shrink-0" />
+                          <span>Goes directly to Dinesh's inbox.</span>
+                        </div>
+                        {validationError && (
+                          <p className="text-xs font-medium text-red-400">{validationError}</p>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-2">
                         <button
                           type="submit"
-                          disabled={true}
-                          // disabled={submitting}
+                          disabled={submitting}
                           className={cx(
                             buttonStyles.base,
                             buttonStyles.sizes.md,
@@ -897,6 +957,52 @@ export function ContactPage() {
                 <div>
                   <p className="text-sm font-bold text-white">Message Dispatched! 🚀</p>
                   <p className="text-xs text-muted-2 mt-0.5">Your note went straight to Dinesh's inbox.</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSubmitStatus("idle")}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-muted-2 transition-colors hover:text-white hover:bg-white/8"
+              >
+                <X size={13} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Error Toast ── */}
+      <AnimatePresence>
+        {submitStatus === "error" && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 420, damping: 30 }}
+            className="fixed bottom-4 left-4 right-4 sm:left-6 sm:right-auto sm:bottom-6 z-50 sm:max-w-sm overflow-hidden rounded-2xl"
+            style={{
+              background: "rgba(2,8,20,0.94)",
+              border: "1px solid rgba(239,68,68,0.3)",
+              backdropFilter: "blur(20px)",
+              boxShadow: "0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(239,68,68,0.1)",
+            }}
+          >
+            {/* Top accent */}
+            <div
+              className="h-[2px]"
+              style={{ background: "linear-gradient(90deg, #ef4444, #f97316)" }}
+            />
+            <div className="flex items-center justify-between gap-3 p-4">
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl"
+                  style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.2)" }}
+                >
+                  <X size={18} className="text-red-400" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white">Submission Failed</p>
+                  <p className="text-xs text-muted-2 mt-0.5">Use &ldquo;Open in Mail App&rdquo; as a fallback.</p>
                 </div>
               </div>
               <button
