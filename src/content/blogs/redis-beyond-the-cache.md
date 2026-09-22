@@ -1,6 +1,6 @@
 ---
 title: "Redis Is More Than a Cache"
-date: "2026-09-09"
+date: "2026-08-03"
 summary: "Most developers describe Redis in one sentence: 'Redis is a cache.' That's true — but it's only part of the story. Here's what Redis actually helps you solve."
 tags: ["Redis"]
 image: "/blogs/redis-beyond-the-cache.webp"

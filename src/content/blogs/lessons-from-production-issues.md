@@ -1,6 +1,6 @@
 ---
 title: "The Most Valuable Backend Lesson Came From a Production Issue"
-date: "2026-09-09"
+date: "2026-08-10"
 summary: "Debugging in production isn't about making quick assumptions or finding one line of failed code. It's about asking better questions, gathering evidence, and understanding how systems actually behave."
 tags: ["Production"]
 image: "/blogs/lessons-from-production-issues.webp"
