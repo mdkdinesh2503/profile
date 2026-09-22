@@ -2,7 +2,7 @@
 title: "Optimistic vs. Pessimistic Locking: Solving Race Conditions"
 date: "2026-09-02"
 summary: "Two users open the same item at the same time. Both see stock = 1. Both click buy. If both requests update independently, two orders get placed for one item. How backend systems handle concurrency conflicts."
-tags: ["Databases", "Architecture"]
+tags: ["Databases"]
 image: "/blogs/optimistic-vs-pessimistic-locking.webp"
 imageAlt: "Architectural comparison of concurrency control: versioned optimistic locking vs exclusive row-level pessimistic locking"
 readTime: 4

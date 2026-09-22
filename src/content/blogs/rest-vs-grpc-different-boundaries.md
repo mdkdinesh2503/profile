@@ -2,7 +2,7 @@
 title: "REST Worked Fine — So Why Did We Need gRPC?"
 date: "2026-09-16"
 summary: "REST worked perfectly well for every API I had built. So when I first worked with gRPC, I asked: Why do backend services need another protocol? The answer became clear when I looked at who was consuming the API."
-tags: ["API Design", "Architecture"]
+tags: ["API Design"]
 image: "/blogs/rest-vs-grpc-different-boundaries.webp"
 imageAlt: "Architectural comparison between REST with JSON payloads for external clients and high-performance binary gRPC over HTTP/2 for internal microservices"
 readTime: 4

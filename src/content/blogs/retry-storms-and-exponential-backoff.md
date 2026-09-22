@@ -2,7 +2,7 @@
 title: "When Retries Make Outages Worse: Retry Storms, Backoff, and Jitter"
 date: "2026-09-07"
 summary: "A retry is supposed to make a system more reliable. Done badly, it can make an outage dramatically worse. How retry storms happen, and why exponential backoff, jitter, and idempotency are essential."
-tags: ["Architecture", "Production"]
+tags: ["Production"]
 image: "/blogs/retry-storms-and-exponential-backoff.webp"
 imageAlt: "Futuristic telemetry diagram showing traffic regulation, retry storms vs exponential backoff with jitter and idempotency guards"
 readTime: 4

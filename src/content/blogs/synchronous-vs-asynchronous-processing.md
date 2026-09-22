@@ -2,7 +2,7 @@
 title: "Not Every Task Needs to Finish Immediately"
 date: "2026-08-28"
 summary: "Just because a user clicks a button doesn't mean every task needs to finish before sending a response. How separating the critical path from background message queues builds resilient, scalable backend systems."
-tags: ["System Design", "Architecture"]
+tags: ["System Design"]
 image: "/blogs/synchronous-vs-asynchronous-processing.webp"
 imageAlt: "Futuristic visual architecture showing the synchronous critical path contrasted with decoupled asynchronous message queue consumers"
 readTime: 4

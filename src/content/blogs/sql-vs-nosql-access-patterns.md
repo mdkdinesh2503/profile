@@ -2,7 +2,7 @@
 title: "Stop Asking 'SQL or NoSQL?' — Ask How the Data Will Be Accessed"
 date: "2026-09-11"
 summary: "I used to think database selection started with 'SQL or NoSQL?' Now I know it starts with a completely different question: How will this data actually be accessed? Real lessons from PostgreSQL and DynamoDB."
-tags: ["Databases", "Architecture"]
+tags: ["Databases"]
 image: "/blogs/sql-vs-nosql-access-patterns.webp"
 imageAlt: "Futuristic visual comparison of relational PostgreSQL tables with joins versus distributed key-value DynamoDB partition keys"
 readTime: 4

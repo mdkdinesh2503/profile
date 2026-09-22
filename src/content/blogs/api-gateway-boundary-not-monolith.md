@@ -2,7 +2,7 @@
 title: "If You Have 10 Microservices, Should the Frontend Know All 10 Exist?"
 date: "2026-09-09"
 summary: "If a backend has 10 microservices, should the frontend talk to all 10 directly? Usually, that creates more problems than it solves. How API Gateways create clean boundaries without turning into accidental monoliths."
-tags: ["Architecture", "System Design"]
+tags: ["System Design"]
 image: "/blogs/api-gateway-boundary-not-monolith.webp"
 imageAlt: "Futuristic architectural blueprint showing API gateway routing, protocol transformation from GraphQL to gRPC, and service mesh isolation"
 readTime: 4

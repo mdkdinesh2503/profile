@@ -2,7 +2,7 @@
 title: "When a Backend Service Fails, Don't Guess — Follow the Evidence"
 date: "2026-08-12"
 summary: "When a backend service fails, the first question shouldn't be 'which line of code do we change?' It should be 'what evidence do we have?' How structured logging transforms production incident debugging."
-tags: ["Observability", "Production"]
+tags: ["Production"]
 image: "/blogs/the-power-of-structured-logging.webp"
 imageAlt: "Futuristic developer terminal displaying structured JSON logs, correlation IDs, and telemetry traces across distributed services"
 readTime: 4

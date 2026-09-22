@@ -2,7 +2,7 @@
 title: "When Direct APIs Break: Moving to Event-Driven Architecture"
 date: "2026-09-04"
 summary: "When one service needs data from another, a direct API call works well—until too many services depend on each other. How event-driven architecture untangles tight coupling and builds resilient distributed systems."
-tags: ["Architecture", "System Design"]
+tags: ["System Design"]
 image: "/blogs/direct-apis-vs-event-driven-architecture.webp"
 imageAlt: "Architectural comparison between tight direct synchronous API coupling and decoupled event-driven message architectures"
 readTime: 4

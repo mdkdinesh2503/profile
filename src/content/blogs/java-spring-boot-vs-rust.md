@@ -2,7 +2,7 @@
 title: "Java/Spring Boot vs. Rust: The Biggest Difference Wasn't Syntax"
 date: "2026-09-14"
 summary: "I worked with Java/Spring Boot first, and later with Rust. The biggest difference wasn't syntax—it was how each ecosystem shaped how I think about backend engineering. Exploring productivity, compile-time safety, and architectural trade-offs."
-tags: ["Architecture", "Career"]
+tags: ["System Design"]
 image: "/blogs/java-spring-boot-vs-rust.webp"
 imageAlt: "Futuristic software engineering workstation contrasting Java Spring Boot enterprise framework productivity with Rust compile-time memory safety"
 readTime: 4

@@ -2,7 +2,7 @@
 title: "The Biggest Threat to Your API Isn't Always an Attacker"
 date: "2026-08-24"
 summary: "Sometimes the biggest threat to an API isn't a malicious attacker—it's an innocent client sending too many requests. How rate limiting protects system stability, fairness, and infrastructure."
-tags: ["API Design", "Architecture"]
+tags: ["API Design"]
 image: "/blogs/rate-limiting-protecting-apis.webp"
 imageAlt: "Futuristic rate limiting gateway managing incoming traffic streams with Redis counters and returning HTTP 429 Too Many Requests"
 readTime: 4
