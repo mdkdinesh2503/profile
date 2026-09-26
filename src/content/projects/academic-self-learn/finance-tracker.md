@@ -8,7 +8,7 @@ stackNote: "Next.js 14 App Router, Server Actions, Neon PostgreSQL, Zustand, Tai
 demoStack: "Next.js, TypeScript, PostgreSQL"
 originalStack: "Next.js, TypeScript, PostgreSQL (NeonDB), Zustand, Tailwind CSS"
 tags: ["Frontend", "Backend", "React", "Node.js", "Express", "MongoDB", "Rest-API"]
-demoUrl: "https://mdkdinesh2503.github.io/Expense_tracker-V1/"
+demoUrl: "https://mdk-expense.vercel.app/"
 repoUrl: "https://github.com/mdkdinesh2503/finance-tracker"
 ---
 
